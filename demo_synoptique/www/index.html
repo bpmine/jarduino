@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoring Jarduino</title>
+</head>
+<body>
+    <synoptique-component></synoptique-component>
+	
+    <script src="synoptique.js"></script>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+
+            const socket = io();
+
+            // Ecouter l'événement 'data_update' envoyé par le serveur
+            socket.on('data_update', function(data) {
+                //const data = document.getElementById('data');
+                console.log(data)
+                window.update_synoptique(data);
+            });
+
+            /*const data = {
+                'main': {
+                    'level': 2,
+                    'pompe': true,
+                    'state': 'on',
+                    'volt': 123,
+                    'db': 65521,
+                    'time': '2024-05-31T14:00:00Z'
+                },
+                'paul': {
+                    'level': 1,
+                    'pompe': false,
+                    'state': 'sleep',
+                    'volt': 101,
+                    'db': 65511,
+                    'time': '2024-05-31T14:00:00Z'
+                },
+                'reduit': {
+                    'level': 0,
+                    'pompe': true,
+                    'state': 'sleep',
+                    'volt': 113,
+                    'db': 65510,
+                    'time': '2024-05-31T14:00:00Z'
+                },
+                'barbec': {
+                    'level': 3,
+                    'pompe': false,
+                    'state': 'off',
+                    'volt': 110,
+                    'db': 65501,
+                    'time': '2024-05-31T14:00:00Z'
+                }
+            };
+            window.update_synoptique(data);*/
+        });
+    </script>
+</body>
+</html>

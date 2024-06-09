@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="100pc"
+   height="75pc"
+   viewBox="0 0 423.33332 317.5"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   sodipodi:docname="synoptique.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="false"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.73139031"
+     inkscape:cx="795.06112"
+     inkscape:cy="382.1489"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <linearGradient
+       id="swatch1"
+       inkscape:swatch="solid">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop1" />
+    </linearGradient>
+  </defs>
+  <g
+     inkscape:label="Synoptique"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g2"
+       inkscape:label="grp_gestion_cuve_barbec">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.69271px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#502d16;stroke-width:0"
+         x="348.91583"
+         y="146.5732"
+         id="titre_cuve_barbec"
+         inkscape:label="titre_cuve_barbec"
+         transform="scale(0.98074051,1.0196377)"><tspan
+           sodipodi:role="line"
+           id="tspan13">Cuve barbec</tspan></text>
+      <rect
+         style="fill:none;stroke:#000000;stroke-width:0.870101;stroke-dasharray:none;stroke-opacity:1"
+         id="cuve_barbec"
+         width="59.370857"
+         height="86.930702"
+         x="333.37119"
+         y="53.380947"
+         transform="matrix(0.99999178,0.00405139,-0.00374906,0.99999297,0,0)" />
+      <rect
+         style="fill:#0000ff;stroke:#000000;stroke-width:0.566634;stroke-dasharray:none;stroke-opacity:1"
+         id="niveau_barbec_1"
+         width="56.74984"
+         height="27.588791"
+         x="334.09183"
+         y="112.57015" />
+      <rect
+         style="fill:#0000ff;stroke:#000000;stroke-width:0.561435;stroke-dasharray:none;stroke-opacity:1"
+         id="niveau_barbec_2"
+         width="56.755039"
+         height="27.082392"
+         x="334.44946"
+         y="83.760849" />
+      <rect
+         style="fill:#0000ff;stroke:#000000;stroke-width:0.556188;stroke-dasharray:none;stroke-opacity:1"
+         id="niveau_barbec_3"
+         width="56.760288"
+         height="26.576042"
+         x="334.80029"
+         y="55.942875" />
+      <g
+         id="g10-8"
+         inkscape:label="grp_module_barbec"
+         transform="translate(227.89211,21.91993)">
+        <rect
+           style="fill:#808080;stroke-width:0"
+           id="module_barbec"
+           width="45.14912"
+           height="25.324068"
+           x="113.06303"
+           y="3.9648795"
+           inkscape:highlight-color="#f31835"
+           inkscape:label="module_barbec"
+           ry="5.8235292"
+           rx="6.359962" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.68349px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:0"
+           x="122.74107"
+           y="9.207202"
+           id="volt_barbec"
+           transform="scale(0.95224301,1.0501521)"><tspan
+             sodipodi:role="line"
+             id="tspan21">__._ V</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.68349px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:0"
+           x="122.52987"
+           y="13.591861"
+           id="db_barbec"
+           transform="scale(0.95224301,1.0501521)"><tspan
+             sodipodi:role="line"
+             id="tspan31">____ dB</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:0"
+           x="127.79586"
+           y="26.156181"
+           id="titre_module_barbec"
+           transform="scale(0.95224301,1.0501521)"
+           inkscape:label="titre_module_barbec"><tspan
+             sodipodi:role="line"
+             id="tspan11"
+             x="127.79586"
+             y="26.156181">Module barbec</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.68349px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:0"
+           x="371.84897"
+           y="41.283096"
+           id="date_barbec"
+           transform="matrix(0.95224301,0,0,1.0501521,-227.89211,-21.91993)"
+           inkscape:label="date_barbec"
+           inkscape:transform-center-x="-2.3514007"
+           inkscape:transform-center-y="0.090438487"><tspan
+             sodipodi:role="line"
+             id="tspan22">__/__/____</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:0"
+           x="142.13164"
+           y="11.983006"
+           id="heure_barbec"
+           transform="scale(0.95224301,1.0501521)"
+           inkscape:label="heure_barbec"><tspan
+             sodipodi:role="line"
+             id="tspan19">__:__:__</tspan></text>
+      </g>
+    </g>
+    <g
+       id="grp_gestion_cuve_main"
+       inkscape:label="grp_gestion_cuve_main">
+      <rect
+         style="fill:#0000ff;stroke:none;stroke-width:1.11092;stroke-dasharray:none;stroke-opacity:1"
+         id="niveau_main_1"
+         width="90.854042"
+         height="42.089973"
+         x="7.2628708"
+         y="96.216751" />
+      <rect
+         style="fill:#0000ff;stroke:none;stroke-width:1.14848;stroke-dasharray:none;stroke-opacity:1"
+         id="niveau_main_2"
+         width="90.854042"
+         height="44.984005"
+         x="7.2191911"
+         y="50.249104" />
+      <rect
+         style="fill:#0000ff;stroke:none;stroke-width:1.12279;stroke-dasharray:none;stroke-opacity:1"
+         id="niveau_main_3"
+         width="90.854042"
+         height="42.994358"
+         x="7.4112539"
+         y="5.7171788" />
+      <g
+         id="g3"
+         inkscape:label="grp_module_main">
+        <rect
+           style="fill:#808080;stroke-width:0"
+           id="module_main"
+           width="46.210381"
+           height="24.901361"
+           x="103.86429"
+           y="13.447964"
+           inkscape:highlight-color="#f31835"
+           inkscape:label="module_main"
+           rx="6.5098801"
+           ry="5.7263231"
+           transform="matrix(1,0,0.00726374,0.99997362,0,0)" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.68349px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:0"
+           x="113.32513"
+           y="17.231083"
+           id="volt_main"
+           transform="scale(0.95224301,1.0501521)"><tspan
+             sodipodi:role="line"
+             id="tspan34">__._ V</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.68349px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:0"
+           x="113.11392"
+           y="21.894999"
+           id="db_main"
+           transform="scale(0.95224301,1.0501521)"><tspan
+             sodipodi:role="line"
+             id="tspan33">____ dB</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:0"
+           x="117.51957"
+           y="34.150513"
+           id="nom_module_main"
+           transform="scale(0.95224301,1.0501521)"
+           inkscape:label="nom_module_main"><tspan
+             sodipodi:role="line"
+             id="tspan8"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff"
+             x="117.51957"
+             y="34.150513">Module principal</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:0"
+           x="133.43839"
+           y="20.00037"
+           id="heure_main"
+           transform="scale(0.95224301,1.0501521)"
+           inkscape:label="heure_main"><tspan
+             sodipodi:role="line"
+             id="tspan35">__:__:__</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.68349px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:0"
+           x="122.89626"
+           y="28.526196"
+           id="date_main"
+           transform="scale(0.95224301,1.0501521)"
+           inkscape:label="date_main"
+           inkscape:transform-center-x="-2.3514007"
+           inkscape:transform-center-y="0.090438487"><tspan
+             sodipodi:role="line"
+             id="tspan36">__/__/____</tspan></text>
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.41799px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#502d16;stroke-width:0"
+         x="27.712879"
+         y="133.88036"
+         id="text6"
+         inkscape:label="titre_cuve_principale"
+         transform="scale(0.90758502,1.1018251)"><tspan
+           sodipodi:role="line"
+           id="tspan5"
+           x="27.712879"
+           y="133.88036"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.41799px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0">Cuve principale</tspan></text>
+      <rect
+         style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-dasharray:none;stroke-opacity:1"
+         id="cuve_main"
+         width="95.179428"
+         height="134.06082"
+         x="5.1048131"
+         y="5.1048059">
+        <title
+           id="title3">Cuve principale</title>
+      </rect>
+      <g
+         id="grp_pompe_main"
+         inkscape:label="grp_pompe_main">
+        <ellipse
+           style="fill:#280b0b;stroke:#000000;stroke-width:0.529167;stroke-dasharray:none;stroke-opacity:1"
+           id="pompe_main"
+           cx="163.58234"
+           cy="68.934738"
+           rx="7.929759"
+           ry="7.4181614"
+           inkscape:label="pompe_main" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.11667;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+           d="m 101.05327,69.833906 h 54.07194"
+           id="pompe_main_left"
+           inkscape:connector-type="polyline"
+           inkscape:connector-curvature="0"
+           inkscape:label="pompe_main_left" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.11667;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+           d="m 172.2862,69.611771 h 54.07194"
+           id="pompe_main_right"
+           inkscape:connector-type="polyline"
+           inkscape:connector-curvature="0"
+           inkscape:label="pompe_main_right" />
+      </g>
+    </g>
+    <g
+       id="g6"
+       inkscape:label="grp_gestion_cuve_paul">
+      <g
+         id="g9"
+         inkscape:label="grp_pompe_paul">
+        <ellipse
+           style="fill:#280b0b;stroke:#000000;stroke-width:0.529167;stroke-dasharray:none;stroke-opacity:1"
+           id="pompe_paul"
+           cx="113.31882"
+           cy="122.52757"
+           rx="7.9299998"
+           ry="7.4181614"
+           inkscape:label="pompe_paul" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.11667;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+           d="m 100.5676,122.63459 h 4.7028"
+           id="pompe_paul_left"
+           inkscape:connector-type="polyline"
+           inkscape:connector-curvature="0"
+           inkscape:label="pompe_paul_left" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.11667;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+           d="m 121.53013,122.76666 h 4.7028"
+           id="pompe_paul_right"
+           inkscape:connector-type="polyline"
+           inkscape:connector-curvature="0"
+           inkscape:label="pompe_paul_right" />
+      </g>
+      <rect
+         style="fill:#0000ff;stroke:none;stroke-width:0.43229;stroke-dasharray:none;stroke-opacity:1"
+         id="niveau_paul_1"
+         width="35.345726"
+         height="16.382208"
+         x="126.87971"
+         y="123.14471" />
+      <rect
+         style="fill:#0000ff;stroke:none;stroke-width:0.437323;stroke-dasharray:none;stroke-opacity:1"
+         id="niveau_paul_2"
+         width="35.345726"
+         height="16.765905"
+         x="126.99508"
+         y="106.03046" />
+      <rect
+         style="fill:#0000ff;stroke:none;stroke-width:0.448848;stroke-dasharray:none;stroke-opacity:1"
+         id="niveau_paul_3"
+         width="35.345726"
+         height="17.661201"
+         x="126.98139"
+         y="87.972389"
+         inkscape:transform-center-x="-6.6507656"
+         inkscape:transform-center-y="18.267646" />
+      <g
+         id="grp_module_paul"
+         inkscape:label="grp_module_paul"
+         transform="translate(44.936721,93.553697)">
+        <rect
+           style="fill:#808080;stroke-width:0"
+           id="module_paul"
+           width="47.024326"
+           height="26.980789"
+           x="120.15046"
+           y="8.9256849"
+           inkscape:highlight-color="#f31835"
+           inkscape:label="module_paul"
+           rx="6.6245446"
+           ry="6.2045093" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.68349px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:0"
+           x="130.73241"
+           y="13.979442"
+           id="volt_paul"
+           transform="scale(0.95224301,1.0501521)"
+           inkscape:label="volt_paul"><tspan
+             sodipodi:role="line"
+             id="tspan30">__._ V</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.68349px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:0"
+           x="130.66028"
+           y="18.966936"
+           id="db_paul"
+           transform="scale(0.95224301,1.0501521)"
+           inkscape:label="db_paul"><tspan
+             sodipodi:role="line"
+             id="tspan32">____ dB</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:0"
+           x="138.05144"
+           y="31.880062"
+           id="titre_module_paul"
+           transform="scale(0.95224301,1.0501521)"
+           inkscape:label="titre_module_paul"><tspan
+             sodipodi:role="line"
+             id="tspan8-9"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff"
+             x="138.05144"
+             y="31.880062">Module Paul</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:0"
+           x="152.57646"
+           y="16.735264"
+           id="heure_paul"
+           transform="scale(0.95224301,1.0501521)"
+           inkscape:label="heure_paul"><tspan
+             sodipodi:role="line"
+             id="tspan28">__:__:__</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.68349px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:0"
+           x="140.2883"
+           y="25.043041"
+           id="date_paul"
+           transform="scale(0.95224301,1.0501521)"
+           inkscape:label="date_paul"
+           inkscape:transform-center-x="-2.3514007"
+           inkscape:transform-center-y="0.090438487"><tspan
+             sodipodi:role="line"
+             id="tspan27">__/__/____</tspan></text>
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777px;font-family:Sans;-inkscape-font-specification:'Sans, ';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#502d16;stroke-width:0"
+         x="128.7067"
+         y="146.90726"
+         id="text6-0"
+         inkscape:label="titre_cuve_paul"><tspan
+           sodipodi:role="line"
+           id="tspan6-3"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke-width:0"
+           x="128.7067"
+           y="146.90726">Cuve Paul</tspan></text>
+      <rect
+         style="fill:none;stroke:#000000;stroke-width:0.52916667;stroke-opacity:1;stroke-dasharray:none"
+         id="cuve_paul"
+         width="36.306019"
+         height="52.579197"
+         x="126.95411"
+         y="86.720795"
+         transform="matrix(0.99999197,0.00400719,-0.00379042,0.99999281,0,0)" />
+    </g>
+    <g
+       id="g7"
+       inkscape:label="grp_gestion_cuve_reduit">
+      <rect
+         style="fill:#0000ff;stroke:none;stroke-width:0.722102;stroke-dasharray:none;stroke-opacity:1"
+         id="niveau_reduit_1"
+         width="57.740704"
+         height="27.981567"
+         x="228.20348"
+         y="112.56616" />
+      <rect
+         style="fill:#0000ff;stroke:none;stroke-width:0.712706;stroke-dasharray:none;stroke-opacity:1"
+         id="niveau_reduit_2"
+         width="57.7407"
+         height="27.25806"
+         x="228.15746"
+         y="84.867989" />
+      <rect
+         style="fill:#0000ff;stroke:none;stroke-width:0.726755;stroke-dasharray:none;stroke-opacity:1"
+         id="niveau_reduit_3"
+         width="57.740704"
+         height="28.343323"
+         x="228.41383"
+         y="55.753277" />
+      <g
+         id="g10-4"
+         inkscape:label="grp_module_reduit"
+         transform="translate(121.33413,22.344945)"
+         style="fill:#808080">
+        <rect
+           style="fill:#808080;stroke-width:0"
+           id="module_reduit"
+           width="43.22591"
+           height="24.810266"
+           x="114.90503"
+           y="5.8507767"
+           inkscape:highlight-color="#f31835"
+           inkscape:label="module_reduit"
+           ry="5.7053752"
+           rx="6.0894432" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.68349px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:0"
+           x="125.10194"
+           y="11.288843"
+           id="volt_reduit"
+           transform="scale(0.95224301,1.0501521)"
+           inkscape:label="volt_reduit"><tspan
+             sodipodi:role="line"
+             id="tspan26">__._ V</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.68349px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:0"
+           x="125.27061"
+           y="16.383354"
+           id="db_reduit"
+           transform="scale(0.95224301,1.0501521)"
+           inkscape:label="db_reduit"><tspan
+             sodipodi:role="line"
+             id="tspan25">____ dB</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.68349px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:0"
+           x="131.00589"
+           y="27.0026"
+           id="titre_module_reduit"
+           transform="scale(0.95224301,1.0501521)"
+           inkscape:label="titre_module_reduit"><tspan
+             sodipodi:role="line"
+             id="tspan10"
+             x="131.00589"
+             y="27.0026">Module réduit</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.68349px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:0"
+           x="132.71465"
+           y="21.88868"
+           id="date_reduit"
+           transform="scale(0.95224301,1.0501521)"
+           inkscape:label="date_reduit"
+           inkscape:transform-center-x="-2.3514007"
+           inkscape:transform-center-y="0.090438487"><tspan
+             sodipodi:role="line"
+             id="tspan24">__/__/____</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:0"
+           x="143.38824"
+           y="14.269856"
+           id="heure_reduit"
+           transform="scale(0.95224301,1.0501521)"
+           inkscape:label="heure_reduit"><tspan
+             sodipodi:role="line"
+             id="tspan23">__:__:__</tspan></text>
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.69271px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#502d16;stroke-width:0"
+         x="243.46828"
+         y="146.23909"
+         id="titre_cuve_reduit"
+         inkscape:label="titre_cuve_reduit"
+         transform="scale(0.98074051,1.0196377)"><tspan
+           sodipodi:role="line"
+           id="tspan14"
+           x="243.46828"
+           y="146.23909">Cuve réduit</tspan></text>
+      <rect
+         style="fill:none;stroke:#000000;stroke-width:0.870101;stroke-dasharray:none;stroke-opacity:1"
+         id="cuve_reduit"
+         width="59.370857"
+         height="86.930702"
+         x="227.90182"
+         y="53.674809"
+         transform="matrix(0.99999178,0.00405139,-0.00374906,0.99999297,0,0)" />
+      <g
+         id="g8"
+         inkscape:label="grp_pompe_reduit">
+        <ellipse
+           style="fill:#280b0b;stroke:#000000;stroke-width:0.529167;stroke-dasharray:none;stroke-opacity:1"
+           id="pompe_reduit"
+           cx="309.83084"
+           cy="125.25491"
+           rx="7.929759"
+           ry="7.4181614"
+           inkscape:label="pompe_reduit" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.264;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+           d="M 287.61559,125.01658 H 301.0663"
+           id="pompe_reduit_left"
+           inkscape:connector-type="polyline"
+           inkscape:connector-curvature="0"
+           inkscape:label="pompe_reduit_left" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.25321;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+           d="M 318.85339,125.18553 H 332.1762"
+           id="pompe_reduit_right"
+           inkscape:connector-type="polyline"
+           inkscape:connector-curvature="0"
+           inkscape:label="pompe_reduit_right" />
+      </g>
+    </g>
+  </g>
+</svg>

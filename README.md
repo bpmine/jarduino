@@ -33,7 +33,7 @@ Ce jarduino est un peu plus sérieux. Il a été prévu en deux temps. Tout d'ab
 
 Il a fonctionné sans difficultés.
 
-#### Nouvel embout de filtrage
+#### Nouvel embout de filtrage pour l'intérieur
 
 #### Carte Nano
 
@@ -50,4 +50,10 @@ Il a fonctionné sans difficultés.
 ### Petite application de pilotage
 
 ### Petit Afficheur
+
+## Gestion des OYAs
+
+Le système permet de diffuser de l'eau aux plantes par la terre grâce à des sortes de petites jarres en céramique appellées OYAs.
+Ce dispositif a été déployé plus tard, en 2023.
+
 

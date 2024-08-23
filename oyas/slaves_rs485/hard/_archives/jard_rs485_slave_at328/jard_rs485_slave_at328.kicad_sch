@@ -1,0 +1,81 @@
+(kicad_sch (version 20230121) (generator eeschema)
+
+  (uuid 5ae93d62-0543-4c0e-b37d-d67af6219e1b)
+
+  (paper "A4")
+
+  (title_block
+    (title "Carte de commande d'un OYA - Esclave RS485")
+    (date "2024-04-02")
+    (rev "E0")
+    (company "BPC")
+    (comment 1 "Technologie CMS basée sur ATMEGA328")
+    (comment 2 "Monitoring de tension d'alimentation")
+    (comment 3 "1 sortie 12V/5A - 2 entrées TOR - 1 débimètre - 1 LED - Temp - RS485")
+  )
+
+  (lib_symbols
+  )
+
+
+  (text "Carte de commande d'un Oya\nEsclave RS485 (Avec ATMEGA328)"
+    (at 39.37 62.23 0)
+    (effects (font (face "Arial") (size 10 10)) (justify left bottom))
+    (uuid 0e447c3c-77e0-461e-99ca-dbe4a82c2c76)
+  )
+
+  (sheet (at 134.62 88.9) (size 54.61 39.37) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 255 194 126 1.0000))
+    (uuid 36e9fbeb-2032-4e73-95af-53e316cf916d)
+    (property "Sheetname" "UC" (at 134.62 88.1884 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "uc.kicad_sch" (at 134.62 128.8546 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "jard_rs485_slave_at328"
+        (path "/5ae93d62-0543-4c0e-b37d-d67af6219e1b" (page "4"))
+      )
+    )
+  )
+
+  (sheet (at 40.64 90.17) (size 67.31 40.64) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 255 212 205 1.0000))
+    (uuid dd36e5af-5314-42bf-9b88-ba8e41ec06f7)
+    (property "Sheetname" "POWER" (at 40.64 89.4584 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "power.kicad_sch" (at 40.64 131.3946 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "jard_rs485_slave_at328"
+        (path "/5ae93d62-0543-4c0e-b37d-d67af6219e1b" (page "2"))
+      )
+    )
+  )
+
+  (sheet (at 213.36 88.9) (size 41.91 38.1) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 153 145 255 1.0000))
+    (uuid dec80786-a2aa-49f2-be55-5994d7e13863)
+    (property "Sheetname" "ES" (at 213.36 88.1884 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "ES.kicad_sch" (at 213.36 127.5846 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "jard_rs485_slave_at328"
+        (path "/5ae93d62-0543-4c0e-b37d-d67af6219e1b" (page "3"))
+      )
+    )
+  )
+
+  (sheet_instances
+    (path "/" (page "1"))
+  )
+)

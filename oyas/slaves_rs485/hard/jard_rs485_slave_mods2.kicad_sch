@@ -1,0 +1,79 @@
+(kicad_sch (version 20230121) (generator eeschema)
+
+  (uuid 5ae93d62-0543-4c0e-b37d-d67af6219e1b)
+
+  (paper "A4")
+
+  (title_block
+    (title "Carte de commande d'un OYA - Esclave RS485")
+    (date "2024-06-11")
+    (rev "H0")
+    (company "BPC")
+    (comment 1 "Technologie avec module Arduino Nano / Petite carte")
+    (comment 2 "Monitoring de tension d'alimentation")
+    (comment 3 "1 sortie 12V/5A - 2 entrées TOR - 1 débimètre - 1 LED - Temp - RS485")
+  )
+
+  (lib_symbols
+  )
+
+
+  (text_box "Version H0:\n- Changement de face du MOS\n- Amélioration pistes\n- 0805 pour un découplage 10µF de MAX485 (+0603 pour 100nF)\n\nVersion G0:\n- Remplacement module RS485 par MAX485E\n- Ajout d'un cavalier pour couper RX pendant la programation via USB\n\nVersion F0:\n- Déplacement piste LED trop proche du bord\n- Inversion TX/RX"
+    (at 20.32 158.75 0) (size 72.39 26.67)
+    (stroke (width 0) (type default))
+    (fill (type none))
+    (effects (font (size 1.27 1.27)) (justify left top))
+    (uuid 215aacd4-2fab-4df4-a6a6-8611767bb469)
+  )
+  (text_box "TODO:\n\n- Mettre une alim 5V plus puissante (Le régulateur Nano casse sur les pompes)\n- Passer les condensateurs 603 en 805"
+    (at 102.87 158.75 0) (size 69.85 26.67)
+    (stroke (width 0) (type default))
+    (fill (type none))
+    (effects (font (size 1.27 1.27)) (justify left top))
+    (uuid b29c5acc-d408-4074-9044-e2689c2b936e)
+  )
+
+  (text "Carte de commande d'un Oya\nEsclave RS485 (Avec Module Nano)\nPetite Carte"
+    (at 46.99 71.12 0)
+    (effects (font (face "Arial") (size 10 10)) (justify left bottom))
+    (uuid 0e447c3c-77e0-461e-99ca-dbe4a82c2c76)
+  )
+
+  (sheet (at 91.44 93.98) (size 54.61 39.37) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 255 194 126 1.0000))
+    (uuid 36e9fbeb-2032-4e73-95af-53e316cf916d)
+    (property "Sheetname" "UC" (at 91.44 93.2684 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "uc.kicad_sch" (at 91.44 133.9346 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "jard_rs485_slave_mods2"
+        (path "/5ae93d62-0543-4c0e-b37d-d67af6219e1b" (page "4"))
+      )
+    )
+  )
+
+  (sheet (at 170.18 93.98) (size 41.91 38.1) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 153 145 255 1.0000))
+    (uuid dec80786-a2aa-49f2-be55-5994d7e13863)
+    (property "Sheetname" "ES" (at 170.18 93.2684 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "ES.kicad_sch" (at 170.18 132.6646 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "jard_rs485_slave_mods2"
+        (path "/5ae93d62-0543-4c0e-b37d-d67af6219e1b" (page "3"))
+      )
+    )
+  )
+
+  (sheet_instances
+    (path "/" (page "1"))
+  )
+)

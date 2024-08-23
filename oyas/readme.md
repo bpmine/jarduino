@@ -58,7 +58,7 @@ A noter cependant la fragilité des électrovannes. Pour fonctionner correctemen
 
 ## Réseau 2 : Réduit
 
-![Réseau barbecue](./images/reseau_reduit.png)
+![Réseau réduit](./images/reseau_reduit.png)
 
 - 1 maître
 - 1 pompe
@@ -157,6 +157,8 @@ Le capteur de niveau comporte deux flotteurs qui ferment un contact en position 
 ![Capteur de niveau](./images/capteur_niveau.png)
 
 ### Module Maître
+
+Le maître des OYAs permet de commander une pompe et plusieurs électrovannes pour remplir des OYAs.
 
 ## Protocole réseau (RS485)
 

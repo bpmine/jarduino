@@ -1,0 +1,108 @@
+(kicad_sch (version 20230121) (generator eeschema)
+
+  (uuid 27904310-f1aa-47e2-a2a6-8db936442bd1)
+
+  (paper "A4")
+
+  (title_block
+    (title "Commande des OYA - Maître RS485")
+    (date "2024-05-06")
+    (rev "B0")
+    (company "BPC")
+    (comment 1 "Extension Wifi (ESP01)")
+    (comment 2 "Inteface LEDs RGB - Bouton - RTC")
+    (comment 3 "Alim 12V - Sortie 12V pilotable - Bus RS485")
+    (comment 4 "Maître RS485 avec alim 12 V commutée")
+  )
+
+  (lib_symbols
+  )
+
+
+  (text_box "Version Bx:\n  - Agrandissement trous de D1 et D3\n  - Correction erreur type de Q2 (Mos P GDS)\n  - Agrandissement empreintes de R5, R7, R13 et R10 + montage vertical\n  - Ajout instructions pour rework MOD485\n  - Ajout d'une interface 5V A B Gnd pour adapter le bus\n  - Déplacement de C13 pour éviter CC avec l'USB de la MEGA 2560\n  - Inversion TX/RX du ESP01\n  - Inversion logique de commande PWR de Wifi et LEDs (+npn) pour optimiser la veille\n  - Réaffectation commandes PWR de Wifi et LEDs pour gestion avec même soft des 2 versions de hard\n"
+    (at 27.94 162.56 0) (size 109.22 22.86)
+    (stroke (width 0) (type default))
+    (fill (type none))
+    (effects (font (size 1.27 1.27)) (justify left top))
+    (uuid ce42a06c-0733-4bf9-88ff-0399399f9632)
+  )
+
+  (text "BUS RS485 + Sortie alim 12V" (at 130.81 139.7 0)
+    (effects (font (face "Arial") (size 4 4) bold) (justify left bottom))
+    (uuid 1cc45f81-19e2-4fd4-a6bb-b468eddf4869)
+  )
+  (text "Alimentations" (at 72.39 110.49 0)
+    (effects (font (face "Arial") (size 4 4) bold) (justify left bottom))
+    (uuid 50685880-e466-43f0-b060-5146ac34a256)
+  )
+  (text "Commande des OYAs - Maître RS485" (at 88.9 45.72 0)
+    (effects (font (face "Arial") (size 5 5) bold) (justify left bottom))
+    (uuid 5d7f679d-9715-48b6-b58a-8f0f388af458)
+  )
+  (text "Maître des OYAS" (at 93.98 36.83 0)
+    (effects (font (face "Arial") (size 10 10) (thickness 0.4) bold) (justify left bottom))
+    (uuid 70535b6a-cdf5-41ff-9e06-fca01b9b8d97)
+  )
+  (text "CPU" (at 148.59 96.52 0)
+    (effects (font (face "Arial") (size 4 4) bold) (justify left bottom))
+    (uuid b98d2943-927a-41e0-b3c5-57c9fb42b9be)
+  )
+
+  (sheet (at 68.58 67.31) (size 43.18 83.82) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0000))
+    (uuid 2eaa2441-998c-4f1a-b526-09e479f565d5)
+    (property "Sheetname" "Power" (at 68.58 66.5984 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "power.kicad_sch" (at 68.58 151.7146 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "board_rs485_master"
+        (path "/27904310-f1aa-47e2-a2a6-8db936442bd1" (page "2"))
+      )
+    )
+  )
+
+  (sheet (at 115.57 123.19) (size 107.95 27.94) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0000))
+    (uuid ad7fcf36-7748-47c7-b2d8-753e3fd3e3b0)
+    (property "Sheetname" "Bus" (at 115.57 122.4784 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "bus.kicad_sch" (at 115.57 151.7146 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (property "Champ2" "" (at 115.57 123.19 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (instances
+      (project "board_rs485_master"
+        (path "/27904310-f1aa-47e2-a2a6-8db936442bd1" (page "3"))
+      )
+    )
+  )
+
+  (sheet (at 115.57 68.58) (size 107.95 52.07)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0000))
+    (uuid aedbe6e2-c2c0-405d-8809-08182b3be347)
+    (property "Sheetname" "cpu" (at 115.57 67.8684 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "cpu.kicad_sch" (at 176.53 120.65 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "board_rs485_master"
+        (path "/27904310-f1aa-47e2-a2a6-8db936442bd1" (page "4"))
+      )
+    )
+  )
+
+  (sheet_instances
+    (path "/" (page "1"))
+  )
+)

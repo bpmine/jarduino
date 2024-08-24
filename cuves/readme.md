@@ -70,9 +70,22 @@ La détection de niveau est réalisée à l'aide de 3 capteurs avec flotteur mon
 
 ## Filtres imprimés en 3D
 
-### Filtre intérieur
+Les électrovannes utilisées pour les OYAs et le transfert de l'eau inter-cuves, les pompes et les gouteurs requièrent une eau parfaitement filtrée.
+Si pour les gouteurs d'entrée 8mm, cela paraît évident, il faut savoir que c'est également nécessaire pour les électrovannes. En effet, de petits morceaux d'algues peuvent bloquer une électrovanne en position ouverte.
 
-### Filtre sortie vers tuyau 8mm
+C'est la raison pour laquelle des filtres ont été ajoutés à plusieurs endroits sur le tuyau (Cuves Paul, Réduit et Barbecue).
+
+### Filtre sortie vers tuyau 4mm/8mm
+
+Une pièce a été conçue et imprimée pour filtrer directement sur le tuyau PVC de sortie des cuves.
+Elle a été utilisée avant 2023 lorsque tous les systèmes d'arrosages étaient en version gouteurs.
+
+Ce filtre permet de brancher un tuyau 4 mm vers le système de gouteurs. 
+Trop fragile, une version similaire avec une sortie 8 mm a ensuite été imprimée.
+
+### Pré-filtre intérieur
+
+Pour filtrer de plus gros morceaux avant le tuyau de sortie, la pièce suivante est vissée à l'intérieur des cuves (Réduit et Barbecue).
 
 ## Modules Wifi pour commander les pompes
 

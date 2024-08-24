@@ -1,6 +1,6 @@
-#Cuves
+# Cuves
 
-Nous avons 4 cuves pour une capacité totale d'environ 1600 L.
+Nous avons 4 cuves pour une capacité totale de 1600 L.
 
 - Cuve principale de 1000 L
 - cuve  "Paul" de 100 L (pour gouteurs petits bacs)
@@ -16,7 +16,7 @@ Les cuves sont communicantes et un système permet de pomper l'eau de la cuve pr
 ### Cuve principale (Main)
 
 Cette cuve recueille l'eau du toit de la maison. D'une capacité de 1000 L, elle constitue la réserve principale.
-Elle sert à alimenter la cuve Paul et aussi la cuve réduit en cas de besoin.
+Elle sert à alimenter la cuve "Paul" et aussi la cuve "Réduit" en cas de besoin.
 
 ![Cuve principale 1000L](./images/cuve_main.png)
 
@@ -31,7 +31,9 @@ A la base de la cuve, un système de 2 pompes (précédées de filtres) permet d
 
 ![Système de pompes](./images/pompes_main.png)
 
-Pour la petite histoire, nous dispositions avant 2023 à cet emplacement d'une cuve de moindre contenance.
+![Pompe AW500S 12V 5m 800L/H](./images/pompe._AW500Spng)
+
+Pour la petite histoire, nous disposions avant 2023 à cet emplacement d'une cuve de moindre contenance.
 Mal positionnée sur son support, un jour de pluie elle est tombée de tout son poids et BOOM !
 
 Depuis, elle marche moins bien...

@@ -1,0 +1,5 @@
+Plot file "C:\DEV\GITHUB\modules_uino\jarduino2\schema\jarduino2\jarduino2_ihm\gerber\jarduino2_ihm-B_Cu.gbr" created.
+Plot file "C:\DEV\GITHUB\modules_uino\jarduino2\schema\jarduino2\jarduino2_ihm\gerber\jarduino2_ihm-F_SilkS.gbr" created.
+Plot file "C:\DEV\GITHUB\modules_uino\jarduino2\schema\jarduino2\jarduino2_ihm\gerber\jarduino2_ihm-B_Mask.gbr" created.
+Plot file "C:\DEV\GITHUB\modules_uino\jarduino2\schema\jarduino2\jarduino2_ihm\gerber\jarduino2_ihm-Edge_Cuts.gbr" created.
+Créer le fichier Gerber "job"  "C:\DEV\GITHUB\modules_uino\jarduino2\schema\jarduino2\jarduino2_ihm\gerber\jarduino2_ihm-job.gbrjob"

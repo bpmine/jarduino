@@ -33,7 +33,7 @@ A la base de la cuve, un système de 2 pompes (précédées de filtres) permet d
 
 Le modèle de pompe utilisé est le AW500S 12V 5m 800L/H:
 
-![Pompe AW500S 12V 5m 800L/H](./images/pompe._AW500Spng)
+![Pompe AW500S 12V 5m 800L/H](./images/pompe_AW500Spng)
 
 Pour la petite histoire, nous disposions avant 2023 à cet emplacement d'une cuve de moindre contenance.
 Mal positionnée sur son support, un jour de pluie elle est tombée de tout son poids et BOOM !
@@ -46,28 +46,63 @@ La cuve "Paul" (de Paul) de 100 L permet d'alimenter un système de gouteurs pou
 
 La détection de niveau est réalisée à l'aide de 3 capteurs avec flotteur montés sur la paroi de la cuve.
 
+![Cuve Réduit](./images/cuve_paul.png)
+
 ### Cuve Réduit
 
 Cette cuve de 250 L alimente un système de remplisage d'OYAs et permet également d'alimenter la cuve Barbecue si besoin.
 
 La détection de niveau est réalisée à l'aide de 3 capteurs avec flotteur montés sur la paroi de la cuve. 
-Ce système de capteurs a montré ses limites car des fuites sont apparus au bout d'un an d'utilisation au niveau de ces capteurs.
+
+![Cuve Réduit](./images/cuve_reduit.png)
+
+Le système de capteurs a montré ses limites car des fuites sont apparus au bout d'un an d'utilisation au niveau de ces capteurs.
 Pour pallier au problème, de la résine a été utilisée pour recouvrir la zone sensible autour des capteurs.
+
+![Résine sur les capteurs](./images/resine_capteur.png)
 
 ### Cuve Barbecue
 
 Cette cuve de 250 L alimente un système de remplisage d'OYAs et un système de gouteurs.
 La détection de niveau est réalisée à l'aide de 3 capteurs avec flotteur montés sur la paroi de la cuve. 
-Une protection en résine a aussi été appliquée sur les capteurs pour prévenir des fuites.
 
-## 
+![Cuve Barbecue](./images/cuve_barbec.png)
+
+## Filtres imprimés en 3D
+
+### Filtre intérieur
+
+### Filtre sortie vers tuyau 8mm
 
 ## Modules Wifi pour commander les pompes
 
-### Principe
+### Description
+
+Le module de pompage comporte:
+- 1 alimentation 12V;
+- 1 sortie pompe de 12V/5A;
+- 3 entrées de type interrupteur (actif à l'état bas) pour la détection du niveau de cuve.
 
 ### Carte Wifi IO
 
 ### Protocole d'échange avec MQTT
 
-## Programme côté serveur
+## Serveur de contrôle
+
+Le serveur comporte un broker MQTT pour centraliser les connexions des différents modules du système.
+
+Un serveur reddis stocke tous les états, les réglages et les commandes des différentes applications.
+
+Les applications sont les suivantes:
+- Interraction avec les modules de pompage
+- Publication des états sur les écrans
+- Webservice pour exposer les services à des clients
+- Automatisme de contrôle
+- Logger
+
+## Module d'affichage
+
+Le module d'affichage comporte un écran, OLED.
+
+Il permet de visualiser l'état des cuves et l'activité de pompage en temps réel.
+

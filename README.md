@@ -53,7 +53,7 @@ Il a fonctionné sans difficultés.
 
 ## Gestion des OYAs
 
-Le système permet de diffuser de l'eau aux plantes par la terre grâce à des sortes de petites jarres en céramique appellées OYAs.
+Le système permet de diffuser de l'eau aux plantes par la terre grâce à des sortes de petites jarres en argile appellées OYAs.
 Ce dispositif a été déployé plus tard, en 2023.
 
 

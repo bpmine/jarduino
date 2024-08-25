@@ -33,7 +33,7 @@ A la base de la cuve, un système de 2 pompes (précédées de filtres) permet d
 
 Le modèle de pompe utilisé est le AW500S 12V 5m 800L/H:
 
-![Pompe AW500S 12V 5m 800L/H](./images/pompe_AW500Spng)
+![Pompe AW500S 12V 5m 800L/H](./images/pompe_AW500S.png)
 
 Pour la petite histoire, nous disposions avant 2023 à cet emplacement d'une cuve de moindre contenance.
 Mal positionnée sur son support, un jour de pluie elle est tombée de tout son poids et BOOM !

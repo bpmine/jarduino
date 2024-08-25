@@ -1,32 +1,38 @@
-/**
- * @file synoptique.js
- * @brief Composant Synoptique
- * 
- * (1) Placer la balise synoptique-component dans une page HTML
- * (2) Appeller update_synoptique avec les donnees de synoptique
- **/
-
 class SynoptiqueComponent extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
-            <object id="syno" type="image/svg+xml" data="synoptique.svg"></object>
+            <object id="syno" type="image/svg+xml" data="cuves.svg"></object>
         `;
-    }
+        
+        this.svgObject = this.shadowRoot.querySelector('#syno');
+        this.svgDocument = null;
 
-    async waitForSVGLoad() {
-        const svgObject = this.shadowRoot.querySelector('#syno');
-        return new Promise((resolve) => {
-            svgObject.addEventListener('load', () => {
-                resolve(svgObject.contentDocument);
-            });
+        // Add an event listener to wait for the SVG to load
+        this.svgObject.addEventListener('load', async () => {
+            this.svgDocument = this.svgObject.contentDocument;
         });
     }
 
-    async update_synoptique(synoptique_datas) {
+    async waitForSVGLoad() {
+        return new Promise((resolve) => {
+            if (this.svgDocument) {
+                resolve(this.svgDocument);
+            } else {
+                this.svgObject.addEventListener('load', () => {
+                    resolve(this.svgObject.contentDocument);
+                });
+            }
+        });
+    }
+
+    async update_cuves(synoptique_datas) {
         const svg = await this.waitForSVGLoad();
         if (!svg) return;
+
+        console.log('done');
+        console.log(synoptique_datas);
 
         this.update_cuve(
             svg,
@@ -86,6 +92,8 @@ class SynoptiqueComponent extends HTMLElement {
     }
 
     update_cuve_level(svg, datas, id_l1, id_l2, id_l3) {
+		console.log(datas)
+		
         const level = datas['level'] || 0;
         const l1 = this.get_id(svg, id_l1);
         const l2 = this.get_id(svg, id_l2);
@@ -172,6 +180,7 @@ class SynoptiqueComponent extends HTMLElement {
     }
 
     update_cuve(svg, datas, id_l1, id_l2, id_l3, id_volt, id_db, id_module, id_date, id_time) {
+		console.log(datas)
         this.update_cuve_level(svg, datas, id_l1, id_l2, id_l3);
         this.update_wiio_module(svg, datas, id_volt, id_db, id_module, id_date, id_time);
     }
@@ -200,8 +209,10 @@ class SynoptiqueComponent extends HTMLElement {
 
 customElements.define('synoptique-component', SynoptiqueComponent);
 
-// Exposer la fonction update_synoptique
-window.update_synoptique = function(data) {
+// Exposer la fonction update_cuves
+window.update_cuves = function(data) {
     const component = document.querySelector('synoptique-component');
-    component.update_synoptique(data);
+    if (component) {
+        component.update_cuves(data);
+    }
 };

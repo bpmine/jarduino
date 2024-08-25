@@ -26,7 +26,7 @@ Le système rempli chaque OYA jusqu'au maximum ou bien selon le programme souhai
 
 ## Description de nos réseaux d'OYAs
 
-Notre installation comporte actuellement (2024) deux réseaux d'OYAs reliés chacun à une cuve et à son alimentation électrique autonome.
+Notre installation comporte actuellement (en 2024) deux réseaux d'OYAs reliés chacun à une cuve et à son alimentation électrique autonome.
 
 ## Réseau 1 : Barbecue
 

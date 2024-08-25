@@ -37,7 +37,7 @@ Il a fonctionné sans difficultés. Mais le module Wifi n'est pas encore prêt (
 
 #### Principe
 
-Une cuve permet de stoker de l'eau. Un boîtier de contrôle alimenté par un panneau solaire et une batterie pilote une pompe qui allimente les goutteurs.
+Une cuve permet de stoker de l'eau. Un boîtier de contrôle alimenté par un panneau solaire avec une batterie pilote une pompe qui allimente les goutteurs.
 Le boîtier pilote jusqu'à deux pompes et peut être programmé à une heure donnée pour une durée d'arrosage souhaitée.
 
 Voir ici la description détaillée: [Système de goutteurs](./goutteurs)
@@ -52,6 +52,8 @@ Un système de pompes contrôlables à distance permet de gérer leur niveau.
 Voir ici la description détaillée: [Gestion des cuves](./cuves)
 
 ## Gestion des OYAs
+
+![Oyas](./images/oyas.png)
 
 Le système permet de diffuser de l'eau aux plantes par la terre grâce à des sortes de petites jarres en argile appellées OYAs.
 Ce dispositif a été déployé après les goutteurs, en 2023. Il remplace petit à petit le système de goutteurs.

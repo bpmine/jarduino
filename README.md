@@ -23,13 +23,15 @@ Le système de goutteurs est le premier "jarduino" historique, mis en place asse
 
 Il a fonctionné presque jusqu'au bout. Le panneau solaire s'est retourné et sans énergie, il s'est arrêté...
 
-Depuis, chaque année, le jarduino a fonctionné en se perfectionnant. Il a compté jusqu'à une cinquantaine de goutteurs à son appogée.
+Depuis 2019, chaque année, le jarduino fonctionne toujours en se perfectionnant. Il a compté jusqu'à une cinquantaine de goutteurs en 2022.
 
 ### Jarduino 2
 
-Ce jarduino est un peu plus sérieux, basé sur de vraies cartes électronique et non plus sur des platines de prototypage.
+Ce jarduino est un peu plus sérieux, basé sur de vraies cartes électroniques et non plus sur des platines de prototypage.
 
-Il a été prévu en deux temps. Tout d'abord une version simple basée sur un arduino Nano et une RTC. Ensuite, une connexion Wifi via un ESP01 et la liaison série / modbus.
+Il a été prévu en deux étapes:
+- Tout d'abord une version simple basée sur un arduino Nano et une RTC;
+- ensuite, une connexion Wifi via un ESP01 et la liaison série / modbus.
 
 Il a fonctionné sans difficultés. Mais le module Wifi n'est pas encore prêt (en 2024)...
 
@@ -42,12 +44,17 @@ Voir ici la description détaillée: [Système de goutteurs](./goutteurs)
 
 ## Gestion des cuves
 
+![Cuves](./images/cuves.png)
+
+Plusieurs cuves récupèrent l'eau de pluie et permettent d'approvisioner les systèmes d'arrosage automatiques.
+Un système de pompes contrôlables à distance permet de gérer leur niveau.
+
 Voir ici la description détaillée: [Gestion des cuves](./cuves)
 
 ## Gestion des OYAs
 
 Le système permet de diffuser de l'eau aux plantes par la terre grâce à des sortes de petites jarres en argile appellées OYAs.
-Ce dispositif a été déployé plus tard, en 2023. Il remplace petit à petit le système de goutteurs.
+Ce dispositif a été déployé après les goutteurs, en 2023. Il remplace petit à petit le système de goutteurs.
 
 Voir ici la description détaillée: [Gestion des OYAs](./oyas)
 

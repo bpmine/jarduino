@@ -1,4 +1,4 @@
-# Sources pour la gestion des gouteurs
+# Sources pour la gestion des goutteurs
 
 Le logiciel embarqué dans le jarduino est ici: [Logiciel jarduino](./jard_nano)
 

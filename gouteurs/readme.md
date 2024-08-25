@@ -1,6 +1,6 @@
-# Gouteurs (Jarduino2)
+# Goutteurs (Jarduino2)
 
-![Gouteurs](./images/gouteurs.png)
+![Goutteurs](./images/goutteurs.png)
 
 Jarduino2 est une évolution du premier jarduino fabriqué en 2019.
 
@@ -9,9 +9,18 @@ Le premier jarduino était construit avec des platines de prototypage et un ardu
 Ce nouveau jarduino est construit à partir d'un Nano. On peut le configurer à l'aide d'une interface MODBUS sur l'USB ou bien sur le port série d'extension.
 Il est possible de lui ajouter une extension Wifi pour le relier au réseau.
 
-##Vue d'ensemble
+## Vue d'ensemble
 
+![Goutteurs](./images/goutteurs2.png)
 
+Deux systèmes jarduinos étaient actifs en 2024, couvrant deux zones de jardin.
+Chaque système est alimenté par une cuve à l'aide d'une pompe ou deux pompes.
+
+Un coffret de commande permet de mettre ou non en service le système et de déclencher un arrosage en mode manuel.
+
+Chaque coffret peut se programmer à l'aide d'un logiciel PC connecté à l'USB de la carte de commande. Cela permet d'activer ou non le mode automatique et de choisir l'heure de déclenchement et la durée d'arrosage.
+
+Le coffret dispose de deux sorties pouvant commander deux pompes. Chaque voie peut alimenter jusqu'à 20 goutteurs. 
 
 ## Hardware
 
@@ -25,9 +34,12 @@ Il est possible de lui ajouter une extension Wifi pour le relier au réseau.
 
 ### Schéma
 
-## Logiciel
+## Logiciels
 
-[Logiciel gestion des gouteurs](./src)
+### Logiciel embarqué dans la carte de commande
+[Logiciel gestion des goutteurs](./src)
+
+### Logiciel PC pour configurer le système
 
 ## Protocole MODBUS
 

@@ -3,7 +3,7 @@
 Nous avons 4 cuves pour une capacité totale de 1600 L.
 
 - Cuve principale de 1000 L
-- cuve  "Paul" de 100 L (pour gouteurs petits bacs)
+- cuve  "Paul" de 100 L (pour goutteurs petits bacs)
 - cuve "Réduit" de 250 L pour les OYAs
 - cuve "Barbec" de 250 L pour les OYAs
 
@@ -44,7 +44,7 @@ Depuis, elle marche moins bien...
 
 ### Cuve Paul
 
-La cuve "Paul" (de Paul) de 100 L permet d'alimenter un système de gouteurs pour des bacs de jardinage (5 bacs en 2024).
+La cuve "Paul" (de Paul) de 100 L permet d'alimenter un système de goutteurs pour des bacs de jardinage (5 bacs en 2024).
 
 La détection de niveau est réalisée à l'aide de 3 capteurs avec flotteur montés sur la paroi de la cuve.
 
@@ -65,22 +65,22 @@ Pour pallier au problème, de la résine a été utilisée pour recouvrir la zon
 
 ### Cuve Barbecue
 
-Cette cuve de 250 L alimente un système de remplisage d'OYAs et un système de gouteurs.
+Cette cuve de 250 L alimente un système de remplisage d'OYAs et un système de goutteurs.
 La détection de niveau est réalisée à l'aide de 3 capteurs avec flotteur montés sur la paroi de la cuve. 
 
 ![Cuve Barbecue](./images/cuve_barbec.png)
 
 ## Filtres imprimés en 3D
 
-Les électrovannes utilisées pour les OYAs et le transfert de l'eau inter-cuves, les pompes et les gouteurs requièrent une eau parfaitement filtrée.
-Si pour les gouteurs d'entrée 8mm, cela paraît évident, il faut savoir que c'est également nécessaire pour les électrovannes. En effet, de petits morceaux d'algues peuvent bloquer une électrovanne en position ouverte.
+Les électrovannes utilisées pour les OYAs et le transfert de l'eau inter-cuves, les pompes et les goutteurs requièrent une eau parfaitement filtrée.
+Si pour les goutteurs d'entrée 8mm, cela paraît évident, il faut savoir que c'est également nécessaire pour les électrovannes. En effet, de petits morceaux d'algues peuvent bloquer une électrovanne en position ouverte.
 
 C'est la raison pour laquelle des filtres ont été ajoutés à plusieurs endroits sur le tuyau (Cuves Paul, Réduit et Barbecue).
 
 ### Filtre sortie vers tuyau 4mm/8mm
 
 Une pièce a été conçue et imprimée pour filtrer directement sur le tuyau PVC de sortie des cuves.
-Elle a été utilisée avant 2023 lorsque tous les systèmes d'arrosages étaient en version gouteurs.
+Elle a été utilisée avant 2023 lorsque tous les systèmes d'arrosages étaient en version goutteurs.
 
 Ce filtre permet de brancher un tuyau 4 mm vers le système de gouteurs. 
 Trop fragile, une version similaire avec une sortie 8 mm a ensuite été imprimée.

@@ -47,7 +47,7 @@ Volume cuve | 250 L
 Capacité totale des Oyas | 7x8L + cuve 100L
 Alimentation | 1 Panneau solaire 120W + 2 Batteries 12V au plomb
 
-La cuve et l'alimentation 12V déservent à la fois le système d'OYAs et un système de gestion de gouteurs alimenté par une petite pompe.
+La cuve et l'alimentation 12V déservent à la fois le système d'OYAs et un système de gestion de goutteurs alimenté par une petite pompe.
 
 Ce réseau est à la fois composé de cartes électroniques  esclaves de "première génération" Rev Ax et de cartes récentes (Rev Gx produites en 2024).
 

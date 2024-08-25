@@ -1,11 +1,12 @@
 #!/usr/bin/python3
 import time
 from flask import Flask, send_from_directory
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, emit
 import threading
 import time
 import requests
 import datetime
+import json
 
 ##                'main': {
 ##                    'level': 2,
@@ -19,6 +20,17 @@ import datetime
 #{'name': 'main', 'cmd': False, 'n1': True, 'n2': True, 'n3': True, 'rssi': 0, 'pwr': 966, 'valid': False, 'sleep': True, 'date': '2024-06-09T09:24:57.764627'}
 
 
+def level(n1,n2,n3):
+    if n1==False and n2==False and n3==False:
+        return 0
+    elif n1==True and n2==False and n3==False:
+        return 1
+    elif n1==True and n2==True and n3==False:
+        return 2
+    elif n1==True and n2==True and n3==True:
+        return 3
+    else:
+        return 0
 
 
 class FetchThread(threading.Thread):
@@ -41,6 +53,7 @@ class FetchThread(threading.Thread):
             return 0
 
     def run(self):
+        time.sleep(5)
         while True:
             try:
                 response = requests.get("http://192.168.3.200:5000/states")
@@ -74,14 +87,13 @@ class FetchThread(threading.Thread):
                             ret[t]=obj
                         
                         print(ret)
-                        self.socketio.emit('data_update', ret)
+                        self.socketio.emit('server_message', ret)                        
                 else:
                     print(f"Failed to retrieve data: {response.status_code}")
             except Exception as e:
                 print(f"Error fetching data: {e}")
                 
-            time.sleep(60)  # Attendre 60 secondes avant de récupérer à nouveau
-
+            time.sleep(5)  # Attendre 60 secondes avant de récupérer à nouveau
 
 app = Flask(__name__)
 socketio = SocketIO(app)
@@ -101,7 +113,52 @@ def serve_static(chemin_fichier):
     chemin_repertoire = r'C:\DEV\GITHUB\jarduino\demo_synoptique\www'
     return send_from_directory(chemin_repertoire, chemin_fichier)
 
+@socketio.on('connect')
+def handle_connect():
+    response = requests.get("http://192.168.3.200:5000/states")
+    if response.status_code == 200:
+        datas= response.json()
+        if 'modules' in datas:
+            ret={}
+            mods=datas["modules"]
+            todo=['main','paul','reduit','barbec']
+            for t in todo:
+                
+                if t not in mods:
+                    obj={
+                        'level':0,
+                        'pompe':False,
+                        'db':0,
+                        'volt':0,
+                        'time':datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ'),
+                        'state':'sleep'
+                        }
+                else:
+                    obj={
+                        'level':level(mods['n1'],mods['n2'],mods['n3']),
+                        'pompe':mods['cmd'],
+                        'db':mods['rssi'],
+                        'volt':mods['pwr'],
+                        'time':mods['date'].strftime('%Y-%m-%dT%H:%M:%SZ'),
+                        'state':'sleep' if mods['sleep']==True else 'on' if mods['valid']==True else 'off'
+                        }
+                    
+                ret[t]=obj
+            
+            print(ret)
+            socketio.emit('server_message', json.dumps(ret))                        
+
+@socketio.on('disconnect')
+def handle_disconnect():
+    print('Client disconnected')
+
+@app.route('/send_data')
+def send_data():
+    data = {'message': 'Hello, this is a message from the server!'}
+    socketio.emit('server_message', data)
+    return "Data sent!"
+
 if __name__ == '__main__':    
-    fetch_thread.start()
+    #fetch_thread.start()
     
-    app.run(debug=True, host='0.0.0.0',port=5001,use_reloader=False)
+    socketio.run(app, debug=True, host='0.0.0.0',port=5001,use_reloader=False)

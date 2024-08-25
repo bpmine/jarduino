@@ -3,7 +3,7 @@
 Le jarduino est un ensemble de systèmes pour l'arrosage du jardin.
 
 Il comporte les sous-ensembles suivants:
-- Gestion des goutteurs
+- Gestion des gouteurs
 - Gestion des cuves
 - Gestion des oyas
 

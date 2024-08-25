@@ -1,5 +1,7 @@
 # Gouteurs (Jarduino2)
 
+![Gouteurs](./images/gouteurs.png)
+
 Jarduino2 est une évolution du premier jarduino fabriqué en 2019.
 
 Le premier jarduino était construit avec des platines de prototypage et un arduino MKR Zero Wifi.
@@ -7,9 +9,13 @@ Le premier jarduino était construit avec des platines de prototypage et un ardu
 Ce nouveau jarduino est construit à partir d'un Nano. On peut le configurer à l'aide d'une interface MODBUS sur l'USB ou bien sur le port série d'extension.
 Il est possible de lui ajouter une extension Wifi pour le relier au réseau.
 
+##Vue d'ensemble
+
+
+
 ## Hardware
 
-Caractéristiques:
+### Caractéristiques
 
   - Alimentation 12V;
   - Entrée de mesure de tension de panneau solaire;
@@ -17,9 +23,13 @@ Caractéristiques:
   - Sonde de température/Humidité;
   - LEDs et interrupteurs.
 
-## Photos
+### Schéma
 
-## MODBUS
+## Logiciel
+
+[Logiciel gestion des gouteurs](./src)
+
+## Protocole MODBUS
 
 Le jarduino implémente un serveur/esclave MODBUS.
 
@@ -51,7 +61,6 @@ Adresse | Description
 Ces bits sont enregistrés en EEPROM sauf ceux qui correspondent au forçage des pompes et à leur commande distante.
 
 NB: La commande à distance des pompe est appliquée seulement si le maître modbus communique toujours avec le jarduino nano.
-
 
 ### Table des Entrees (Lecture)
 
@@ -88,7 +97,6 @@ Adresse | Description
 200 | Version (2 pour jarduino 2)
 201 | Numéro de série du Jarduino
 202 | Version du logiciel nano
-
 
 ### Table des HOLDING REGISTERs (Lecture/Ecriture)
 

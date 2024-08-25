@@ -40,6 +40,8 @@ Mal positionnée sur son support, un jour de pluie elle est tombée de tout son 
 
 Depuis, elle marche moins bien...
 
+![Cuve cassée](./images/boom.png)
+
 ### Cuve Paul
 
 La cuve "Paul" (de Paul) de 100 L permet d'alimenter un système de gouteurs pour des bacs de jardinage (5 bacs en 2024).

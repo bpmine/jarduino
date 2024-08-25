@@ -15,45 +15,40 @@ La réalisation comporte des cartes électroniques conçues maison, du logiciel,
 
 ## Gestion des goutteurs
 
+![Goutteurs](./images/goutteurs.png)
+
 ### Aux origines...
 
-C'est le premier "jarduino" historique, mis en place assez rapidement pour partir en vacances sans s'occuper de l'arrosage.
+Le système de goutteurs est le premier "jarduino" historique, mis en place assez rapidement (en 2019 ?) pour partir en vacances sans s'occuper de l'arrosage.
 
 Il a fonctionné presque jusqu'au bout. Le panneau solaire s'est retourné et sans énergie, il s'est arrêté...
 
-#### Principe
-
-#### Embout de filtrage
-
-#### Carte électronique MKR Wifi
+Depuis, chaque année, le jarduino a fonctionné en se perfectionnant. Il a compté jusqu'à une cinquantaine de goutteurs à son appogée.
 
 ### Jarduino 2
 
-Ce jarduino est un peu plus sérieux. Il a été prévu en deux temps. Tout d'abord une version simple basée sur un arduino Nano et une RTC. Ensuite, une connexion Wifi via un ESP01 et la liaison série / modbus.
+Ce jarduino est un peu plus sérieux, basé sur de vraies cartes électronique et non plus sur des platines de prototypage.
 
-Il a fonctionné sans difficultés.
+Il a été prévu en deux temps. Tout d'abord une version simple basée sur un arduino Nano et une RTC. Ensuite, une connexion Wifi via un ESP01 et la liaison série / modbus.
 
-#### Nouvel embout de filtrage pour l'intérieur
+Il a fonctionné sans difficultés. Mais le module Wifi n'est pas encore prêt (en 2024)...
 
-#### Carte Nano
+#### Principe
 
-#### Extension ESP01
+Une cuve permet de stoker de l'eau. Un boîtier de contrôle alimenté par un panneau solaire et une batterie pilote une pompe qui allimente les goutteurs.
+Le boîtier pilote jusqu'à deux pompes et peut être programmé à une heure donnée pour une durée d'arrosage souhaitée.
+
+Voir ici la description détaillée: [Système de goutteurs](./goutteurs)
 
 ## Gestion des cuves
 
-### Vue d'ensemble
-
-### Module Wifi IO
-
-### Point Wifi et Serveur Orange PI
-
-### Petite application de pilotage
-
-### Petit Afficheur
+Voir ici la description détaillée: [Gestion des cuves](./cuves)
 
 ## Gestion des OYAs
 
 Le système permet de diffuser de l'eau aux plantes par la terre grâce à des sortes de petites jarres en argile appellées OYAs.
-Ce dispositif a été déployé plus tard, en 2023.
+Ce dispositif a été déployé plus tard, en 2023. Il remplace petit à petit le système de goutteurs.
+
+Voir ici la description détaillée: [Gestion des OYAs](./oyas)
 
 

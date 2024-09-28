@@ -1,0 +1,6 @@
+apt-get update
+apt-get install redis-server
+sudo systemctl enable redis-server
+sudo systemctl start redis-server
+
+pip install redis

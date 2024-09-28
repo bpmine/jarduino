@@ -1,15 +1,15 @@
 # Jarduino
 
-Le jarduino est un ensemble de systèmes pour l'arrosage du jardin.
+Le Jarduino est un ensemble de systèmes pour l'arrosage du jardin.
 
 Il comporte les sous-ensembles suivants:
 - Gestion des goutteurs
 - Gestion des cuves
 - Gestion des oyas
 
-Le but du projet est avant tout de s'amuser et accessoirement d'utiliser du savoir-faire acquis brièvement lors d'une réponse à cahier des charges sur un projet pro n'ayant pas abouti.
+Le principal objectif du projet est de s'amuser tout en mettant à profit les compétences acquises lors d'une réponse à un cahier des charges pour un projet professionnel qui n'a finalement pas abouti.
 
-La réalisation comporte des cartes électroniques conçues maison, du logiciel, quelques petites pièces mécaniques et tout le reste....
+La réalisation inclue des cartes électroniques conçues sur mesure, du logiciel, quelques petites pièces mécaniques et bien d'autres éléments....
 
 ## Illustrations (photos)
 
@@ -19,21 +19,21 @@ La réalisation comporte des cartes électroniques conçues maison, du logiciel,
 
 ### Aux origines...
 
-Le système de goutteurs est le premier "jarduino" historique, mis en place assez rapidement (en 2019 ?) pour partir en vacances sans s'occuper de l'arrosage.
+Le système de goutteurs est le "Jarduino" historique, mis en place assez rapidement (en 2019 ?) pour partir en vacances sans s'occuper de l'arrosage.
 
-Il a fonctionné presque jusqu'au bout. Le panneau solaire s'est retourné et sans énergie, il s'est arrêté...
+Il a fonctionné presque jusqu'au bout. Le panneau solaire s'est retourné (vent?), et sans énergie, il s'est arrêté...
 
-Depuis 2019, chaque année, le jarduino fonctionne toujours en se perfectionnant. Il a compté jusqu'à une cinquantaine de goutteurs en 2022.
+Depuis 2019, chaque année, le Jarduino fonctionne toujours en se perfectionnant. Il a compté jusqu'à une cinquantaine de goutteurs en 2022.
 
 ### Jarduino 2
 
-Ce jarduino est un peu plus sérieux, basé sur de vraies cartes électroniques et non plus sur des platines de prototypage.
+Ce Jarduino est un peu plus sérieux, basé sur de vraies cartes électroniques et non plus sur des platines de prototypage.
 
 Il a été prévu en deux étapes:
 - Tout d'abord une version simple basée sur un arduino Nano et une RTC;
 - ensuite, une connexion Wifi via un ESP01 et la liaison série / modbus.
 
-Il a fonctionné sans difficultés. Mais le module Wifi n'est pas encore prêt (en 2024)...
+Il a fonctionné sans difficultés. Mais le module Wifi n'est toujours pas prêt (en 2024)...
 
 #### Principe
 

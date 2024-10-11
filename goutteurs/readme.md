@@ -71,8 +71,8 @@ Le boîtier comporte les entrées/sorties suivantes:
 
 | Voie | Type | Description |
 | --- | --- | --- |
-| Alimentation | Alim 12V  | Connection d'une batterie extérieure (Plomb) |
-| solaire | Alim 12V/20V | Connection d'un panneau solaire pour recharger la batterie |
+| Alimentation | Alim 12V  | Connexion d'une batterie extérieure (Plomb) |
+| solaire | Alim 12V/20V | Connexion d'un panneau solaire pour recharger la batterie |
 | Pompe 1 | Sortie 12V | Sortie de commande de la pompe 1 |
 | Pompe 2 | Sortie 12V | Sortie de commande de la pompe 2 |
 
@@ -111,7 +111,7 @@ Le logiciel communique avec le boîtier Jarduino à l'aide du protocole MODBUS (
 
 ## Protocole MODBUS
 
-![Connection au PC](./images/connection_pc.png)
+![Connexion au PC](./images/connexion_pc.png)
 
 Le jarduino implémente un serveur/esclave MODBUS.
 

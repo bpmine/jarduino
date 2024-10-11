@@ -34,11 +34,15 @@ Le coffret dispose de deux sorties pouvant commander deux pompes. Chaque voie pe
 
 ### Schéma
 
-[Schéma de la carte ce commande](./hard/jarduino2_nano/jarduino2_nano.pdf)
+[Schéma de la carte de commande](./hard/jarduino2_nano/jarduino2_nano.pdf)
 
 [Schéma de la carte d'interface à LEDs](./hard/jarduino2_ihm/jarduino2_ihm.pdf)
 
 ### PCBs
+
+Chaque boîtier/coffret de commande est composé de deux circuits imprimés (PCBs):
+- La carte de commande contient le microcontrôleur et gère tout le système
+- la carte d'interface permet à l'utilisateur visualiser le fonctionnement et d'agir sur celui-ci.
 
 ![Carte de commande Jarduino2 Nano](./images/pcb_jarduino2_nano.png)
 
@@ -47,6 +51,34 @@ Le coffret dispose de deux sorties pouvant commander deux pompes. Chaque voie pe
 ### Boîtier de commande
 
 ![Boîtier de commande Jarduino2](./images/boitier.png)
+
+| LED | Description |
+| --- | --- |
+| BATT | Batterie OK |
+| SUN | Panneau photovoltaique OK |
+| Réseau | Réseau Wifi Activé |
+
+NB: Il n'y a pas à ce jour (en 2024) de module Wifi terminé et apte à se connecter au réseau de domotique de la maison. C'est une fonction prévue à l'origine mais qui ne verra peut-être pas le jour puisque nous sommes en train de remplacer les goutteurs par des OYAs.
+
+| Bouton | Type | Description |
+| --- | --- | --- |
+| ON/OFF | Inverseur  | Bouton de mise en service (Ne coupe pas l'alimentation mais fait passer le CPU en veille) |
+| Réseau | Inverseur  | Bouton de mise sous tension de la carte Wifi (si présente) |
+| Pump 1 | Poussoir  | Bouton de démarrage de l'arrosage manuel de la voie 1 |
+| Pump 2 | Poussoir  | Bouton de démarrage de l'arrosage manuel de la voie 2 |
+
+Le boîtier comporte les entrées/sorties suivantes:
+
+| Voie | Type | Description |
+| --- | --- | --- |
+| Alimentation | Alim 12V  | Connection d'une batterie extérieure (Plomb) |
+| solaire | Alim 12V/20V | Connection d'un panneau solaire pour recharger la batterie |
+| Pompe 1 | Sortie 12V | Sortie de commande de la pompe 1 |
+| Pompe 2 | Sortie 12V | Sortie de commande de la pompe 2 |
+
+NB: Un module chargeur/régulateur solaire se trouve dans le boîtier pour permettre la charge de la batterie à l'aide du panneau solaire relié.
+
+Ce système s'est avéré suffisant pour gérer le décalage entre les horaires à forte énergie solaire (jour) et la plage horaire idéale pour arroser (soirée/début de nuit).
 
 ## Logiciels
 

@@ -34,14 +34,52 @@ Le coffret dispose de deux sorties pouvant commander deux pompes. Chaque voie pe
 
 ### Schéma
 
+[Schéma de la carte ce commande](./hard/jarduino2_nano/jarduino2_nano.pdf)
+
+[Schéma de la carte d'interface à LEDs](./hard/jarduino2_ihm/jarduino2_ihm.pdf)
+
+### PCBs
+
+![Carte de commande Jarduino2 Nano](./images/pcb_jarduino2_nano.png)
+
+![Carte d'interface à LEDs](./images/pcb_ihm.png)
+
+### Boîtier de commande
+
+![Boîtier de commande Jarduino2](./images/boitier.png)
+
 ## Logiciels
 
 ### Logiciel embarqué dans la carte de commande
+
 [Logiciel gestion des goutteurs](./src)
 
 ### Logiciel PC pour configurer le système
 
+![Le logiciel JardConfig](./images/jardconfig.png)
+
+Ce logiciel permet de configurer le boîtier Jarduino.
+Pour cela, on branche un PC à l'USB de la carte de commande.
+
+On peut:
+- Régler l'heure
+
+Et pour chaque voie (1 ou 2):
+- Forcer la commande de la pompe
+- Activer ou désactiver la pompe
+- Activer et simuler le pilotage distant de la pompe
+- Sélectionner le mode Auto (basé sur l'horloge)
+- Régler l'heure d'arosage automatique
+- Régler la durée de l'arrosage automatique
+- Sélectionner les jours de semaine de l'arrosage automatique
+
+Il permet également d'afficher l'état du système et quelques statistiques de fonctionnement.
+
+Le logiciel communique avec le boîtier Jarduino à l'aide du protocole MODBUS (Voir ci-après).
+
 ## Protocole MODBUS
+
+![Connection au PC](./images/connection_pc.png)
 
 Le jarduino implémente un serveur/esclave MODBUS.
 

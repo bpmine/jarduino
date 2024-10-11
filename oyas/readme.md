@@ -64,7 +64,7 @@ A noter cependant la fragilité des électrovannes. Pour fonctionner correctemen
 - 1 pompe
 - 7 OYAs
 
-Caractéristique | Desfription
+Caractéristique | Description
 -- | --
 Nombre de nœuds | 9
 Longueur | environ 30 m
@@ -123,7 +123,7 @@ Ce module est placé en sortie de cuve pour pomper l'eau et donner une certaine 
 
 Il faut aussi noter qu'une pression minimale est nécessaire pour ouvrir une électrovanne (voir ces caractéristiques).
 
-Le schéma et le pcb de la carte sont ici: [Carte esclave RS485](..\jard_485_slave\board)
+Le schéma et le pcb de la carte sont ici: [Carte esclave RS485](./slaves_rs485/hard)
 
 Plusieurs versions ont été réalisées, compatibles entre-elles. A ce jour le système est composé de façon hétérogène par ces différentes versions.
 
@@ -135,7 +135,7 @@ Rev Dx | 2024 | Version sans module (tout intégré en CMS)
 Rev Ex | 2024 | Avec modules (petite carte)
 Rev Gx | 2024 | MAX485 en CMS (petite carte)
 
-Le logiciel est ici: [Logiciel esclave RS485](..\jard_485_slave\soft)
+Le logiciel est ici: [Logiciel esclave RS485](.\slaves_rs485\src)
 
 ### Module Oya
 

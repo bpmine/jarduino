@@ -25,7 +25,7 @@
     (effects (font (size 1.27 1.27)) (justify left top))
     (uuid 215aacd4-2fab-4df4-a6a6-8611767bb469)
   )
-  (text_box "TODO:\n\n- Mettre une alim 5V plus puissante (Le régulateur Nano casse sur les pompes)\n- Passer les condensateurs 603 en 805"
+  (text_box "TODO:\n\n- Mettre une alim 5V plus puissante (Le régulateur Nano casse sur les pompes)\n- Passer les condensateurs 603 en 805\n- Essayer d'élargir les plages sur les protections MAX485 (Hand solder ?)"
     (at 102.87 158.75 0) (size 69.85 26.67)
     (stroke (width 0) (type default))
     (fill (type none))

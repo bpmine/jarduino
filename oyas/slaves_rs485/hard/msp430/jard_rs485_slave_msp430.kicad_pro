@@ -55,7 +55,15 @@
           "width": 0.0
         }
       ],
-      "drc_exclusions": [],
+      "drc_exclusions": [
+        "courtyards_overlap|183330001|112700000|3aac9fc2-4705-4f8d-be3e-59e2ce207907|6aaa7e88-f3c9-42bc-a435-245ca58ed6ec",
+        "silk_over_copper|125829944|113580000|d10237bd-953c-4139-af82-d4e554eae90a|00000000-0000-0000-0000-000000000000",
+        "silk_over_copper|125980000|97070000|7102dd54-5509-4302-9f25-bd4b7c547622|00000000-0000-0000-0000-000000000000",
+        "silk_overlap|147190000|94020000|b1ebbbf8-b519-4755-93d8-c7b074e0d158|9a8ab55d-047d-4e1f-bbc1-52a1ababb98f",
+        "silk_overlap|186929613|112690000|40a07f7e-e9fd-4e42-83e0-97fa7588fa99|a34603bb-e9b0-4df9-bd2d-87750c8c9b0a",
+        "starved_thermal|142600000|99450000|5b67c97e-2d61-4cfd-bb30-eb09d02b4a14|c969ad58-d26d-4e5c-ae73-48c15d03f9e8|B.Cu",
+        "starved_thermal|168800000|94060000|5b67c97e-2d61-4cfd-bb30-eb09d02b4a14|6e958afb-ec2d-48f5-8288-2dc06fe1e342|F.Cu"
+      ],
       "meta": {
         "version": 2
       },

@@ -6,7 +6,7 @@
 
   (title_block
     (title "Esclave Oya MSP430")
-    (date "2025-04-11")
+    (date "2025-04-13")
     (rev "Rev B")
     (company "BPC")
     (comment 1 "Alim 12V - Bus RS485 - cmd EV/Pompe - Niveaux - Débit")
@@ -2023,6 +2023,7 @@
     (uuid fe9f2c57-a914-4fc0-a39c-530fe6825d71)
   )
 
+  (no_connect (at 157.48 171.45) (uuid 201c98cb-50c9-401a-8cf7-7c88d5939577))
   (no_connect (at 125.73 109.22) (uuid 30d03e41-3668-410a-8e05-1a29c4e48fdc))
   (no_connect (at 157.48 166.37) (uuid 37795166-ade6-4cc8-bdb1-786638c79f4f))
   (no_connect (at 111.76 144.78) (uuid 3d73f7ef-6835-4086-8148-44289b15ed10))
@@ -2998,7 +2999,7 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 45b17d8f-0793-4083-aab5-0ce1a2be74a1)
   )
-  (text "Réservé FLOW" (at 158.75 166.37 0)
+  (text "P2.2: Réservé FLOW" (at 165.1 172.72 0)
     (effects (font (size 0.762 0.762)) (justify left bottom))
     (uuid 84b7f1f7-815c-4392-b209-bd9f99773c13)
   )

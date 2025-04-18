@@ -55,7 +55,10 @@
           "width": 0.0
         }
       ],
-      "drc_exclusions": [],
+      "drc_exclusions": [
+        "silk_over_copper|125829944|113580000|a5c130f0-8b8b-46d2-b6d2-fc80841f5180|00000000-0000-0000-0000-000000000000",
+        "silk_over_copper|125980000|97070000|5a27043b-039f-48a1-8502-9821c3aba2b1|00000000-0000-0000-0000-000000000000"
+      ],
       "meta": {
         "version": 2
       },
@@ -485,7 +488,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "jard_rs485_slave_msp430.kicad_pro",
+    "filename": "jard_rs485_slave_at328.kicad_pro",
     "version": 1
   },
   "net_settings": {

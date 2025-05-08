@@ -1416,6 +1416,12 @@
     (uuid fbd6ef01-dc43-4778-b829-1e35891b4f5b)
   )
 
+  (text "Mettre un pont diviseur sur POW_MES\nAjouter 2 capas en entrée de l'alim (1000 uF + 100nF)"
+    (at 168.91 137.16 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid d7851b74-acbd-4bd7-bbb2-d91d75686175)
+  )
+
   (global_label "LED_ROUGE" (shape output) (at 134.62 138.43 0)
     (effects (font (size 1.27 1.27)) (justify left))
     (uuid 01fad523-5c1e-4ed9-88d4-ee2a607bb5a2)

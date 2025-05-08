@@ -48,3 +48,10 @@ Fonction | Description | Paramètre | Retour | exemple
 'r' | Retourne les compteurs d'erreur réseau du noeud| Laisser à "00" | | [SOH]Ar00{Cs}[STX]
 'R' | Remet à zéro les compteurs d'erreurs | Laisser à "00" | | [SOH]AR00{Cs}[STX]
 'p' | Ping | Valeur quelconque entre '00' et 'FF' | Echo de la valeur passée en paramètre | [SOH]Ap09{Cs}[STX] -> Réponse: [SOH]Ap09{Cs}[STX]
+
+## Taille du programme
+
+| Description | Taille |
+| --- | --- |
+| Mémoire Flash | 11,154 kOctets |
+| RAM | 485 Octets|

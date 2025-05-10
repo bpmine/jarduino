@@ -147,7 +147,7 @@
   <avrgcccpp.compiler.symbols.DefSymbols>
     <ListValues>
       <Value>DEBUG</Value>
-      <Value>F_CPU=16000000L</Value>
+      <Value>F_CPU=8000000L</Value>
       <Value>ARDUINO=108012</Value>
       <Value>ARDUINO_AVR_NANO</Value>
       <Value>ARDUINO_ARCH_AVR</Value>

@@ -14,6 +14,12 @@
 #define TICK_8S         (0x0040)
 #define TICK_16S        (0x0080)
 
+#define IS_TICK_250MS   ( (g_tick_flgs&TICK_250MS) == TICK_250MS )
+#define IS_TICK_500MS   ( (g_tick_flgs&TICK_500MS) == TICK_500MS )
+#define IS_TICK_1S      ( (g_tick_flgs&TICK_1S) == TICK_1S )
+#define IS_TICK_2S      ( (g_tick_flgs&TICK_2S) == TICK_2S )
+#define IS_TICK_4S      ( (g_tick_flgs&TICK_4S) == TICK_4S )
+
 extern volatile unsigned long g_tick_1ms;
 extern volatile unsigned long g_tick_1s;
 

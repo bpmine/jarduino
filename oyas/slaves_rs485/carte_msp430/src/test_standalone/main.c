@@ -11,6 +11,9 @@ volatile unsigned char g_Low=0;
 volatile unsigned char g_cmd=0;
 
 volatile unsigned char g_cycle_test=0;
+volatile unsigned short g_power_dv=0;
+
+char msg[70]="";
 
 inline void micro_set_internal_1MHz(void)
 {
@@ -46,6 +49,31 @@ inline unsigned char read_address(void)
     return addr;
 }
 
+void adc_init(void)
+{
+    P2DIR &= ~PIN_MES_V;
+
+    ADC10CTL1 = INCH_1;
+    ADC10CTL0 = SREF_0 + ADC10SHT_2 + ADC10ON;
+}
+
+unsigned short adc_voltage_read(void)
+{
+    unsigned short ret=0;
+    unsigned short val=0;
+
+    ADC10CTL0 |= ENC | ADC10SC;
+    while (ADC10CTL1 & ADC10BUSY)
+        __no_operation();
+
+    val=ADC10MEM;
+    ADC10CTL0 &=~ENC;
+
+    ret=val*120L/707L;
+
+    return ret;
+}
+
 inline void micro_init(void)
 {
     _DINT();                        ///< Disable interrupts
@@ -66,8 +94,11 @@ inline void micro_init(void)
     //micro_set_internal_1MHz();
     micro_set_external_8MHz();
 
+
     serial_init(9600);
     tick_init();
+
+    adc_init();
 
     _EINT();                    ///< Enable interrupts
 }
@@ -87,7 +118,45 @@ void _boot_blink(void)
     tick_delay_ms(500);
 }
 
-char msg[50]="";
+void itoa(char *buffer,int value)
+{
+    char temp[7]; // assez pour -32768 + '\0'
+    int i,j = 0;
+    int isNegative = 0;
+
+    if (value == 0)
+    {
+        buffer[0] = '0';
+        buffer[1] = '\0';
+        return;
+    }
+
+    if (value < 0)
+    {
+        isNegative = 1;
+        value = -value;
+    }
+
+    while (value > 0)
+    {
+        temp[i++] = (value % 10) + '0';
+        value /= 10;
+    }
+
+    if (isNegative)
+    {
+        temp[i++] = '-';
+    }
+
+    // inverser la chaîne
+    for ( j = 0; j < i; j++)
+    {
+        buffer[j] = temp[i - j - 1];
+    }
+
+    buffer[i] = '\0';
+}
+
 
 /**
  * main.c
@@ -99,19 +168,16 @@ int main(void)
     g_High=0;
     g_Low=0;
     g_cmd=0;
-
+    g_power_dv=0;
 
     g_slaveAddr=read_address();
     while ( (g_slaveAddr==0) || (g_slaveAddr==15) )
     {
         if ( (g_tick_flgs&TICK_2S) && (g_tick_flgs&TICK_1S) )
-        {
             P2OUT |= PIN_LED1;
-        }
         else
-        {
             P2OUT &= ~PIN_LED1;
-        }
+
         g_slaveAddr=read_address();
     }
 
@@ -119,24 +185,20 @@ int main(void)
 
 	while (1)
 	{
-        g_High=(P3IN&PIN_CPT_LVL_HIGH)==PIN_CPT_LVL_HIGH?0:1;
-        g_Low=(P3IN&PIN_CPT_LVL_LOW)==PIN_CPT_LVL_LOW?0:1;
+        g_High=(P3IN&PIN_CPT_LVL_HIGH)==PIN_CPT_LVL_HIGH?1:0;
+        g_Low=(P3IN&PIN_CPT_LVL_LOW)==PIN_CPT_LVL_LOW?1:0;
 
-        if (g_High==0)
-            g_cmd=0;
+        g_power_dv=adc_voltage_read();
 
-        if (g_tick_flgs&TICK_1S)
+        g_cmd=!g_High;
+
+        if (IS_TICK_2S)
 	    {
-	        g_cmd=g_High;
-
-	        P2OUT |= PIN_LED1;
-
-	        g_slaveAddr=read_address();
-
 	        if (g_cycle_test==1)
 	        {
 	            char x[2];
 
+	            g_slaveAddr=read_address();
 	            if (g_slaveAddr<10)
 	            {
 	                x[0]='0'+g_slaveAddr;
@@ -163,6 +225,12 @@ int main(void)
 	            if (g_cmd==1) strcat(msg,"1"); else strcat(msg,"0");
                 strcat(msg,"\n\r");
 
+                char strVal[10]="";
+                itoa(strVal,g_power_dv);
+                strcat(msg,"V: ");
+                strcat(msg,strVal);
+                strcat(msg,"\n\r");
+
 	            strcat(msg,"_____\n\r");
 	            serial_send((unsigned char *)msg,strlen(msg));
 
@@ -171,12 +239,27 @@ int main(void)
 	    }
 	    else
 	    {
-	        P2OUT &= ~PIN_LED1;
 	        g_cycle_test=1;
 	    }
 
+        if (g_High)
+        {
+            P2OUT |= PIN_LED1;
+        }
+        else if (g_Low)
+        {
+            if (IS_TICK_250MS)
+                P2OUT |= PIN_LED1;
+            else
+                P2OUT &= ~PIN_LED1;
+        }
+        else
+        {
+            P2OUT &= ~PIN_LED1;
+        }
+
         if (g_cmd==1)
-            P3OUT|=PIN_CMD_EV;
+            P3OUT |= PIN_CMD_EV;
         else
             P3OUT &= ~PIN_CMD_EV;
 

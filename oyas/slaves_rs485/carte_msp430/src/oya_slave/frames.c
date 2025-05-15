@@ -165,11 +165,11 @@ static void _frames_pack_common(T_FRAME *pFrm,unsigned char addr,unsigned char s
 static unsigned char _frames_read_char(T_FRAME *pFrm, char* c, int *pCur)
 {
     *c = 0;
-    if (*pCur >= pFrm->size)
+    if ( (*pCur) >= pFrm->size )
         return 0;
     else
     {
-        *c=pFrm->data[*pCur++];
+        *c=pFrm->data[(*pCur)++];
         return 1;
     }
 }
@@ -179,47 +179,34 @@ static unsigned char _frames_read_byte(T_FRAME *pFrm, unsigned char* uc, int *pC
 {
     *uc = 0;
 
-    if (*pCur+1 >= pFrm->size)
+    if ( (*pCur)+1 >= pFrm->size )
         return 0;
     else
     {
-        unsigned char a= pFrm->data[*pCur++];
-        unsigned char b = pFrm->data[*pCur++];
+        unsigned char a= pFrm->data[(*pCur)++];
+        unsigned char b = pFrm->data[(*pCur)++];
         *uc=_frames_decode_hex_byte(a, b);
 
         return 1;
     }
 }
 
-/*static unsigned char _frames_read_sbyte(char* c, int *pCur)
-{
-    unsigned char uc;
-    bool ret = read_byte(&uc, *pCur);
-    if (ret == true)
-    {
-        *c = (char)uc;
-        return 1;
-    }
-    else
-        return 0;
-}*/
-
 static unsigned char _frames_read_word(T_FRAME *pFrm, unsigned short* us, int *pCur)
 {
     *us = 0;
 
-    if (*pCur + 3 >= pFrm->size)
+    if ((*pCur) + 3 >= pFrm->size)
         return 0;
     else
     {
-        unsigned char a = pFrm->data[*pCur++];
-        unsigned char b = pFrm->data[*pCur++];
-        unsigned char c = pFrm->data[*pCur++];
-        unsigned char d = pFrm->data[*pCur++];
+        unsigned char a = pFrm->data[(*pCur)++];
+        unsigned char b = pFrm->data[(*pCur)++];
+        unsigned char c = pFrm->data[(*pCur)++];
+        unsigned char d = pFrm->data[(*pCur)++];
         unsigned char uc = _frames_decode_hex_byte(a, b);
-        *us |= ((uc << 8) & 0xFF00);
+        (*us) |= ((uc << 8) & 0xFF00);
         uc = _frames_decode_hex_byte(c, d);
-        *us |= (uc & 0x00FF);
+        (*us) |= (uc & 0x00FF);
 
         return 1;
     }
@@ -229,6 +216,10 @@ unsigned char _frames_on_receive_frame(T_FRAME *pFrame)
 {
     int cur=1;
     char msg;
+    unsigned char len;
+
+    if (_frames_read_byte(pFrame,&len,&cur)!=1)
+        return 0;
 
     if (_frames_read_char(pFrame,&msg, &cur)!=1)
         return 0;

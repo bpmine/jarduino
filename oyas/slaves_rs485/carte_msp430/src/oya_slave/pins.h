@@ -19,7 +19,4 @@
 #define PIN_ADDR_A4       (0x01)
 #define PIN_MASK_ADDR     (0x0F)
 
-#define PIN_DGB_SYNC      (A0)      ///< @remark A 1 pendant les mesures (temp/hum)
-#define PIN_DGB_CMD       (12)      ///< @remark Change d'etat à chaque reception de commande
-
 #endif

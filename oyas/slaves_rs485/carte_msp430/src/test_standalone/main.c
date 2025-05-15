@@ -69,7 +69,7 @@ unsigned short adc_voltage_read(void)
     val=ADC10MEM;
     ADC10CTL0 &=~ENC;
 
-    ret=val*120L/707L;
+    ret=(val*120L)/778L;
 
     return ret;
 }
@@ -118,24 +118,21 @@ void _boot_blink(void)
     tick_delay_ms(500);
 }
 
-void itoa(char *buffer,int value)
+void ustoa(char *buffer,unsigned short value)
 {
-    char temp[7]; // assez pour -32768 + '\0'
-    int i,j = 0;
-    int isNegative = 0;
+    char temp[7]=""; // Contient la chaîne dans l'ordre de l'evaluation
+    int i=0;
+    int j=0;
 
-    if (value == 0)
+    if (value == 0 )
     {
         buffer[0] = '0';
-        buffer[1] = '\0';
+        buffer[1] = 0;
         return;
     }
 
-    if (value < 0)
-    {
-        isNegative = 1;
-        value = -value;
-    }
+    if (value>999)
+        value=999;
 
     while (value > 0)
     {
@@ -143,18 +140,11 @@ void itoa(char *buffer,int value)
         value /= 10;
     }
 
-    if (isNegative)
-    {
-        temp[i++] = '-';
-    }
-
     // inverser la chaîne
     for ( j = 0; j < i; j++)
-    {
         buffer[j] = temp[i - j - 1];
-    }
 
-    buffer[i] = '\0';
+    buffer[i] = 0;
 }
 
 
@@ -226,7 +216,7 @@ int main(void)
                 strcat(msg,"\n\r");
 
                 char strVal[10]="";
-                itoa(strVal,g_power_dv);
+                ustoa(strVal,g_power_dv);
                 strcat(msg,"V: ");
                 strcat(msg,strVal);
                 strcat(msg,"\n\r");

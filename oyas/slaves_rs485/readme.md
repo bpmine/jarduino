@@ -61,11 +61,11 @@ Elément | Description | exemple(s)
 SOH | Valeur 1 (Voir table ASCII) | 
 Length | Taille de la trame comprenant Length + ID msg + datas + Checksum (1 octet codé en chaîne hexadécimale) | '09' = 9 octets
 ID | Identifiant (ou type) de trame(1 caractère) | 'm' = Trame de commande du maître, 'o' = Réponse d'un oya...
-{datas} | Données propres au type de trame (n octets codés en chaîne hexadécimale) |  Voir chaque type de message
+{datas} | Données propres au type de trame (n octets codés en chaîne hexadécimale) |  Voir chaque type de trame
 {Checksum} | Somme de contrôle (1 octet codé en chaîne hexadécimale) | 'AE' = 174
 [STX] | Valeur 2 (Voir table ASCII) |
 
-### Liste des types de trame
+### Liste des types de trames
 
 ID | Maître | Esclave | Description
 --- | --- | --- | ---
@@ -78,6 +78,50 @@ y | | X | Trame PONG de réponse d'un esclave à un PING
 t | X | | Trame de RAZ du temps destinée à un esclave
 z | X | | Trame de RAZ du nombre d'erreurs destinée à un esclave
 
+### Description détaillée des types de trames
+
+#### Principe communs à toutes les trames
+
+
+
+#### Trame de commande générale (m)
+
+[SOH]09m{Commandes}{Adresse}{Checksum}[STX]
+
+Elément | Description | exemple(s)
+--- | --- | ---
+Commandes | 16 bits B15..B0 codés en chaîne hexadécimale | '0802' = Pompe (@1) et oya (@11) actifs
+Adresse| Adresse du noeud concerné par la réponse | '0E' = esclave 14, '01' = pompe, ...
+
+B1 correspond à la pompe (activée si à 1)
+B2..B14 correspondent aux Oyas @2 à @14 (activés si à 1)
+
+NB: B0 et B15 sont réservés et aucun esclave ne doit interpréter ces commandes.
+
+Les adresses sont comprises entre 1 et 14. Aucun esclave ne doit répondre à des sollicitations pour les adresses en dehors de cet intervalle.
+
+Lorsque le maître envoi cette trame, il attend une réponse de la part de l'esclave concerné. En cas d'absence de réponse de l'esclave, celui-ci est considéré comme non connecté.
+
+#### Trames de réponse d'un esclave (p,o)
+
+Les trames de réponse d'un Oya et d'une pompe sont très similaires.
+La différence réside dans l'interprétation de l'octet de statut et par la présence du débit pour la pompe.
+
+[SOH]XXp{Statut}{tick}{temp}{hum}{volt}{total time}{total errs}{flow}{Checksum}[STX]
+
+Elément | Description | exemple(s)
+--- | --- | ---
+Statut | 1 octet de statut B7..B0 codés en chaîne hexadécimale | '02' = 
+tick |  | 
+
+
+### Description détaillée des échanges
+
+#### Echange Commande/Réponse
+
+#### Echange Ping/Pong
+
+### Description d'un cycle
 
 
 #define STATUS_CMD     		(0x01)

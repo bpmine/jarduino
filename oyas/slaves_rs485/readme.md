@@ -12,6 +12,8 @@ Les premières cartes comportaient un module RS485 indépendant. Il a ensuite é
 Ces cartes sont alimentées par le régulateur du module nano.
 Il y'a eu plusieurs versions de cette "première" carte. 
 
+Cette carte existe depuis 2023. Elle a donc déjà un plus long historique. Elle fonctionnait avec un vieux protocole qui a été remplacé dans la dernière version de logiciel.
+
 ### Carte AT328
 
 Seule l'alimentation à découpage provient d'un module extérieur. Tout le reste a été intégré en composant CMS ou tranversants (connecteurs).
@@ -22,7 +24,7 @@ Le logiciel utilise le arduinocore (compatible arduino).
 
 ### Carte MSP430
 
-Même principe quel la carte à base de AT328 mais ne peut gérer qu'un oya.
+Même principe que la carte à base de AT328 mais ne peut gérer qu'un oya.
 
 ## Protocole
 
@@ -30,45 +32,60 @@ Ce protocole est commun à toutes les cartes esclaves.
 
 ### Principe
 
-Le maître envoi une requête à un esclave et attend une réponse de celui-ci.
+Seul le maître peut initier un échange en envoyant une trame.
+Chaque trame d'induit pas nécessairement de réponse de la part des esclaves. Si une réponse est attendue, alors la trame contient l'adresse de l'esclave concerné.
 
-Il existe une adresse de broadcast permettant de maintenir la communication réseau vivante pour tous les esclaves qui peuvent considérer alors le réseau comme sain et maintenir les commandes en cours.
-Aucun esclave n'est autorisé de répondre à cette adresse de broadcast.
+Lors d'un cycle bus, le maître envoi successivement une trame de commande à l'ensemble des noeuds. 
+Elle contient:
+- l'état souhaité de la pompe et des électrovannes;
+- une adresse d'esclave.
 
-Il utilise des fonctions pour agir sur un esclave. A chaque fonction correspond un format de réponse associé.
+Tous les noeuds reçoivent cette trame et obéissent à la consigne les concernant.
 
-### Format de la trame
+Seul le noeud concerné répond avec une trame de pompe ou d'oya contenant l'ensemble des informations concernant son état actuel.
 
-#### Requête
+Lorsque le maître a interrogé tous les esclaves, il doit envoyer une trame de synchronisation de fin de cycle. Cette trame permet aux esclaves de travailler tranquilement pendant le temps d'inter-cycle.
+Ils peuvent effectuer des traitements pendant lesquels ils pourraient se permettre de perdre des trames du bus. Durant cette période, le traitement des commandes n'est donc pas garanti.
+Cette technique permet d'éviter qu'une éventuelle surcharge de cpu ne vienne perturber le cycle réseau.
 
-Seul le maître peut envoyer une requête.
+D'autres commandes, à l'initiative du maître, permettent d'effectuer d'autres opérations de façon asynchrone.
 
-[SOH] {Adresse esclave} {Fonction} {datas} {Checksum} [STX]
+### Format d'une trame
+
+Toute trame doit avoir le format suivant:
+
+[SOH] {Length} {ID} {datas} {Checksum} [STX]
 
 Elément | Description | exemple(s)
 --- | --- | ---
-[SOH] | Valeur 1 (Voir table ASCII) | 
-{Adresse esclave} | Caractère de 'A' à 'Y' identifiant un noeud/esclave (1 caractère) | 'A': Pompe, 'B': Oya 1, ...
-{Fonction} | Fonction à executer sur le noeud (1 caractère) | '1': Commander la pompe, '2': Commander l'électrovanne, 'p': Ping, ...
-{datas} | Donnée pour la commande (1 octet codé en chaîne hexadécimale) |  '12' = 18 , 'AE' = 174, '01' = 1, ...
-{Checksum} | Somme de contrôle (1 octet codé en chaîne hxadécimale) | 'AE' = 174, ...
+SOH | Valeur 1 (Voir table ASCII) | 
+Length | Taille de la trame comprenant Length + ID msg + datas + Checksum (1 octet codé en chaîne hexadécimale) | '09' = 9 octets
+ID | Identifiant (ou type) de trame(1 caractère) | 'm' = Trame de commande du maître, 'o' = Réponse d'un oya...
+{datas} | Données propres au type de trame (n octets codés en chaîne hexadécimale) |  Voir chaque type de message
+{Checksum} | Somme de contrôle (1 octet codé en chaîne hexadécimale) | 'AE' = 174
 [STX] | Valeur 2 (Voir table ASCII) |
 
-Nota: L'adresse 'Z' est une adresse spéciale qui ne doit jamais être utilisée sur un réseau. C'est l'adresse initiale du noeud après une programmation du micro avec le #define FORCE_INIT. Toujours revenir à un programme sans ce #define après réinit.
+### Liste des types de trame
 
-Le checksum correspond à la somme modulo 256 de tous les octets envoyée en commençant après le SOH jusqu'aux datas incluses.
+ID | Maître | Esclave | Description
+--- | --- | --- | ---
+m | X | | Trame de commande générale envoyée par le maître
+p | | X | Trame de réponse envoyée par un esclave de type pompe lorsque son adresse est contenue dans la trame de commande générale
+o | | X | Trame de réponse pour un oya (même principe que pour la trame p)
+S | X | | Trame SYNC de synchronisation fin de cycle
+i | X | | Trame PING envoyé par le maître pour tester un esclave en particulier
+y | | X | Trame PONG de réponse d'un esclave à un PING
+t | X | | Trame de RAZ du temps destinée à un esclave
+z | X | | Trame de RAZ du nombre d'erreurs destinée à un esclave
 
-### Liste des fonctions
 
-Fonction | Description | Paramètre | Retour | exemple
---- | --- | --- | --- | ---
-'1' | Actionner une pompe | 1= ON, 0= OFF | [SOH]{addr}1{Status}{Temp}{Hum>]{Cs>][STX] | [SOH]A100[<Cs>][STX] => OFF, [SOH]A101[<Cs>][STX] => ON
-'2' | Actionner une électrovanne | 1= ON, 0= OFF | [SOH]{addr}1{Status}{Temp}{Hum}{Cs}[STX] | [SOH]B200{Cs}[STX] => OFF, [SOH]B201{Cs}[STX] => ON
-'@' | Changer l'adresse du noeud | code ascii de la nouvelle adresse (codé en chaîne hexa) | [SOH]{nouvelle addr}@{Status}{Nouvelle addr}{Cs}[STX] | [SOH]Z@59{Cs}[STX] => Le noeud 'Z' devient 'Y' (Ascii 89 / 59H)
-'f' | Changer la fonction principale du noeud | code ascii de la nouvelle fonction (codé en chaîne hexa) | | [SOH]Zf31{Cs}[STX] => Le noeud 'A' devient une pompe '1'
-'e' | Activer ou non le noeud (un noeud désactivé ne commandera pas sa pompe ou son électrovanne) | "01" pour activer ou "00" pour désactiver | | [SOH]Ae01{Cs}[STX] => Le noeud 'A' est activé
-'s' | Retourne le temps en s d'actionnement de la pompe ou de l'électrovanne | Laisser à "00"  | | [SOH]As00{Cs}[STX]
-'S' | Remet à zéro le compteur de temps | Laisser à "00" | | [SOH]AS00{Cs}[STX]
-'r' | Retourne les compteurs d'erreur réseau du noeud| Laisser à "00" | | [SOH]Ar00{Cs}[STX]
-'R' | Remet à zéro les compteurs d'erreurs | Laisser à "00" | | [SOH]AR00{Cs}[STX]
-'p' | Ping | Valeur quelconque entre '00' et 'FF' | Echo de la valeur passée en paramètre | [SOH]Ap09{Cs}[STX] -> Réponse: [SOH]Ap09{Cs}[STX]
+
+#define STATUS_CMD     		(0x01)
+#define STATUS_ON     		(0x02)
+#define STATUS_LVL_LOW    	(0x04)
+#define STATUS_LVL_HIGH   	(0x08)
+
+
+#define ADDR_SYNC		'S'		///< Synchro fin de cycle (pour laisser du temps aux esclave de faire leur traitement)
+
+

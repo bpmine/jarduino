@@ -54,7 +54,9 @@ D'autres commandes, à l'initiative du maître, permettent d'effectuer d'autres 
 
 Toute trame doit avoir le format suivant:
 
-[SOH] | {Length} | {Id} | {Datas} | {Checksum} | [STX]
+![Capteur de niveau](./images/capteur_niveau.png)
+
+[SOH] {Length} {Id} {Datas} {Checksum} [STX]
 
 Elément | Taille | Description | exemple(s)
 --- | --- | ---
@@ -64,6 +66,9 @@ Id | 1 | Identifiant (ou type) de trame(1 caractère) | 'm' = Trame de commande 
 Datas | n=2p | Données propres au type de trame (n octets codés en chaîne hexadécimale) |  Voir chaque type de trame
 Checksum | 2 | Somme de contrôle (1 octet codé en chaîne hexadécimale) | 'AE' = 174
 [STX] | 1 | Valeur 2 (Voir table ASCII) |
+
+Chaque chaine hexadécimale est codée selon la logique du MSB first. C'est à dire que l'on envoi l'octet de poids fort en premier.
+Exemple le mot 16 bits 0xABCD sera transcrit 'ABCD' dans la trame
 
 ### Liste des types de trames
 
@@ -132,4 +137,8 @@ tick |  |
 
 #define ADDR_SYNC		'S'		///< Synchro fin de cycle (pour laisser du temps aux esclave de faire leur traitement)
 
+#### Timing notable
+
+Temps de cycle
+Temps entre le sync et un nouveau cycle
 

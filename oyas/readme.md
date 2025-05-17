@@ -28,9 +28,9 @@ Le système rempli chaque OYA jusqu'au maximum ou bien selon le programme souhai
 
 Notre installation comporte actuellement (en 2024) deux réseaux d'OYAs reliés chacun à une cuve et à son alimentation électrique autonome.
 
-## Réseau 1 : Barbecue
+## Réseau A : Barbecue
 
-![Réseau barbecue](./images/reseau_barbec.png)
+![Réseau Barbecue](./images/reseau_barbec.png)
 
 C'est le plus ancien (mise en service en 2023). Il comporte à ce jour:
 
@@ -56,9 +56,9 @@ Excellent retour aussi en 2024.
 
 A noter cependant la fragilité des électrovannes. Pour fonctionner correctement, il est nécessaire d'avoir une eau d'arrivée sans impureté. En effet, celle ci peut se déposer entre le corps et la membrane de l'électrovanne et bloquer cette dernière en position ouverte. Le tuyau 10mm transparent génère des algues qui sèchent pendant l'hiver lors de l'entreposage du système. Lors de la remise en service au printemps 2023, des morceaux d'algue de l'année précédente se sont détachées et sont venues perturber le fonctionnement des électrovannes.
 
-## Réseau 2 : Réduit
+## Réseau B : Réduit
 
-![Réseau réduit](./images/reseau_reduit.png)
+![Réseau Réduit](./images/reseau_reduit.png)
 
 - 1 maître
 - 1 pompe
@@ -73,6 +73,24 @@ Capacité totale des Oyas | 7x8L
 Alimentation | 1 Panneau solaire 120W + 2 Batteries 12V au plomb
 
 Mis en service en 2024.
+
+## Réseau C : Nord (Derrière la maison)
+
+![Réseau Nord](./images/reseau_nord.png)
+
+- 1 maître
+- 1 pompe
+- 6 OYAs
+
+Caractéristique | Description
+-- | --
+Nombre de nœuds | 7
+Longueur | environ 15 m
+Volume cuve | 150 L
+Capacité totale des Oyas | 6x8L 
+Alimentation | ? (A définir)
+
+Mis en service en 2025.
 
 ## Pilotage par Wifi
 

@@ -54,16 +54,16 @@ D'autres commandes, à l'initiative du maître, permettent d'effectuer d'autres 
 
 Toute trame doit avoir le format suivant:
 
-[SOH] {Length} {ID} {datas} {Checksum} [STX]
+[SOH] | {Length} | {Id} | {Datas} | {Checksum} | [STX]
 
-Elément | Description | exemple(s)
+Elément | Taille | Description | exemple(s)
 --- | --- | ---
-SOH | Valeur 1 (Voir table ASCII) | 
-Length | Taille de la trame comprenant Length + ID msg + datas + Checksum (1 octet codé en chaîne hexadécimale) | '09' = 9 octets
-ID | Identifiant (ou type) de trame(1 caractère) | 'm' = Trame de commande du maître, 'o' = Réponse d'un oya...
-{datas} | Données propres au type de trame (n octets codés en chaîne hexadécimale) |  Voir chaque type de trame
-{Checksum} | Somme de contrôle (1 octet codé en chaîne hexadécimale) | 'AE' = 174
-[STX] | Valeur 2 (Voir table ASCII) |
+SOH | 1 | Valeur 1 (Voir table ASCII) | 
+Length | 2 | Taille de la trame comprenant Length + ID msg + datas + Checksum (1 octet codé en chaîne hexadécimale) | '09' = 9 octets
+Id | 1 | Identifiant (ou type) de trame(1 caractère) | 'm' = Trame de commande du maître, 'o' = Réponse d'un oya...
+Datas | n=2p | Données propres au type de trame (n octets codés en chaîne hexadécimale) |  Voir chaque type de trame
+Checksum | 2 | Somme de contrôle (1 octet codé en chaîne hexadécimale) | 'AE' = 174
+[STX] | 1 | Valeur 2 (Voir table ASCII) |
 
 ### Liste des types de trames
 

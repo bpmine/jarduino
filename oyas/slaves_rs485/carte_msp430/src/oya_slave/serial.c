@@ -81,27 +81,7 @@ __interrupt void USART0_TX_ISR(void)
 __interrupt void USART0_RX_ISR(void)
 {
     unsigned char dta=U0RXBUF;
-
     frames_on_receive_byte(&rx,dta);
-
-    /*if (dta==SOH)
-        rx.pos=0;
-
-    else if ( (rx.pos==0) && (dta!=SOH) )
-        return;
-
-    rx.data[rx.pos]=dta;
-    rx.pos++;
-
-    if (dta==STX)
-    {
-        rx.size=rx.pos;
-        frames_on_receive(&rx);
-    }
-    else if (rx.pos >= MAX_BUFFER_SIZE )
-    {
-        rx.pos=0;
-    }*/
 }
 
 void serial_init(int speed)

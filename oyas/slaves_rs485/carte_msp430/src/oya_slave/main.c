@@ -13,6 +13,9 @@ volatile unsigned char g_cmd=0;
 volatile unsigned char g_cycle_test=0;
 volatile unsigned short g_power_dv=0;
 
+volatile unsigned short g_time_s=0;
+volatile unsigned short g_errs=0;
+
 inline void micro_set_internal_1MHz(void)
 {
     // Clock configuration
@@ -94,7 +97,7 @@ inline void micro_init(void)
 
 
     serial_init(9600);
-   // tick_init();
+    tick_init();
 
     adc_init();
 
@@ -118,7 +121,6 @@ void _boot_blink(void)
 
 void frames_on_receive_sync(void)
 {
-
 }
 
 void frames_on_receive_cmds(unsigned short cmds,unsigned char addr)
@@ -132,10 +134,8 @@ void frames_on_receive_cmds(unsigned short cmds,unsigned char addr)
 
         if (addr==g_slaveAddr)
         {
-            unsigned short tick_ms=0;
-            unsigned short time_s=0;
+            unsigned short tick_ms=tick_getu16_ms();
             unsigned char status=0;
-            unsigned short errs=0;
 
             if (g_High)
                 status|=STATUS_LVL_HIGH;
@@ -146,14 +146,14 @@ void frames_on_receive_cmds(unsigned short cmds,unsigned char addr)
             if (P3OUT & PIN_CMD_EV)
                 status|=STATUS_ON;
 
-            serial_send_oya(status,tick_ms,g_power_dv,time_s,errs);
+            serial_send_oya(status,tick_ms,g_power_dv,g_time_s,g_errs);
         }
     }
 }
 
 void frames_on_receive_ping(unsigned char val)
 {
-
+    serial_send_pong(val);
 }
 
 
@@ -168,6 +168,8 @@ int main(void)
     g_Low=0;
     g_cmd=0;
     g_power_dv=0;
+    g_time_s=0;
+    g_errs=0;
 
     g_slaveAddr=read_address();
     while ( (g_slaveAddr==0) || (g_slaveAddr==15) )
@@ -180,7 +182,7 @@ int main(void)
         g_slaveAddr=read_address();
     }
 
-    //_boot_blink();
+    _boot_blink();
 
 	while (1)
 	{
@@ -188,7 +190,6 @@ int main(void)
         g_Low=(P3IN&PIN_CPT_LVL_LOW)==PIN_CPT_LVL_LOW?1:0;
 
         g_power_dv=adc_voltage_read();
-
 
         if (g_High)
         {
@@ -212,5 +213,14 @@ int main(void)
             P3OUT &= ~PIN_CMD_EV;
 
 	    serial_tick();
+	    tick_cycle();
+
+	    if ( (IS_RISE_1S) && (g_cmd==1) )
+	        g_time_s++;
+
+	    /*if (IS_RISE_2S)
+	    {
+	        serial_send_pong(45);
+	    }*/
 	}
 }

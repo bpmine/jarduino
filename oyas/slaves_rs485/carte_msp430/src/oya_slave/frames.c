@@ -148,6 +148,8 @@ static void _frames_end_build(T_FRAME *pFrm)
   _frames_pack_cs(pFrm);
   _frames_pack(pFrm,STX);
   _frames_calc_size(pFrm);
+
+  pFrm->size=pFrm->pos;
 }
 
 static void _frames_pack_common(T_FRAME *pFrm,unsigned char addr,unsigned char status,unsigned short tick_ms,unsigned char volt,unsigned short time_s,unsigned short errs)

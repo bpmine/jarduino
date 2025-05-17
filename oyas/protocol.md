@@ -59,7 +59,7 @@ Toute trame doit avoir le format suivant:
 ![Trame](./images/trame.png)
 
 Elément | Taille | Description | exemple(s)
---- | --- | ---
+--- | --- | --- | ---
 SOH | 1 | Valeur 1 (Voir table ASCII) | 
 LEN | 2 | Taille de la trame comprenant Length + ID msg + datas + Checksum (1 octet codé en chaîne hexadécimale) | '09' = 9 octets
 ID | 1 | Identifiant (ou type) de trame(1 caractère) | 'm' = Trame de commande du maître, 'o' = Réponse d'un oya...

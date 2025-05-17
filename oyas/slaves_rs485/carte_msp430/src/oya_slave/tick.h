@@ -32,7 +32,6 @@ extern volatile unsigned short g_edges_flgs;
 extern void tick_init(void);
 
 extern unsigned long tick_get_ms(void);
-extern unsigned short tick_getu16_ms(void);
 extern unsigned long tick_get_s(void);
 extern unsigned long tick_delta_ms(unsigned long t0_ms);
 extern unsigned long tick_delta_s(unsigned long t0_s);

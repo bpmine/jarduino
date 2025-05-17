@@ -11,7 +11,6 @@
 #define _IS_TEMP(mask)      _tick_flgs_div & (mask)
 
 volatile unsigned long g_tick_1ms=0;
-volatile unsigned short g_ticku16_1ms=0;
 volatile unsigned long g_tick_1s=0;
 volatile unsigned short g_tick_flgs=0;
 volatile unsigned short g_edges_flgs=0;
@@ -23,8 +22,6 @@ volatile unsigned char g_tick_1ms_lock=0;
 volatile unsigned long g_tick_1ms_latched=0;
 volatile unsigned char g_tick_1s_lock=0;
 volatile unsigned long g_tick_1s_latched=0;
-volatile unsigned char g_ticku16_1ms_lock=0;
-volatile unsigned short g_ticku16_1ms_latched=0;
 
 volatile unsigned short _previous_flgs=0;
 
@@ -32,17 +29,12 @@ volatile unsigned short _previous_flgs=0;
 __interrupt void Timer_A_ISR(void)
 {
     g_tick_1ms++;
-    g_ticku16_1ms++;
     _count_til_250ms++;
 
     _TGL_TICK(TICK_1MS);
 
     if (g_tick_1ms_lock==0)
         g_tick_1ms_latched=g_tick_1ms;
-
-    if (g_ticku16_1ms_lock==0)
-        g_ticku16_1ms_latched=g_ticku16_1ms;
-
     if (g_tick_1s_lock==0)
         g_tick_1s_latched=g_tick_1s;
 
@@ -79,7 +71,6 @@ void tick_init(void)
     TACCTL0 = CCIE; // Activation de l'interruption sur TACCR0
 
     g_tick_1ms=0;
-    g_ticku16_1ms=0;
     g_tick_1s=0;
     g_tick_flgs=0;
     g_edges_flgs=0;
@@ -153,15 +144,6 @@ void tick_delay_s(unsigned long delay_s)
     {
         delta_s=tick_delta_s(t0);
     }
-}
-
-unsigned short tick_getu16_ms(void)
-{
-    g_ticku16_1ms_lock=1;
-    unsigned short t=g_ticku16_1ms_latched;
-    g_ticku16_1ms_lock=0;
-
-   return t;
 }
 
 void tick_cycle(void)

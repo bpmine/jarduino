@@ -5,6 +5,8 @@
 #include "frames.h"
 #include "pins.h"
 
+#define TIMEOUT_MS  (5000)
+
 volatile unsigned char g_slaveAddr=0;
 volatile unsigned char g_High=0;
 volatile unsigned char g_Low=0;
@@ -13,14 +15,17 @@ volatile unsigned char g_cmd=0;
 volatile unsigned char g_cycle_test=0;
 volatile unsigned short g_power_dv=0;
 
+volatile unsigned short g_tick_s=0;
 volatile unsigned short g_time_s=0;
 volatile unsigned short g_errs=0;
+volatile unsigned char g_comm_alive=0;
+
+volatile unsigned long g_comm_tick0_ms=0;
 
 inline void micro_set_internal_1MHz(void)
 {
-    // Clock configuration
-    DCOCTL = DCO2|DCO1|DCO0;              /// 7th frequency for DCO (1MHz)
-    BCSCTL1 = XT2OFF|RSEL2|RSEL1|RSEL0|XTS;      /// 7th nominal frequency, XT2 off
+    DCOCTL = DCO2|DCO1|DCO0;                /// 7th frequence pour le DCO (1MHz)
+    BCSCTL1 = XT2OFF|RSEL2|RSEL1|RSEL0|XTS; /// 7th frequence nominale, XT2 off
     BCSCTL2 = 0;
 }
 
@@ -101,7 +106,7 @@ inline void micro_init(void)
 
     adc_init();
 
-    _EINT();                    ///< Enable interrupts
+    _EINT();                        ///< Enable interrupts
 }
 
 void _boot_blink(void)
@@ -121,6 +126,7 @@ void _boot_blink(void)
 
 void frames_on_receive_sync(void)
 {
+    g_comm_tick0_ms=tick_get_ms();
 }
 
 void frames_on_receive_cmds(unsigned short cmds,unsigned char addr)
@@ -134,7 +140,6 @@ void frames_on_receive_cmds(unsigned short cmds,unsigned char addr)
 
         if (addr==g_slaveAddr)
         {
-            unsigned short tick_ms=tick_getu16_ms();
             unsigned char status=0;
 
             if (g_High)
@@ -146,14 +151,17 @@ void frames_on_receive_cmds(unsigned short cmds,unsigned char addr)
             if (P3OUT & PIN_CMD_EV)
                 status|=STATUS_ON;
 
-            serial_send_oya(status,tick_ms,g_power_dv,g_time_s,g_errs);
+            serial_send_oya(status,g_tick_s,g_power_dv,g_time_s,g_errs);
         }
     }
+
+    g_comm_tick0_ms=tick_get_ms();
 }
 
 void frames_on_receive_ping(unsigned char val)
 {
     serial_send_pong(val);
+    g_comm_tick0_ms=tick_get_ms();
 }
 
 
@@ -184,28 +192,14 @@ int main(void)
 
     _boot_blink();
 
+    g_comm_tick0_ms=tick_get_ms();
+
 	while (1)
 	{
         g_High=(P3IN&PIN_CPT_LVL_HIGH)==PIN_CPT_LVL_HIGH?1:0;
         g_Low=(P3IN&PIN_CPT_LVL_LOW)==PIN_CPT_LVL_LOW?1:0;
 
         g_power_dv=adc_voltage_read();
-
-        if (g_High)
-        {
-            P2OUT |= PIN_LED1;
-        }
-        else if (g_Low)
-        {
-            if (IS_TICK_250MS)
-                P2OUT |= PIN_LED1;
-            else
-                P2OUT &= ~PIN_LED1;
-        }
-        else
-        {
-            P2OUT &= ~PIN_LED1;
-        }
 
         if (g_cmd==1)
             P3OUT |= PIN_CMD_EV;
@@ -215,12 +209,46 @@ int main(void)
 	    serial_tick();
 	    tick_cycle();
 
-	    if ( (IS_RISE_1S) && (g_cmd==1) )
-	        g_time_s++;
-
-	    /*if (IS_RISE_2S)
+	    if ( IS_RISE_1S )
 	    {
-	        serial_send_pong(45);
-	    }*/
+	        g_tick_s++;
+
+	        if (g_cmd==1)
+	            g_time_s++;
+	    }
+
+	    if ( tick_delta_ms(g_comm_tick0_ms) > TIMEOUT_MS )
+	    {
+	        g_comm_alive=0;
+	        g_comm_tick0_ms=tick_get_ms()-TIMEOUT_MS-1000;
+	        g_cmd=0;
+	    }
+	    else
+	    {
+	        g_comm_alive=1;
+	    }
+
+	    if (g_comm_alive)
+	    {
+            if (g_cmd)
+            {
+                if (IS_TICK_250MS)
+                    P2OUT |= PIN_LED1;
+                else
+                    P2OUT &= ~PIN_LED1;
+            }
+            else
+            {
+                P2OUT |= PIN_LED1;
+            }
+	    }
+	    else
+	    {
+            if (IS_TICK_4S)
+                P2OUT |= PIN_LED1;
+            else
+                P2OUT &= ~PIN_LED1;
+	    }
+
 	}
 }

@@ -105,6 +105,12 @@ class MyApp:
         self.sync_check.pack(pady=5)
         self.sync_var.set(False)
 
+        # Checkbox for "pompe"
+        self.pump_var = tk.BooleanVar()
+        self.pump_check = tk.Checkbutton(root, text="Activation pompe", variable=self.pump_var)
+        self.pump_check.pack(pady=5)
+        self.pump_var.set(False)
+
         # Checkbox for "ON/OFF"
         self.on_var = tk.BooleanVar()
         self.on_check = tk.Checkbutton(root, text="ON/OFF", variable=self.on_var)
@@ -149,11 +155,16 @@ class MyApp:
             addr = 0 if self.address_entry.get()=='' else int(self.address_entry.get())
             cmds_active = self.cmds_var.get()
             sync_active = self.sync_var.get()
+            pump_active=self.pump_var.get()
             on=self.on_var.get()
 
             if addr>0 and addr<15:
                 if on==True:
                     cmd=1<<addr
+                    
+                    if pump_active==True:
+                        cmd|=0x02
+                        
                 else:
                     cmd=0
                     

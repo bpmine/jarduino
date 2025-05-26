@@ -5,7 +5,7 @@
 #ifndef FRAMES_H_
 #define FRAMES_H_
 
-#define MAX_BUFFER_SIZE    (50)
+#define MAX_BUFFER_SIZE    (40)
 
 typedef struct
 {

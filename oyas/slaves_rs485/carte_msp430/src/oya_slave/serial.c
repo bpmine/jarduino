@@ -5,31 +5,28 @@
 #include "prot.h"
 
 #include "pins.h"
+#include "tick.h"
 
 #define OUT_UTXD0       0x10    // P3.4
 #define IN_URXD0        0x20    // P3.5
 
-#define SER_CT_TX   (0x01)
-
-
 T_FRAME rx;
 T_FRAME tx;
 
-unsigned char _serial_ctrl=0;
-unsigned char _addr=0;
-unsigned char _flgPending=0;
+#define TX_IDLE     (0)
+#define TX_TOSEND   (1)
+#define TX_SENDING  (2)
+#define TX_LAST     (3)
+
+volatile unsigned char _serial_tx_state=0;
 
 void serial_send(unsigned char *datas,unsigned char nb)
 {
-    if (_serial_ctrl&SER_CT_TX)
+    if (_serial_tx_state!=TX_IDLE)
         return;
 
     if (nb==0)
         return;
-
-    P3OUT|=PIN_TX_EN;
-    _flgPending=1;
-    _delay_cycles(10);
 
     int i;
     for (i=0;i<nb;i++)
@@ -38,41 +35,66 @@ void serial_send(unsigned char *datas,unsigned char nb)
     }
     tx.pos=1;
     tx.size=nb;
-    _serial_ctrl|=SER_CT_TX;
-    U0TXBUF=datas[0];
-    IE2 |= UTXIE0;
+
+    _serial_tx_state=TX_TOSEND;
 }
 
 void serial_tick(void)
 {
-    if (_flgPending==2)
+    switch (_serial_tx_state)
     {
-        if (U0TCTL & TXEPT)
+        case TX_TOSEND:
         {
-            _delay_cycles(10);
-            P3OUT&=~PIN_TX_EN;
-            _flgPending=0;
+            tick_delay_ms(5);
+            P3OUT|=PIN_TX_EN;
+            tick_delay_ms(5);
+            _serial_tx_state=TX_SENDING;
+            U0TXBUF=tx.data[0];
+            IE2 |= UTXIE0;
+            break;
         }
+        case TX_SENDING:
+        {
+            break;
+        }
+        case TX_LAST:
+        {
+            while (!(U0TCTL & TXEPT));
+            tick_delay_ms(2);
+            P3OUT&=~PIN_TX_EN;
+            _serial_tx_state=TX_IDLE;
+            break;
+        }
+
     }
 }
 
 #pragma vector=USART0TX_VECTOR
 __interrupt void USART0_TX_ISR(void)
 {
-    if (_serial_ctrl & SER_CT_TX)
+    switch (_serial_tx_state)
     {
-        if (tx.pos<tx.size)
+        case TX_SENDING:
         {
-            U0TXBUF = tx.data[tx.pos];
-            tx.pos++;
+            if (tx.pos<tx.size)
+            {
+                U0TXBUF = tx.data[tx.pos];
+                tx.pos++;
+            }
+            else
+            {
+                tx.size=0;
+                tx.pos=0;
+                _serial_tx_state=TX_LAST;
+            }
+            break;
         }
-        else
+        default:
         {
             tx.size=0;
             tx.pos=0;
-            _serial_ctrl &= ~SER_CT_TX;
             IE2 &= ~UTXIE0;
-            _flgPending=2;
+            break;
         }
     }
 }
@@ -101,9 +123,7 @@ void serial_init(int speed)
 
     frames_init(&tx);
     frames_init(&rx);
-    _serial_ctrl=0;
-    _addr=0;
-    _flgPending=0;
+    _serial_tx_state=TX_IDLE;
 
     UCTL0 &= ~SWRST;
     IFG2 &= ~(URXIFG0 | UTXIFG0);
@@ -111,15 +131,15 @@ void serial_init(int speed)
     IE2 |= URXIE0;
 }
 
-void serial_send_oya(unsigned char status,unsigned short tick_ms,unsigned short volt,unsigned short time_s,unsigned short errs)
+void serial_send_oya(unsigned char addr,unsigned char status,unsigned short tick_ms,unsigned short volt,unsigned short time_s,unsigned short errs)
 {
-    frames_build_oya(&tx,_addr,status,tick_ms,volt,time_s,errs);
+    frames_build_oya(&tx,addr,status,tick_ms,volt,time_s,errs);
     serial_send(tx.data,tx.size);
 }
 
-void serial_send_pump(unsigned char status,unsigned short tick_ms,unsigned short volt,unsigned short time_s,unsigned short errs,unsigned short flow)
+void serial_send_pump(unsigned char addr,unsigned char status,unsigned short tick_ms,unsigned short volt,unsigned short time_s,unsigned short errs,unsigned short flow)
 {
-    frames_build_pump(&tx,_addr,status,tick_ms,volt,time_s,errs,flow);
+    frames_build_pump(&tx,addr,status,tick_ms,volt,time_s,errs,flow);
     serial_send(tx.data,tx.size);
 }
 

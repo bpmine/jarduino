@@ -44,7 +44,7 @@ def read_serial_data(port):
         with serial.Serial(port, baudrate=9600, bytesize=8, parity=serial.PARITY_NONE, stopbits=1, timeout=1) as ser:
             print(f"Lecture du port série {port}...")
             while True:
-                data = ser.read(1)  # Lire un octet
+                data = ser.read_until(b'\x02')
                 if data:
                     print(f"Donnée reçue: {data.hex()} ({data})")
                     ser.write(b'B')

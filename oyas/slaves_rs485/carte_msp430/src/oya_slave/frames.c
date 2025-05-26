@@ -27,7 +27,7 @@ static void _frames_pack_common(T_FRAME *pFrm,unsigned char addr,unsigned char s
 static unsigned char _frames_on_receive_frame(T_FRAME *pFrame);
 
 
-static unsigned char _frames_hex_val(unsigned char hex)
+static inline unsigned char _frames_hex_val(unsigned char hex)
 {
   if ( (hex>='0') && (hex<='9') )
   {
@@ -43,12 +43,12 @@ static unsigned char _frames_hex_val(unsigned char hex)
   }
 }
 
-static unsigned char _frames_decode_hex_byte(unsigned char a, unsigned char b)
+static inline unsigned char _frames_decode_hex_byte(unsigned char a, unsigned char b)
 {
   return _frames_hex_val(a)*16 + _frames_hex_val(b);
 }
 
-static char _frames_tohexchar(unsigned char b)
+static inline char _frames_tohexchar(unsigned char b)
 {
     b = b & 0xF;
     if (b <= 9)
@@ -65,17 +65,17 @@ static char _frames_tohexchar(unsigned char b)
     }
 }
 
-static void _frames_enableCS(T_FRAME *pFrm)
+static inline void _frames_enableCS(T_FRAME *pFrm)
 {
     pFrm->cs_enabled=1;
 }
 
-static void _frames_disableCS(T_FRAME *pFrm)
+static inline void _frames_disableCS(T_FRAME *pFrm)
 {
     pFrm->cs_enabled=0;
 }
 
-static void _frames_pack(T_FRAME *pFrm,unsigned char b)
+static inline void _frames_pack(T_FRAME *pFrm,unsigned char b)
 {
     if (pFrm->pos < MAX_BUFFER_SIZE)
     {
@@ -86,19 +86,19 @@ static void _frames_pack(T_FRAME *pFrm,unsigned char b)
     }
 }
 
-static void _frames_pack_byte(T_FRAME *pFrm,unsigned char b)
+static inline void _frames_pack_byte(T_FRAME *pFrm,unsigned char b)
 {
     _frames_pack(pFrm,_frames_tohexchar((b >> 4) & 0x0F));
     _frames_pack(pFrm,_frames_tohexchar(b & 0x0F));
 }
 
-static void _frames_pack_sbyte(T_FRAME *pFrm,char b)
+static inline void _frames_pack_sbyte(T_FRAME *pFrm,char b)
 {
     unsigned char uc = (unsigned char)b;
     _frames_pack_byte(pFrm,uc);
 }
 
-static void _frames_pack_word(T_FRAME *pFrm,unsigned short word)
+static inline void _frames_pack_word(T_FRAME *pFrm,unsigned short word)
 {
     _frames_pack(pFrm,_frames_tohexchar((word >> 12) & 0x0F));
     _frames_pack(pFrm,_frames_tohexchar((word >> 8) & 0x0F));
@@ -106,13 +106,13 @@ static void _frames_pack_word(T_FRAME *pFrm,unsigned short word)
     _frames_pack(pFrm,_frames_tohexchar(word & 0x0F));
 }
 
-static void _frames_pack_cs(T_FRAME *pFrm)
+static inline void _frames_pack_cs(T_FRAME *pFrm)
 {
     _frames_disableCS(pFrm);
     _frames_pack_byte(pFrm,pFrm->cs);
 }
 
-static void _frames_calc_size(T_FRAME *pFrm)
+static inline void _frames_calc_size(T_FRAME *pFrm)
 {
   _frames_disableCS(pFrm);
   unsigned char tmp = pFrm->pos;
@@ -122,7 +122,7 @@ static void _frames_calc_size(T_FRAME *pFrm)
   pFrm->pos = tmp;
 }
 
-static void _frames_reset(T_FRAME *pFrm)
+static inline void _frames_reset(T_FRAME *pFrm)
 {
     int i;
     for (i=0;i<MAX_BUFFER_SIZE;i++)
@@ -134,7 +134,7 @@ static void _frames_reset(T_FRAME *pFrm)
     pFrm->size=0;
 }
 
-static void _frames_start_build(T_FRAME *pFrm,char msg)
+static inline void _frames_start_build(T_FRAME *pFrm,char msg)
 {
   _frames_reset(pFrm);
   _frames_pack(pFrm,SOH);
@@ -143,7 +143,7 @@ static void _frames_start_build(T_FRAME *pFrm,char msg)
   _frames_pack(pFrm,msg);
 }
 
-static void _frames_end_build(T_FRAME *pFrm)
+static inline void _frames_end_build(T_FRAME *pFrm)
 {
   _frames_pack_cs(pFrm);
   _frames_pack(pFrm,STX);

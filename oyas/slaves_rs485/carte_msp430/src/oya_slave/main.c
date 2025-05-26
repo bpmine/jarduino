@@ -151,7 +151,7 @@ void frames_on_receive_cmds(unsigned short cmds,unsigned char addr)
             if (P3OUT & PIN_CMD_EV)
                 status|=STATUS_ON;
 
-            serial_send_oya(status,g_tick_s,g_power_dv,g_time_s,g_errs);
+            serial_send_oya(g_slaveAddr,status,g_tick_s,g_power_dv,g_time_s,g_errs);
         }
     }
 
@@ -179,6 +179,7 @@ int main(void)
     g_time_s=0;
     g_errs=0;
 
+    /// @todo bloquer si adresse 1 car pas de pompe possible !!!!
     g_slaveAddr=read_address();
     while ( (g_slaveAddr==0) || (g_slaveAddr==15) )
     {

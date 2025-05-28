@@ -12,6 +12,7 @@
     (comment 1 "Extension Wifi (ESP01)")
     (comment 2 "Inteface LEDs RGB - Bouton - RTC")
     (comment 3 "Alim 12V - Sortie 12V pilotable - Bus RS485")
+    (comment 4 "Maître RS485 avec alim 12 V commutée")
   )
 
   (lib_symbols

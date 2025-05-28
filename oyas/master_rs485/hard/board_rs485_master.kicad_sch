@@ -6,8 +6,8 @@
 
   (title_block
     (title "Commande des OYA - Maître RS485")
-    (date "2024-05-06")
-    (rev "B0")
+    (date "2025-05-25")
+    (rev "C0")
     (company "BPC")
     (comment 1 "Extension Wifi (ESP01)")
     (comment 2 "Inteface LEDs RGB - Bouton - RTC")
@@ -25,6 +25,13 @@
     (fill (type none))
     (effects (font (size 1.27 1.27)) (justify left top))
     (uuid ce42a06c-0733-4bf9-88ff-0399399f9632)
+  )
+  (text_box "Version Cx:\n- Manque 330 entre pnp et npn Wifi et LEDs"
+    (at 127 189.23 0) (size 48.26 6.35)
+    (stroke (width 0) (type default))
+    (fill (type none))
+    (effects (font (size 1.27 1.27)) (justify left top))
+    (uuid ec16c270-6f45-4833-af51-e4a1ca0d5b11)
   )
 
   (text "BUS RS485 + Sortie alim 12V" (at 130.81 139.7 0)

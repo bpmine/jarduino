@@ -180,8 +180,6 @@ Le maître des OYAs permet de commander une pompe et plusieurs électrovannes po
 
 ## Protocole réseau (RS485)
 
-### Principe
-
 Le réseau est de type RS485. Il comporte un maître et plusieurs esclaves. Chaque esclave a une adresse unique (de 1 à 14 ou 1 à E en hexadécimal).
 
 Seul le maître peut initier une communication. Un seul esclave peut répondre à une trame émise par le maître.
@@ -204,17 +202,7 @@ Durant un cycle, le maître envoie autant de trames __*"Commandes"*__ qu'il y'a 
 
 Après un __*"Sync"*__, le maître doit impérativement attendre un temps minimum avant d'initier un nouveau cycle. Cela permet aux esclaves d'effectuer des traitements.
 
-#### Echange Commandes
+Pour plus de détails, voir 
 
-##### Trame Commandes
 
-##### Trame Pompe
 
-##### Trame Oya
-
-#### Echange Ping/Pong
-
-#### Timing notable
-
-Temps de cycle
-Temps entre le sync et un nouveau cycle

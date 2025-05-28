@@ -1,3 +1,19 @@
+/**
+ * @file jard_rs485_master_test_standalone.ino
+ * 
+ * @brief Programme de test PRODUCTION pour la carte maitre des oyas
+ * 
+ * - Brancher un bandeau à LEDs 5V de 16 LEDs minimum
+ * - Connecter un ESP01 avec le programme de test Wifi qui répond pong à ping sur le port serie
+ * - Alimenter la carte en 12V ainsi que le POWER OYAs (même alim)
+ * - Connecter une LED avec 1k sur le 12V commute du bus (Entre 1 et 4)
+ * - Connecter un Usb serie/TTL sur le port de LOG / Serial3
+ * - Connecter un USB/485 sur A/B du bus
+ * 
+ * Sur le PC faire tourner le programme loop.py entre les deux ports COMs détectés
+ * 
+ * Voir les etapes de test dans le code et suite les instructions sur le terminal arduino (Serial 0)...
+*/
 #include "pins.h"
 
 #include <FastLED.h>
@@ -31,6 +47,7 @@ void test_set_led(int inx,int r=0,int g=255,int b=0)
 
 void go_in_error(int stp)
 {
+  Serial.println(">> ERROR! <<");
   test_set_led(stp,255,0,0);
   while(1)
   {
@@ -44,9 +61,11 @@ void test_leds_rgb(void)
 {
   Serial.println("Test LEDs RGB...");
   digitalWrite(PIN_PWR_LEDS,HIGH);
+  digitalWrite(PIN_PWR_LEDS2,LOW);
   delay(1000);
 
   digitalWrite(PIN_PWR_LEDS,LOW);
+  digitalWrite(PIN_PWR_LEDS2,HIGH);
   for (int i=0;i<NUM_LEDS;i++)
   {
     for (int j=0;j<NUM_LEDS;j++)
@@ -80,6 +99,7 @@ void test_rtc(void)
 
   #ifdef INIT_TIME
     _rtc.adjust(DateTime(__DATE__, __TIME__));
+    Serial.println("INIT TIME!");
   #endif
   
    DateTime now = _rtc.now();
@@ -95,7 +115,7 @@ void test_rtc(void)
    Serial.print("Date: ");
    Serial.println(strDte);
 
-   if (now.year()!=2024)
+   if (now.year()!=2025)
    {
     Serial.println("Date lue NOK!");
     go_in_error(STEP_RTC);
@@ -103,39 +123,64 @@ void test_rtc(void)
    test_set_led(STEP_RTC,0,255,0); 
 }
 
+/**
+ * @brief Test RS485
+ * 
+ * Rappel des ports serie:
+ * Serial 0: USB
+ * Serial 1: RS485
+ * Serial 2: Wifi
+ * Serial 3: Log
+*/
 void test_send_rs485(void)
 {
-  Serial.println("Test envoi RS485...");
+  Serial.println("Test RS485...");
   test_set_led(STEP_RS485,0,0,255);
   Serial1.begin(9600);
   Serial3.begin(9600);
+  delay(500);
 
-  Serial.println("Send and receive MOTIF...");
-  digitalWrite(PIN_TX_EN,HIGH);
+  Serial.println("  Purge RX buffers...");
+  digitalWrite(PIN_TX_EN,LOW);
   delay(10);
   while (Serial3.available()>0)
-    Serial3.read();  
-  Serial1.print("MOTIF");
+    Serial1.read();
+  while (Serial1.available()>0)
+    Serial3.read();
+
+  Serial.println("  Send MOTIF on Log");
+  Serial3.print("MOTIF");
   delay(100);
 
-  if (Serial3.available()<5)
+  Serial.println("  Check MOTIF received on RS485/Serial 3");
+  if (Serial1.available()<5)
     go_in_error(STEP_RS485);
 
-  String recv=Serial3.readString();  
+  String recv=Serial1.readString();  
   Serial.println(recv);  
   if (recv!="MOTIF")
     go_in_error(STEP_RS485);
 
-  Serial.println("TX Disabled...");
-  digitalWrite(PIN_TX_EN,LOW);
+  Serial.println("  RS485 RX was OK!");
+  
+  delay(500);
+  digitalWrite(PIN_TX_EN,HIGH);
   delay(50);
-
-  while (Serial3.available()>0)
-    Serial3.read();  
-  Serial1.println("DESACTIVE");
+  Serial.println("  Send FITOM on RS485");
+  Serial1.print("FITOM");
   delay(100);
-  if (Serial3.available()!=0)
+  digitalWrite(PIN_TX_EN,LOW);
+
+  Serial.println("  Check FITOM on log");
+  if (Serial3.available()<5)
     go_in_error(STEP_RS485);
+
+  recv=Serial3.readString();  
+  Serial.println(recv);  
+  if (recv!="FITOM")
+    go_in_error(STEP_RS485);
+
+  Serial.println("  TX was also OK!\n");
   
   test_set_led(STEP_RS485,0,255,0);   
 }
@@ -174,9 +219,11 @@ void test_pwr_33V(void)
   {    
     test_set_led(STEP_33V,0,0,255);
     digitalWrite(PIN_PWR_WIFI,LOW);
+    digitalWrite(PIN_PWR_WIFI2,HIGH);
     delay(2000);
     test_set_led(STEP_33V,0,0,0);
     digitalWrite(PIN_PWR_WIFI,HIGH);
+    digitalWrite(PIN_PWR_WIFI2,LOW);
     delay(2000);
   }
   test_set_led(STEP_33V,0,255,0);
@@ -188,6 +235,7 @@ void test_wifi_comm(void)
   Serial.println("Test comm wifi...");
   Serial2.begin(9600);
   digitalWrite(PIN_PWR_WIFI,LOW);
+  digitalWrite(PIN_PWR_WIFI2,HIGH);
   delay(5000);
   while (Serial2.available()>0)
     Serial2.read();    
@@ -204,6 +252,7 @@ void test_wifi_comm(void)
     go_in_error(STEP_WIFI);
 
   digitalWrite(PIN_PWR_WIFI,HIGH);
+  digitalWrite(PIN_PWR_WIFI2,LOW);
   test_set_led(STEP_WIFI,0,255,0);
 }
 
@@ -224,9 +273,13 @@ void setup()
 
   pinMode(PIN_PWR_LEDS,OUTPUT);
   digitalWrite(PIN_PWR_LEDS,HIGH);
+  pinMode(PIN_PWR_LEDS2,OUTPUT);
+  digitalWrite(PIN_PWR_LEDS2,LOW);
 
   pinMode(PIN_PWR_WIFI,OUTPUT);
   digitalWrite(PIN_PWR_WIFI,HIGH);
+  pinMode(PIN_PWR_WIFI2,OUTPUT);
+  digitalWrite(PIN_PWR_WIFI2,LOW);
   
   pinMode(PIN_SD_CS,OUTPUT);
   digitalWrite(PIN_SD_CS,LOW);

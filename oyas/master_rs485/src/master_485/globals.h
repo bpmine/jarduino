@@ -1,3 +1,8 @@
+/**
+ * @file globals.h
+ *
+ * @brief Definitions globales / configuration en dur
+**/
 #ifndef GLOBALS_HEADER_INCLUDED
 #define GLOBALS_HEADER_INCLUDED
 

@@ -79,7 +79,7 @@ void setup(void)
     Master.set_config_slaves(0x01FF);
   #endif
   #ifdef NODE_PAUL
-    Master.set_config_slaves(0x1F);
+    Master.set_config_slaves(0x7F);
   #endif
 
   tmrCycle.start();

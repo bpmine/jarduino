@@ -1,7 +1,11 @@
 /**
  * @file pins.h
+ *
  * @brief Definition des broches de la carte Master RS485
-*/
+ *
+ * Serial2: Wifi
+ * Serial3: Log
+**/
 #ifndef PINS_HEADER_INCLUDED
 #define PINS_HEADER_INCLUDED
 
@@ -13,6 +17,6 @@
 #define PIN_PWR_WIFI      (7)     ///< Alimentation module wifi (via pnp)
 #define PIN_PWR_LEDS2     (9)     ///< Alimentation des LEDs (via npn)
 #define PIN_PWR_WIFI2     (10)    ///< Alimentation module wifi (via npn)
-#define PIN_SD_CS         (10)
+
 
 #endif

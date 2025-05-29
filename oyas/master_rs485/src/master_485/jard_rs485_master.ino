@@ -78,6 +78,9 @@ void setup(void)
   #ifdef NODE_REDUIT
     Master.set_config_slaves(0x01FF);
   #endif
+  #ifdef NODE_PAUL
+    Master.set_config_slaves(0x1F);
+  #endif
 
   tmrCycle.start();
   tmrLeds.start();

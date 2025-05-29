@@ -32,7 +32,7 @@ class SpecialFillElmSettings
 /**
  * Pour le cote barbec, les 3 derniers oyas doivent remplir moins (plus petits)
  * */
-#if (defined(NODE_BARBEC) && !defined(NODE_REDUIT))
+#if (defined(NODE_BARBEC) && !defined(NODE_REDUIT) && !defined(NODE_PAUL))
   #define TIMEOUT_LOW_S                      (80)
   #define TIME_FILLING_AFTER_LOW_S           (60)
 
@@ -45,12 +45,16 @@ class SpecialFillElmSettings
    * Pour le cote reduit, les adresses ???  oyas doivent remplir moins (plus petits)
    * @8 et @9 passent a low en 9s puis a high en 44s (Soit 53s pour passer de vide a high)
    * */
-#elif (!defined(NODE_BARBEC) && defined(NODE_REDUIT))
+#elif (!defined(NODE_BARBEC) && defined(NODE_REDUIT) && !defined(NODE_PAUL))
   #define TIMEOUT_LOW_S                      (40)
   #define TIME_FILLING_AFTER_LOW_S           (30)
 
   SpecialFillElmSettings tabSpecialFillElmSettings[]={ };
+#elif (!defined(NODE_BARBEC) && !defined(NODE_REDUIT) && defined(NODE_PAUL))
+  #define TIMEOUT_LOW_S                      (40)
+  #define TIME_FILLING_AFTER_LOW_S           (30)
 
+  SpecialFillElmSettings tabSpecialFillElmSettings[]={ };
 #else
   #error CONFIGURATION INCONNUE !!
 #endif

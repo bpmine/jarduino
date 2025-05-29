@@ -93,7 +93,7 @@ void WifiComm::pubDataInfo(void)
   doc["ons"]=data.on;
   doc["lows"]=data.low;
   doc["highs"]=data.high;
-  doc['flow']=data.flow;
+  doc["flow"]=data.flow;
 
   char dte[40];
   sprintf(dte,"%04d-%02d-%02dT%02d:%02d:%02dZ",

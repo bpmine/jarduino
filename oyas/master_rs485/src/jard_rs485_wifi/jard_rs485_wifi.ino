@@ -20,15 +20,18 @@
 //#define MQTT_TRACE_ON
 
 //#define NODE_MASTER_BARBEC
-#define NODE_MASTER_REDUIT
+//#define NODE_MASTER_REDUIT
+#define NODE_MASTER_PAUL
 //#define NODE_TEST
 
-#if defined(NODE_TEST) && !defined(NODE_MASTER_BARBEC) && !defined(NODE_MASTER_REDUIT)
+#if defined(NODE_TEST) && !defined(NODE_MASTER_BARBEC) && !defined(NODE_MASTER_REDUIT) && !defined(NODE_MASTER_PAUL)
   char NAME[]="test";
-#elif !defined(NODE_TEST) && defined(NODE_MASTER_BARBEC) && !defined(NODE_MASTER_REDUIT)
+#elif !defined(NODE_TEST) && defined(NODE_MASTER_BARBEC) && !defined(NODE_MASTER_REDUIT) && !defined(NODE_MASTER_PAUL)
   char NAME[]="barbec";
-#elif !defined(NODE_TEST) && !defined(NODE_MASTER_BARBEC) && defined(NODE_MASTER_REDUIT)
+#elif !defined(NODE_TEST) && !defined(NODE_MASTER_BARBEC) && defined(NODE_MASTER_REDUIT) && !defined(NODE_MASTER_PAUL)
   char NAME[]="reduit";  
+#elif !defined(NODE_TEST) && !defined(NODE_MASTER_BARBEC) && !defined(NODE_MASTER_REDUIT) && defined(NODE_MASTER_PAUL)
+  char NAME[]="paul";  
 #else
   #error Noeud non defini
 #endif

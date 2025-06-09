@@ -150,7 +150,7 @@ void test_send_rs485(void)
 
   Serial.println("  Send MOTIF on Log");
   Serial3.print("MOTIF");
-  delay(100);
+  delay(200);
 
   Serial.println("  Check MOTIF received on RS485/Serial 3");
   if (Serial1.available()<5)
@@ -168,7 +168,7 @@ void test_send_rs485(void)
   delay(50);
   Serial.println("  Send FITOM on RS485");
   Serial1.print("FITOM");
-  delay(100);
+  delay(200);
   digitalWrite(PIN_TX_EN,LOW);
 
   Serial.println("  Check FITOM on log");
@@ -281,8 +281,6 @@ void setup()
   pinMode(PIN_PWR_WIFI2,OUTPUT);
   digitalWrite(PIN_PWR_WIFI2,LOW);
   
-  pinMode(PIN_SD_CS,OUTPUT);
-  digitalWrite(PIN_SD_CS,LOW);
   /*pinMode(11,INPUT);
   pinMode(12,INPUT);
   pinMode(13,INPUT);*/

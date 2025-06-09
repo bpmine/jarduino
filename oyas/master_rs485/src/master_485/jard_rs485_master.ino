@@ -72,13 +72,13 @@ void setup(void)
 
   Master.begin(&Serial1, PIN_TX_EN);
 
-  #ifdef NODE_BARBEC
+  #ifdef NODE_BARBEC  ///< Barbec: 7 Oyas + 1 Pompe
     Master.set_config_slaves(0x00FF);
   #endif
-  #ifdef NODE_REDUIT
-    Master.set_config_slaves(0x01FF);
+  #ifdef NODE_REDUIT ///< Reduit: 12 Oyas + 1 Pompe
+    Master.set_config_slaves(0x0FFF);
   #endif
-  #ifdef NODE_PAUL
+  #ifdef NODE_PAUL  ///< Paul/Nord: 6 Oyas + 1 Pompe
     Master.set_config_slaves(0x7F);
   #endif
 

@@ -30,29 +30,37 @@ class SpecialFillElmSettings
 };
 
 /**
- * Pour le cote barbec, les 3 derniers oyas doivent remplir moins (plus petits)
+ * COTE BARBEC: @6, @7 et @8 sont des petits Oyas
+ *
+ * Chrono @3: Low en 62s - Niv acceptable 70s apres le low (coupe a 70s alors que 60s ds le code !)
+ * Chrono @4: Low en 8s - Niv final en 57s apres le low (correspond au code)
  * */
 #if (defined(NODE_BARBEC) && !defined(NODE_REDUIT) && !defined(NODE_PAUL))
-  #define TIMEOUT_LOW_S                      (80)
+  #define TIMEOUT_LOW_S                      (100)
   #define TIME_FILLING_AFTER_LOW_S           (60)
 
   SpecialFillElmSettings tabSpecialFillElmSettings[]={
-      SpecialFillElmSettings(6,40,42),
-      SpecialFillElmSettings(7,40,50),
-      SpecialFillElmSettings(8,40,50)
+      SpecialFillElmSettings(6,50,47),
+      SpecialFillElmSettings(7,50,55),
+      SpecialFillElmSettings(8,50,55)
   };
+
   /**
-   * Pour le cote reduit, les adresses ???  oyas doivent remplir moins (plus petits)
+   * COTE REDUIT:
    * @8 et @9 passent a low en 9s puis a high en 44s (Soit 53s pour passer de vide a high)
    * */
 #elif (!defined(NODE_BARBEC) && defined(NODE_REDUIT) && !defined(NODE_PAUL))
-  #define TIMEOUT_LOW_S                      (40)
-  #define TIME_FILLING_AFTER_LOW_S           (30)
+  #define TIMEOUT_LOW_S                      (50)
+  #define TIME_FILLING_AFTER_LOW_S           (35)
 
   SpecialFillElmSettings tabSpecialFillElmSettings[]={ };
+
+ /**
+  * COTE NORD/PAUL:
+  * */
 #elif (!defined(NODE_BARBEC) && !defined(NODE_REDUIT) && defined(NODE_PAUL))
-  #define TIMEOUT_LOW_S                      (40)
-  #define TIME_FILLING_AFTER_LOW_S           (30)
+  #define TIMEOUT_LOW_S                      (50)
+  #define TIME_FILLING_AFTER_LOW_S           (35)
 
   SpecialFillElmSettings tabSpecialFillElmSettings[]={ };
 #else

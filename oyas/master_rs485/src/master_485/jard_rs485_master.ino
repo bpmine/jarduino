@@ -76,7 +76,7 @@ void setup(void)
     Master.set_config_slaves(0x00FF);
   #endif
   #ifdef NODE_REDUIT ///< Reduit: 12 Oyas + 1 Pompe
-    Master.set_config_slaves(0x0FFF);
+    Master.set_config_slaves(0x1FFF);
   #endif
   #ifdef NODE_PAUL  ///< Paul/Nord: 6 Oyas + 1 Pompe
     Master.set_config_slaves(0x7F);

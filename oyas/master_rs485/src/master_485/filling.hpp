@@ -2,6 +2,10 @@
  * @file filling.hpp
  * @brief Gestion du contexte pour le remplissage
  *
+ * 2 Modèles d'OYAs:
+ *   - n x 8L
+ *   - 6 x 10L
+ *
  * */
 #ifndef FILLING_HEADER_INCLIDED
 #define FILLING_HEADER_INCLIDED
@@ -30,7 +34,10 @@ class SpecialFillElmSettings
 };
 
 /**
- * COTE BARBEC: @6, @7 et @8 sont des petits Oyas
+ * COTE BARBEC: 7 OYAs
+ *
+ * - Oyas 10L : @2, @3, @4, @5
+ * - Oyas 8L  : @6, @7 et @8
  *
  * Chrono @3: Low en 62s - Niv acceptable 70s apres le low (coupe a 70s alors que 60s ds le code !)
  * Chrono @4: Low en 8s - Niv final en 57s apres le low (correspond au code)
@@ -40,27 +47,34 @@ class SpecialFillElmSettings
   #define TIME_FILLING_AFTER_LOW_S           (60)
 
   SpecialFillElmSettings tabSpecialFillElmSettings[]={
-      SpecialFillElmSettings(6,50,47),
-      SpecialFillElmSettings(7,50,55),
-      SpecialFillElmSettings(8,50,55)
+      SpecialFillElmSettings(6,60,47),
+      SpecialFillElmSettings(7,60,55),
+      SpecialFillElmSettings(8,60,55)
   };
 
   /**
    * COTE REDUIT:
+   *
+   * - Oyas 8L  : @1,
+   * - Oyas 10L : @2, @3
+   *
    * @8 et @9 passent a low en 9s puis a high en 44s (Soit 53s pour passer de vide a high)
    * */
 #elif (!defined(NODE_BARBEC) && defined(NODE_REDUIT) && !defined(NODE_PAUL))
-  #define TIMEOUT_LOW_S                      (50)
-  #define TIME_FILLING_AFTER_LOW_S           (35)
+  #define TIMEOUT_LOW_S                      (60)
+  #define TIME_FILLING_AFTER_LOW_S           (45)
 
-  SpecialFillElmSettings tabSpecialFillElmSettings[]={ };
+  SpecialFillElmSettings tabSpecialFillElmSettings[]={
+      SpecialFillElmSettings(3,100,60),
+      SpecialFillElmSettings(6,100,60)
+  };
 
  /**
   * COTE NORD/PAUL:
   * */
 #elif (!defined(NODE_BARBEC) && !defined(NODE_REDUIT) && defined(NODE_PAUL))
-  #define TIMEOUT_LOW_S                      (50)
-  #define TIME_FILLING_AFTER_LOW_S           (35)
+  #define TIMEOUT_LOW_S                      (60)
+  #define TIME_FILLING_AFTER_LOW_S           (45)
 
   SpecialFillElmSettings tabSpecialFillElmSettings[]={ };
 #else

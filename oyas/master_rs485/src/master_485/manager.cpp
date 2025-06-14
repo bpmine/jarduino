@@ -124,8 +124,8 @@ class StateIdle:public StateGestion
       /// @remark Remplissage tous les Dimanche, mercredi et vendredi
       ///if ( ( (now.dayOfWeek()==0) || (now.dayOfWeek()==3) || (now.dayOfWeek()==5) ) && (now.minute()==0) && (now.hour()==12) )
 
-      /// @remark Remplissage tous les midi
-      if ( (now.minute()==0) && (now.hour()==12) )
+      /// @remark Remplissage tous les jours à 13h
+      if ( (now.minute()==0) && (now.hour()==13) )
       {
         if (!_flgRtcTriggered)
         {

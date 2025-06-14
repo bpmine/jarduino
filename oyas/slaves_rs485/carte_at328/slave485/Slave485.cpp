@@ -1,6 +1,12 @@
 ﻿/**
  * @file jard_slave_rs485.ino
  * @brief Programme d'un esclave RS485 de gestion d'un OYA (ou d'une pompe)
+ *
+ *
+ * Fuses:
+ *   Extended: FD
+ *   High: D2
+ *   Low: FF
 */
 #include "client.h"
 #include "globals.h"

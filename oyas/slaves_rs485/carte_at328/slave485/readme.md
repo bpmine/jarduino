@@ -2,6 +2,11 @@
 
 Ce logiciel pilote un noeud RS485 du système Oyas.
 
+Fuse:
+Extended: FD
+High: 0xD2
+Low: 0xFF
+
 ## Protocole
 
 ### Principe

@@ -27,11 +27,18 @@
     (uuid ce42a06c-0733-4bf9-88ff-0399399f9632)
   )
   (text_box "Version Cx:\n- Manque 330 entre pnp et npn Wifi et LEDs"
-    (at 127 189.23 0) (size 48.26 6.35)
+    (at 227.33 148.59 0) (size 48.26 6.35)
     (stroke (width 0) (type default))
     (fill (type none))
     (effects (font (size 1.27 1.27)) (justify left top))
     (uuid ec16c270-6f45-4833-af51-e4a1ca0d5b11)
+  )
+  (text_box "Todo:\n- Passer en CMS la majorité des composants\n- Mesurer le 12V d'alim\n- Ajouter un écran OLED petit\n- Ajouter des boutons\n- Mode boost ? (jauge haut)"
+    (at 227.33 121.92 0) (size 48.26 22.86)
+    (stroke (width 0) (type default))
+    (fill (type none))
+    (effects (font (size 1.27 1.27)) (justify left top))
+    (uuid f2d5018a-7653-4f03-9592-2081cc478ec6)
   )
 
   (text "BUS RS485 + Sortie alim 12V" (at 130.81 139.7 0)

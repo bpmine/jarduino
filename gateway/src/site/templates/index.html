@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etat des Oyas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        function toggleDetails(id) {
+            var x = document.getElementById(id);
+            x.style.display = x.style.display === "none" ? "block" : "none";
+        }
+    </script>
+</head>
+<body>
+    <h1>Etat des Oyas</h1>
+    <div class="grid-container">
+        {% for module in modules %}
+        <div class="card">
+            <h2 onclick="toggleDetails('detail-{{ loop.index }}')">{{ module.name }}</h2>
+            <p class="date">{{ module.date }}</p>
+            <meter min="0" max="100" value="{{ module.level }}"></meter>
+            <div class="status">
+                {% if module.high_count > 0 %}
+                <span class="badge blue">Débordement ({{ module.high_count }})</span>
+                {% endif %}
+                {% if module.alert_count > 0 %}
+                <span class="badge red">Bas ({{ module.alert_count }})</span>
+                {% endif %}
+                {% if module.comm_issues %}
+                <span class="badge red">Pas de réponse</span>
+                {% endif %}
+            </div>
+            <div id="detail-{{ loop.index }}" style="display: none;">
+                <table class="oyas-table">
+                    <tbody>
+                        {% for oya in module.slaves %}
+                        <tr>
+                            <td>{{ oya.addr }}</td>
+                            <td>
+                                <img src="{{ url_for('static', filename='pump.png' if oya.type == 'pump' else 'oya.png') }}" alt="{{ oya.type }}" class="oya-icon">
+                            </td>
+                            <td>
+                                <img src="{{ url_for('static', filename='bus_ok.png' if oya.comm_ok else 'bus_nok.png') }}" alt="réseau" class="oya-icon">
+                            </td>
+                            <td>
+                                {% if oya.type != 'pump' %}
+                                    {% if oya.get("high") %}
+                                        <img src="{{ url_for('static', filename='oya_high.png') }}" alt="haut" class="oya-icon">
+                                    {% elif oya.get("low") %}
+                                        <img src="{{ url_for('static', filename='oya_ok.png') }}" alt="ok" class="oya-icon">
+                                    {% else %}
+                                        <img src="{{ url_for('static', filename='oya_low.png') }}" alt="bas" class="oya-icon">
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+	<h1>État des cuves</h1>
+	<div class="grid-container">
+		{% for cuve in cuves %}
+		<div class="card">
+			<h2>{{ cuve.name }}</h2>
+			<p class="date">{{ cuve.date }}</p>
+			<p><strong>Puissance :</strong> {{ cuve.pwr }} | <strong>RSSI :</strong> {{ cuve.rssi }}</p>
+			<meter min="0" max="100" value="{{ cuve.level }}"></meter>
+			<div class="status">
+				{% if not cuve.valid and not cuve.sleep %}
+				<span class="badge red">valid</span>
+				{% endif %}
+				{% if cuve.sleep %}
+				<span style="background:black; color:white; padding:5px 10px; border-radius:10px;">sleep</span>
+				{% endif %}
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+	
+</body>
+</html>

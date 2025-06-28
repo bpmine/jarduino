@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>État des Oyas et des Cuves</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .jauge-container {
+            width: 100%;
+            height: 20px;
+            background-color: #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .jauge-bar {
+            height: 100%;
+            transition: width 0.5s ease;
+        }
+        .jauge-bar.red { background-color: #e74c3c; }
+        .jauge-bar.orange { background-color: #f39c12; }
+        .jauge-bar.green { background-color: #2ecc71; }
+        .badge-black {
+            background-color: black;
+            color: white;
+        }
+    </style>
+    <script>
+        function toggleDetails(id) {
+            var x = document.getElementById(id);
+            x.style.display = x.style.display === "none" ? "block" : "none";
+        }
+    </script>
+</head>
+<body class="container my-4">
+    <h1 class="text-center mb-4">État des Oyas</h1>
+    <div class="row g-4">
+        {% for module in modules %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" onclick="toggleDetails('detail-{{ loop.index }}')" style="cursor: pointer;">{{ module.name }}</h5>
+                    <p class="text-muted">{{ module.date }}</p>
+                    <div class="jauge-container">
+                        <div class="jauge-bar {% if module.level < 25 %}red{% elif module.level > 60 %}green{% else %}orange{% endif %}" style="width: {{ module.level }}%;"></div>
+                    </div>
+                    <div class="mb-2">
+                        {% if module.high_count > 0 %}
+                        <span class="badge bg-primary">Débordement ({{ module.high_count }})</span>
+                        {% endif %}
+                        {% if module.alert_count > 0 %}
+                        <span class="badge bg-danger">Bas ({{ module.alert_count }})</span>
+                        {% endif %}
+                        {% if module.comm_issues %}
+                        <span class="badge bg-danger">Pas de réponse</span>
+                        {% endif %}
+                    </div>
+                    <div id="detail-{{ loop.index }}" style="display: none;">
+                        <table class="table table-sm mt-2">
+                            <tbody>
+                                {% for oya in module.slaves %}
+                                <tr>
+                                    <td>{{ oya.addr }}</td>
+                                    <td>
+                                        <img src="{{ url_for('static', filename='pump.png' if oya.type == 'pump' else 'oya.png') }}" class="img-fluid" width="32">
+                                    </td>
+                                    <td>
+                                        <img src="{{ url_for('static', filename='bus_ok.png' if oya.comm_ok else 'bus_nok.png') }}" class="img-fluid" width="32">
+                                    </td>
+                                    <td>
+                                        {% if oya.type != 'pump' %}
+                                            {% if oya.get("high") %}
+                                            <img src="{{ url_for('static', filename='oya_high.png') }}" class="img-fluid" width="32">
+                                            {% elif oya.get("low") %}
+                                            <img src="{{ url_for('static', filename='oya_ok.png') }}" class="img-fluid" width="32">
+                                            {% else %}
+                                            <img src="{{ url_for('static', filename='oya_low.png') }}" class="img-fluid" width="32">
+                                            {% endif %}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h1 class="text-center mt-5 mb-4">État des Cuves</h1>
+    <div class="row g-4">
+        {% for cuve in cuves %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ cuve.name }}</h5>
+                    <p class="text-muted">{{ cuve.date }}</p>
+                    <p><strong>PWR:</strong> {{ cuve.pwr }} | <strong>RSSI:</strong> {{ cuve.rssi }}</p>
+                    <div class="jauge-container">
+                        <div class="jauge-bar {% if cuve.level < 40 %}red{% elif cuve.level > 60 %}green{% else %}orange{% endif %}" style="width: {{ cuve.level }}%;"></div>
+                    </div>
+                    <div class="mb-2">
+                        {% if not cuve.valid and not cuve.sleep %}
+                        <span class="badge bg-danger">valid</span>
+                        {% endif %}
+                        {% if cuve.sleep %}
+                        <span class="badge badge-black">sleep</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

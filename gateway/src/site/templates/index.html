@@ -68,14 +68,20 @@
 		<div class="card">
 			<h2>{{ cuve.name }}</h2>
 			<p class="date">{{ cuve.date }}</p>
-			<p><strong>Puissance :</strong> {{ cuve.pwr }} | <strong>RSSI :</strong> {{ cuve.rssi }}</p>
+			<p><strong>Alim :</strong> {{ cuve.pwr }}V | <strong>RSSI :</strong> {{ cuve.rssi }}</p>
 			<meter min="0" max="100" value="{{ cuve.level }}"></meter>
 			<div class="status">
 				{% if not cuve.valid and not cuve.sleep %}
-				<span class="badge red">valid</span>
+				<span class="badge red">Pas de comm.</span>
+				{% endif %}
+				{% if cuve.valid %}
+				<span class="badge green">En ligne</span>
 				{% endif %}
 				{% if cuve.sleep %}
 				<span style="background:black; color:white; padding:5px 10px; border-radius:10px;">sleep</span>
+				{% endif %}
+				{% if cuve.cmd %}
+				<span style="background:rgb(48, 45, 190); color:white; padding:5px 10px; border-radius:10px;">Pompage en cours</span>
 				{% endif %}
 			</div>
 		</div>

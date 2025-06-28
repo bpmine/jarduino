@@ -1,10 +1,30 @@
 from flask import Flask, render_template
 import requests
 from datetime import datetime
+import re
 
 app = Flask(__name__)
 
-WEBSERVICE_URL = 'http://192.168.3.200:5000/oyas'
+IP_WEBSERVICE = 'http://127.0.0.1:5000'
+IP_WEBSERVICE = 'http://192.168.3.200:5000'
+
+pDte=re.compile(r'^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})')
+def iso_to_dte(iso_str):
+    m=pDte.match(iso_str)
+    if m!=None:
+        year=int(m.group(1))
+        month=int(m.group(2))
+        day=int(m.group(3))
+        hour=int(m.group(4))
+        minute=int(m.group(5))
+        sec=int(m.group(6))
+        
+        dte=datetime(year,month,day,hour,minute,sec)
+
+        return dte.strftime("%d/%m/%Y %H:%M:%S")
+
+    return '???'    
+    
 
 def resume_levels(oyas):
     tot=len(oyas)
@@ -22,6 +42,7 @@ def resume_levels(oyas):
             pass
         
     return nb_low*100/tot
+    
 
 def niveau_cuve(cuve):
     n1=cuve.get('n1',False)
@@ -40,20 +61,22 @@ def niveau_cuve(cuve):
 
 def get_cuves():
     try:
-        response = requests.get("http://192.168.3.200:5000/states", timeout=5)
+        response = requests.get(IP_WEBSERVICE+"/states", timeout=5)
         response.raise_for_status()
         data = response.json()
         cuves = []
         for cuve in data.get("modules", []):
             cuves.append({
                 "name": cuve.get("name"),
-                "date": datetime.fromisoformat(cuve["date"]).strftime("%d/%m/%Y %H:%M:%S"),
-                "pwr": cuve.get("pwr"),
+                "date": iso_to_dte(cuve["date"]),
+                "pwr": int(cuve.get("pwr"))/10.0,
                 "rssi": cuve.get("rssi"),
                 "valid": cuve.get("valid", True),
                 "sleep": cuve.get("sleep", False),
-                "level": niveau_cuve(cuve)
-            })
+                'cmd':cuve.get("cmd", False),
+                "level": niveau_cuve(cuve)                
+            })            
+
         return cuves
     except Exception as e:
         print(f"Erreur lors de l'appel des cuves : {e}")
@@ -63,7 +86,7 @@ def get_cuves():
 @app.route('/')
 def index():
     try:
-        response = requests.get(WEBSERVICE_URL, timeout=5)
+        response = requests.get(IP_WEBSERVICE+"/oyas", timeout=5)
         response.raise_for_status()
         data = response.json()
         modules = []
@@ -76,7 +99,7 @@ def index():
             alert_count = sum(1 for oya in slaves if oya.get("type") == "oya" and not oya.get("high") and not oya.get("low"))
             module = {
                 "name": module_info.get("name"),
-                "date": datetime.fromisoformat(module_info.get("date").replace("Z", "+00:00")).strftime("%d/%m/%Y %H:%M:%S"),
+                "date": iso_to_dte(module_info.get("date").replace("Z", "+00:00")),
                 "level": level,
                 "comm_issues": comm_issues,
                 "high_count": high_count,
@@ -90,7 +113,7 @@ def index():
 
     cuves=get_cuves()
 
-    return render_template('index.html', modules=modules,cuves=cuves)
+    return render_template('index_bootstrap.html', modules=modules,cuves=cuves)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=False)

@@ -1,13 +1,13 @@
 # Cuves
 
-Nous avons 4 cuves pour une capacité totale de 1600 L.
+Nous avons 4 cuves pour une capacité totale de 2200 L.
 
 - Cuve principale de 1000 L
-- cuve  "Paul" de 100 L (pour goutteurs petits bacs)
-- cuve "Réduit" de 250 L pour les OYAs
-- cuve "Barbec" de 250 L pour les OYAs
+- cuve  "Paul" de 300 L
+- cuve "Réduit" de 520 L
+- cuve "Barbec" de 520 L
 
-Deux cuves de 250 alimentent nos deux systèmes de remplissage automatique des OYAs.
+Deux cuves de 520 L et une de 300 L alimentent nos deux systèmes de remplissage automatique des OYAs.
 
 Les cuves sont communicantes et un système permet de pomper l'eau de la cuve principale vers les autres. 
 
@@ -44,7 +44,7 @@ Depuis, elle marche moins bien...
 
 ### Cuve Paul
 
-La cuve "Paul" (de Paul) de 100 L permet d'alimenter un système de goutteurs pour des bacs de jardinage (5 bacs en 2024).
+La cuve "Paul" (de Paul) de 220 L permet d'alimenter un système de 6 oyas (en 2025). Anciennement, elle alimentait les derniers goutteurs pour des bacs de jardinage (5 bacs en 2024).
 
 La détection de niveau est réalisée à l'aide de 3 capteurs avec flotteur montés sur la paroi de la cuve.
 
@@ -52,7 +52,7 @@ La détection de niveau est réalisée à l'aide de 3 capteurs avec flotteur mon
 
 ### Cuve Réduit
 
-Cette cuve de 250 L alimente un système de remplisage d'OYAs et permet également d'alimenter la cuve Barbecue si besoin.
+Cette cuve de 520 L alimente un système de remplisage d'OYAs et permet également d'alimenter la cuve Barbecue si besoin.
 
 La détection de niveau est réalisée à l'aide de 3 capteurs avec flotteur montés sur la paroi de la cuve. 
 
@@ -65,7 +65,7 @@ Pour pallier au problème, de la résine a été utilisée pour recouvrir la zon
 
 ### Cuve Barbecue
 
-Cette cuve de 250 L alimente un système de remplisage d'OYAs et un système de goutteurs.
+Cette cuve de 520 L alimente un système de remplisage d'OYAs et un système de goutteurs.
 La détection de niveau est réalisée à l'aide de 3 capteurs avec flotteur montés sur la paroi de la cuve. 
 
 ![Cuve Barbecue](./images/cuve_barbec.png)

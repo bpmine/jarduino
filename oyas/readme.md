@@ -26,7 +26,7 @@ Le système rempli chaque OYA jusqu'au maximum ou bien selon le programme souhai
 
 ## Description de nos réseaux d'OYAs
 
-Notre installation comporte actuellement (en 2024) deux réseaux d'OYAs reliés chacun à une cuve et à son alimentation électrique autonome.
+Notre installation comporte actuellement (en 2025) trois réseaux d'OYAs reliés chacun à une cuve et à son alimentation électrique autonome.
 
 ## Réseau A : Barbecue
 
@@ -43,8 +43,8 @@ C'est le plus ancien (mise en service en 2023). Il comporte à ce jour:
 -- | --
 Nombre de nœuds | 10
 Longueur | environ 30 m
-Volume cuve | 250 L
-Capacité totale des Oyas | 7x8L + cuve 100L
+Volume cuve | 520 L
+Capacité totale des Oyas | 64 L (4x10 + 3x8 + cuve de 100L non gérée actuellement)
 Alimentation | 1 Panneau solaire 120W + 2 Batteries 12V au plomb
 
 La cuve et l'alimentation 12V déservent à la fois le système d'OYAs et un système de gestion de goutteurs alimenté par une petite pompe.
@@ -62,17 +62,17 @@ A noter cependant la fragilité des électrovannes. Pour fonctionner correctemen
 
 - 1 maître
 - 1 pompe
-- 7 OYAs
+- 12 OYAs (dont 4 ajoutés en 2025)
 
 Caractéristique | Description
 -- | --
-Nombre de nœuds | 9
-Longueur | environ 30 m
-Volume cuve | 250 L
-Capacité totale des Oyas | 7x8L 
+Nombre de nœuds | 13
+Longueur | environ 35 m
+Volume cuve | 520 L
+Capacité totale des Oyas | 100 L (2x10 + 10x8) 
 Alimentation | 1 Panneau solaire 120W + 2 Batteries 12V au plomb
 
-Mis en service en 2024.
+Mis en service en 2024. Etendu en 2025.
 
 ## Réseau C : Nord (Derrière la maison)
 
@@ -87,7 +87,7 @@ Caractéristique | Description
 Nombre de nœuds | 7
 Longueur | environ 15 m
 Volume cuve | 150 L
-Capacité totale des Oyas | 6x8L 
+Capacité totale des Oyas | 48 L (6x8) 
 Alimentation | ? (A définir)
 
 Mis en service en 2025.

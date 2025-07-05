@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template,jsonify,request
 import requests
 from datetime import datetime
 import re
@@ -61,11 +61,11 @@ def niveau_cuve(cuve):
 
 def get_cuves():
     try:
-        response = requests.get(IP_WEBSERVICE+"/states", timeout=5)
+        response = requests.get(IP_WEBSERVICE+"/wiio", timeout=5)
         response.raise_for_status()
         data = response.json()
         cuves = []
-        for cuve in data.get("modules", []):
+        for nme,cuve in data.get("modules", {}).items():
             cuves.append({
                 "name": cuve.get("name"),
                 "date": iso_to_dte(cuve["date"]),
@@ -77,7 +77,13 @@ def get_cuves():
                 "level": niveau_cuve(cuve)                
             })            
 
-        return cuves
+        state={
+            'on':data.get('on',False),
+            'sleep':data.get('sleep',False)
+        }
+
+        return cuves,state
+    
     except Exception as e:
         print(f"Erreur lors de l'appel des cuves : {e}")
         return []
@@ -89,8 +95,8 @@ def index():
         response = requests.get(IP_WEBSERVICE+"/oyas", timeout=5)
         response.raise_for_status()
         data = response.json()
-        modules = []
 
+        modules = []
         for module_name, module_info in data.get("modules", {}).items():
             slaves = module_info.get("slaves", [])
             level = resume_levels([oya for oya in slaves if oya.get("type") == "oya"])
@@ -111,9 +117,48 @@ def index():
         print(f"Erreur lors de l'appel : {e}")
         modules = []
 
-    cuves=get_cuves()
+    cuves, state=get_cuves()
 
-    return render_template('index_bootstrap.html', modules=modules,cuves=cuves)
+    return render_template('index_bootstrap.html', modules=modules,cuves=cuves,state=state)
+
+@app.route('/command/general/<state>', methods=['POST'])
+def set_general_state(state):
+    base_url = f"{IP_WEBSERVICE}/wiio/do"
+    
+    if state == "on":
+        url = f"{base_url}/on"
+    elif state == "off":
+        url = f"{base_url}/off"
+    elif state == "sleep":
+        url = f"{base_url}/sleep"
+    else:
+        return jsonify({"status": "error", "message": "État invalide"}), 400
+
+    print('URL: ',url)
+    try:
+        response = requests.get(url)
+        return jsonify({"status": "ok", "response": response.text})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route('/command/<module>/on', methods=['POST'])
+def pump_on(module):
+    duration = request.args.get('duration', default=1, type=int)
+    url = f"{IP_WEBSERVICE}/wiio/modules/{module}/do/on?duration={duration}"
+    try:
+        r = requests.get(url)
+        return jsonify({"status": "ok", "response": r.text})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route('/command/<module>/off', methods=['POST'])
+def pump_off(module):
+    url = f"{IP_WEBSERVICE}/wiio/modules/{module}/do/off"
+    try:
+        r = requests.get(url)
+        return jsonify({"status": "ok", "response": r.text})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=False)

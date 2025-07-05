@@ -107,7 +107,7 @@
                         {% if not cuve.valid and not cuve.sleep %}
                         <span class="badge bg-danger">Hors ligne</span>
                         {% endif %}
-                        {% if cuve.sleep %}
+                        {% if cuve.sleep and not cuve.valid %}
                         <span class="badge badge-black">sleep</span>
                         {% endif %}
                         {% if cuve.valid and not cuve.sleep %}

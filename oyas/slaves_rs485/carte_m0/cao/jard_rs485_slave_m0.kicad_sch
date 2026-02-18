@@ -1,0 +1,66 @@
+(kicad_sch (version 20230121) (generator eeschema)
+
+  (uuid a198b99e-c4dc-4064-b4d8-b20710c7a061)
+
+  (paper "A4")
+
+  (title_block
+    (title "Esclave Oya MSP430")
+    (date "2025-05-08")
+    (rev "Rev B1")
+    (company "BPC")
+    (comment 1 "Alim 12V - Bus RS485 - cmd EV/Pompe - Niveaux - Débit")
+    (comment 2 "Mesure alim")
+  )
+
+  (lib_symbols
+  )
+
+
+  (text "ALIM\nE/S" (at 120.65 97.79 0)
+    (effects (font (size 2.54 2.54) bold) (justify left bottom))
+    (uuid 239bf3e0-725b-400d-be51-0b89f22f2c83)
+  )
+  (text "MICRO" (at 148.59 96.52 0)
+    (effects (font (size 2.54 2.54) (thickness 0.254) bold) (justify left bottom))
+    (uuid 2fe09a33-fc33-4a0d-a437-7fc3fb3e9024)
+  )
+
+  (sheet (at 137.16 64.77) (size 36.83 60.96) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0000))
+    (uuid 807e41c6-7e33-4b7f-96c0-2700525736e4)
+    (property "Sheetname" "micro" (at 137.16 64.0584 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "micro.kicad_sch" (at 137.16 126.3146 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "jard_rs485_slave_m0"
+        (path "/a198b99e-c4dc-4064-b4d8-b20710c7a061" (page "2"))
+      )
+    )
+  )
+
+  (sheet (at 114.3 64.77) (size 21.59 60.96) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0000))
+    (uuid fab97b7a-d6f8-430d-b29e-f9e08ccfedcc)
+    (property "Sheetname" "alim_es" (at 114.3 64.0584 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "alim_es.kicad_sch" (at 114.3 126.3146 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "jard_rs485_slave_m0"
+        (path "/a198b99e-c4dc-4064-b4d8-b20710c7a061" (page "2"))
+      )
+    )
+  )
+
+  (sheet_instances
+    (path "/" (page "1"))
+  )
+)

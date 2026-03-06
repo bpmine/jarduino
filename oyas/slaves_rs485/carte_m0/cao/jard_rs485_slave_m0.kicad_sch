@@ -5,9 +5,9 @@
   (paper "A4")
 
   (title_block
-    (title "Esclave Oya MSP430")
-    (date "2025-05-08")
-    (rev "Rev B1")
+    (title "Carte Oya M0")
+    (date "2026-03-06")
+    (rev "Rev A")
     (company "BPC")
     (comment 1 "Alim 12V - Bus RS485 - cmd EV/Pompe - Niveaux - Débit")
     (comment 2 "Mesure alim")

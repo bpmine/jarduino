@@ -5,10 +5,13 @@
   (paper "A4")
 
   (title_block
-    (title "Carte Oya M0")
-    (date "2026-03-06")
-    (rev "Rev A")
+    (title "Esclave Oya M0")
+    (date "2026-03-07")
+    (rev "A")
     (company "BPC")
+    (comment 1 "Technologie avec M0 / Petite carte")
+    (comment 2 "Monitoring de tension d'alimentation")
+    (comment 3 "1 sortie 12V/5A - 2 entrées TOR (niveaux) ou 1 débimètre - 1 LED - RS485")
   )
 
   (lib_symbols

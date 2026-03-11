@@ -86,7 +86,7 @@ Caractéristique | Description
 -- | --
 Nombre de nœuds | 7
 Longueur | environ 15 m
-Volume cuve | 150 L
+Volume cuve | 300 L
 Capacité totale des Oyas | 48 L (6x8) 
 Alimentation | ? (A définir)
 

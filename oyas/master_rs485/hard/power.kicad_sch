@@ -1227,6 +1227,16 @@
     (effects (font (size 5.08 5.08) (thickness 2.54) bold) (justify left bottom))
     (uuid 223edc2c-5531-403f-9c21-52d77ac04857)
   )
+  (text "Ajouter une TVS 18V 600W sur le 12V à l'entrée (cf carte Oya M0)"
+    (at 29.21 86.995 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 9bd7e48e-82eb-4115-aa09-023f559e33f6)
+  )
+  (text "Mettre des capas en entrée.\nC'est pourquoi Ca marchait pas !!!"
+    (at 27.94 69.215 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid c52ee9f7-ae80-46cb-bfab-709b15d3f1dd)
+  )
 
   (global_label "DATA_LEDS" (shape input) (at 215.9 97.79 180)
     (effects (font (size 1.27 1.27)) (justify right))

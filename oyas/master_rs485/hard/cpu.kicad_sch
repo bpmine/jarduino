@@ -1482,6 +1482,20 @@
     (effects (font (size 5.08 5.08) (thickness 2.54) bold) (justify left bottom))
     (uuid 2c905581-ae3c-4238-852c-32118e5fb809)
   )
+  (text "Attention, EN devrait être à 1. C'est miraculeux que ça marche !"
+    (at 148.59 132.08 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 776c689c-d844-4b59-aeb3-d8c4cdc16d50)
+  )
+  (text "Voir le découplage/filtrage 3.3V\nAdapter à l'ESP (Wifi = bursts)"
+    (at 213.36 92.71 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid b5a0d671-02e6-4cb6-bd9e-7e1515477296)
+  )
+  (text "Ajouter capas de découplage pour le module ?" (at 95.25 20.32 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid caab367f-778a-4424-8ce2-b1e3d6d065e3)
+  )
 
   (global_label "TX_LOG" (shape input) (at 245.11 60.96 180) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify right))

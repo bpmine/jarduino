@@ -48,16 +48,14 @@
           "min_clearance": 0.508
         }
       },
-      "diff_pair_dimensions": [],
-      "drc_exclusions": [
-        "silk_over_copper|160518445|104585078|622eb314-b034-4915-8457-c4f0a8ca9ff2|00000000-0000-0000-0000-000000000000",
-        "silk_over_copper|160524839|104650000|b6bb4674-60fb-4e79-83f0-afa48cfe76b1|00000000-0000-0000-0000-000000000000",
-        "text_height|169820000|116520000|00000000-0000-0000-0000-0000640da6db|00000000-0000-0000-0000-000000000000",
-        "text_height|169945000|118770000|ef5ab891-8d95-436e-96f4-5b7b076b1f24|00000000-0000-0000-0000-000000000000",
-        "text_height|171855000|103510000|f6685466-6a6d-4ee9-86fc-d3ace1e891e1|00000000-0000-0000-0000-000000000000",
-        "text_height|177375000|118850000|d251fda5-89da-4324-9b2a-33790c6e61f7|00000000-0000-0000-0000-000000000000",
-        "text_height|177500000|116600000|b7e32322-31c1-4e37-97d5-19c49b0bbcd1|00000000-0000-0000-0000-000000000000"
+      "diff_pair_dimensions": [
+        {
+          "gap": 0.0,
+          "via_gap": 0.0,
+          "width": 0.0
+        }
       ],
+      "drc_exclusions": [],
       "meta": {
         "filename": "board_design_settings.json",
         "version": 2
@@ -176,10 +174,16 @@
       ],
       "track_widths": [
         0.0,
+        0.25,
         1.0,
         2.0
       ],
-      "via_dimensions": [],
+      "via_dimensions": [
+        {
+          "diameter": 0.0,
+          "drill": 0.0
+        }
+      ],
       "zones_allow_external_fillets": false
     },
     "layer_presets": [],

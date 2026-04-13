@@ -109,7 +109,8 @@ unsigned short adc_voltage_read(void)
     ADC->INTFLAG.reg = ADC_INTFLAG_RESRDY;
 
     /* Conserver la formule métier existante temporairement */
-    ret = (unsigned short)((val * 120UL) / 778UL);
+    //ret = (unsigned short)((val * 120UL) / 778UL);
+	ret=val;
 
     return ret;
 }

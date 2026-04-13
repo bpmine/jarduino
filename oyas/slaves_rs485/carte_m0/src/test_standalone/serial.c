@@ -48,16 +48,15 @@ static inline uint8_t serial_tx_complete(void)
 
 static uint16_t serial_calc_baud(uint32_t fref, uint32_t baud)
 {
-    /* BAUD = 65536 * (1 - 16*baud/fref) */
-    uint32_t tmp;
+    uint64_t tmp;
 
     if (baud == 0)
         baud = 9600;
 
-    tmp = 65536UL - ((16UL * 65536UL * baud) / fref);
+    tmp = 65536ULL - ((16ULL * 65536ULL * (uint64_t)baud) / (uint64_t)fref);
 
-    if (tmp > 65535UL)
-        tmp = 65535UL;
+    if (tmp > 65535ULL)
+        tmp = 65535ULL;
 
     return (uint16_t)tmp;
 }
@@ -165,7 +164,9 @@ void serial_init(int speed)
     uint16_t baud_reg;
 
     if (speed <= 0)
+	{
         speed = 9600;
+	}
 
 	gpio_configure_uart(PIN_UART_TX, PIN_UART_RX,GPIO_PMUX_SERCOM);
 
@@ -199,9 +200,10 @@ void serial_init(int speed)
         SERCOM_USART_CTRLB_TXEN;
     serial_wait_sync();
 
-    /* Baudrate pour GCLK0 = 8 MHz */
-    baud_reg = serial_calc_baud(8000000UL, (uint32_t)speed);
-    SERCOM1->USART.BAUD.reg = baud_reg;
+    /* Baudrate pour GCLK0 = 8 MHz */    
+	//baud_reg = serial_calc_baud(8000000UL, (uint32_t)speed);
+	SERCOM1->USART.BAUD.reg = 64277;
+    //SERCOM1->USART.BAUD.reg = baud_reg;
     serial_wait_sync();
 
     /* Init buffer/flags */

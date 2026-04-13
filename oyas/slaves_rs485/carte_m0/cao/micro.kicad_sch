@@ -6,8 +6,8 @@
 
   (title_block
     (title "Esclave Oya M0")
-    (date "2026-03-07")
-    (rev "A")
+    (date "2026-04-14")
+    (rev "B")
     (company "BPC")
     (comment 1 "Technologie avec M0 / Petite carte")
     (comment 2 "Monitoring de tension d'alimentation")
@@ -1077,10 +1077,12 @@
     (uuid ada95f9f-b1ea-4645-902a-26a4407376cc)
   )
 
-  (text "REV B:\n- Pull up sur le sel. d'adresses et sur les niveaux\n- Correction Empreinte sérigraphie PROG (+ grosse)\n- Décalage LED\n- Suppression de l'entrée de débit\n- Empreintes des diodes TVS et des capas en hand soldering\n- D12 horizontale\n- C8 et C10 en 805 au lieu de 603\n- Serigraphie de version en plus gros"
-    (at 231.14 34.29 0)
-    (effects (font (size 1.016 1.016)) (justify left bottom))
-    (uuid 4cb9149b-3124-475a-b25c-cddef891bf66)
+  (text_box "Rev B:\n- Inversion RX/TX"
+    (at 51.435 181.61 0) (size 26.035 6.35)
+    (stroke (width 0) (type default))
+    (fill (type none))
+    (effects (font (size 1.27 1.27)) (justify left top))
+    (uuid a502f1ff-a577-4abe-87b9-f093d8441828)
   )
 
   (global_label "CMD_EV1" (shape output) (at 114.3 93.98 180) (fields_autoplaced)
@@ -1090,10 +1092,10 @@
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
   )
-  (global_label "TX" (shape output) (at 114.3 127 180) (fields_autoplaced)
+  (global_label "TX" (shape output) (at 114.3 124.46 180) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify right))
     (uuid 120d9534-f454-424b-bfaf-bfb904be7348)
-    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 109.2171 127 0)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 109.2171 124.46 0)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
   )
@@ -1230,10 +1232,10 @@
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
   )
-  (global_label "RX" (shape input) (at 114.3 124.46 180) (fields_autoplaced)
+  (global_label "RX" (shape input) (at 114.3 127 180) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify right))
     (uuid f359a7df-8f5b-4ac7-bbd4-9a1f7b2036b7)
-    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 108.9147 124.46 0)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 108.9147 127 0)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
   )

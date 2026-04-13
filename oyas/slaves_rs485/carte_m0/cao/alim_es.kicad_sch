@@ -6,8 +6,8 @@
 
   (title_block
     (title "Esclave Oya M0")
-    (date "2026-03-07")
-    (rev "A")
+    (date "2026-04-14")
+    (rev "B")
     (company "BPC")
     (comment 1 "Technologie avec M0 / Petite carte")
     (comment 2 "Monitoring de tension d'alimentation")

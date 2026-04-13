@@ -6,8 +6,8 @@
 #define PIN_CPT_LVL_HIGH  PA14
 #define PIN_CMD_EV        PA04
 #define PIN_TX_EN         PA18
-#define PIN_UART_TX		  PA17
-#define PIN_UART_RX       PA16
+#define PIN_UART_TX		  PA16
+#define PIN_UART_RX       PA17
 #define GPIO_PMUX_SERCOM  GPIO_PMUX_C
 
 /// Port 2

@@ -3,6 +3,10 @@
  * @brief ESP32-C3 - Gestion d'un noeud WIFI-IO de controle de cuve
  * 
  * NOLOGO - ESP C3 super mini
+ * 
+ * LED Verte   : Fiwe=ON, Clignote si EV active
+ * LED interne : Clignote rapide si activité réseau, éteinte si nada
+ * LED Rouge   : Fixe=Pas de Wifi, Rapide=Pas de Mqtt, Lent(2s)=Off
  */
 
 #include <WiFi.h>
@@ -15,10 +19,10 @@
 #include "esp_sleep.h"
 // #include "esp_task_wdt.h"       // Optionnel si tu veux gérer le WDT proprement
 
-//#define NODE_MAIN
+#define NODE_MAIN
 //#define NODE_PAUL
 //#define NODE_REDUIT
-#define NODE_BARBEC
+//#define NODE_BARBEC
 //#define NODE_TEST
 
 #define VERSION "V1.0-ESP32C3"
@@ -51,8 +55,8 @@
 #define PIN_IN_N2       4
 #define PIN_IN_N3       5
 #define PIN_OUT_CMD     10
-#define PIN_LED_ROUGE   LED_BUILTIN
-//#define PIN_LED_VERTE   21
+#define PIN_LED_ROUGE   20
+#define PIN_LED_VERTE   21
 
 // ADC: sur ESP32-C3, analogRead() se fait sur un GPIO ADC (ex: GPIO0/1/2/3/4 selon carte)
 // Mets ici un GPIO réellement câblé vers ta mesure tension
@@ -73,6 +77,13 @@ bool g_lvl_3=false;
 int  g_rssi=0;
 bool g_cmd_pump=false;
 unsigned long g_tick_s=0;
+bool g_flg250ms=false;
+bool g_flg500ms=false;
+bool g_flg1s=false;
+bool g_flg2s=false;
+bool g_flgImp500ms=false;
+bool g_flgImp1s=false;
+bool g_flgImp2s=false;
 
 typedef enum
 {
@@ -87,11 +98,12 @@ bool g_boot_event_sent=false;
 
 Analog anVoltage=Analog();
 
-Timer tmrComm((unsigned long)TIMEOUT_COMM_S*1000UL,false);
-Timer tmrCycle((unsigned long)TIME_CYCLE_MS,false);
+Timer tmrComm((unsigned long)TIMEOUT_COMM_S*1000UL);
 Timer tmrBeforeSleep((unsigned long)TIME_BEFORE_SLEEP_S*1000UL);
 Timer tmrGotoSleep(5000UL);
-Timer tmrTick1S(1000UL,false);
+
+Timer tmrCycle((unsigned long)TIME_CYCLE_MS,false);
+Timer tmr250ms(250UL,false);
 
 Timer tmrBeforeFirst((unsigned long)TIME_BEFORE_FIRST_S*1000UL);
 Timer tmrRepeatFirst((unsigned long)TIME_REPEAT_FIRST_S*1000UL,false);
@@ -195,9 +207,7 @@ void sendData(void)
 }
 
 void onReceiveCmd(const String &payload)
-{
-  digitalWrite(PIN_LED_ROUGE,LOW);
-
+{  
   Serial.print("Cmd: ");
   Serial.println(payload);
 
@@ -207,7 +217,6 @@ void onReceiveCmd(const String &payload)
   if (tmrGotoSleep.isRunning())
   {
     Serial.println("Cmd ignoree car veille demandee.");
-    digitalWrite(PIN_LED_ROUGE,HIGH);
     return;
   }
 
@@ -236,9 +245,6 @@ void onReceiveCmd(const String &payload)
   }
 
   sendData();
-
-  if (g_cmd_pump)
-    digitalWrite(PIN_LED_ROUGE,HIGH);
 
   g_comm_ok=true;
   tmrComm.start();
@@ -283,16 +289,20 @@ void setup_mqtt(void)
 inline void _point(void)
 {
   digitalWrite(PIN_LED_ROUGE,LOW);
+  digitalWrite(LED_BUILTIN,LOW);
   delay(100);
   digitalWrite(PIN_LED_ROUGE,HIGH);
+  digitalWrite(LED_BUILTIN,HIGH);
   delay(200);
 }
 
 inline void _trait(void)
 {
   digitalWrite(PIN_LED_ROUGE,LOW);
+  digitalWrite(LED_BUILTIN,LOW);
   delay(400);
   digitalWrite(PIN_LED_ROUGE,HIGH);
+  digitalWrite(LED_BUILTIN,HIGH);
   delay(200);
 }
 
@@ -346,6 +356,12 @@ void setup()
   pinMode(PIN_LED_ROUGE,OUTPUT);
   digitalWrite(PIN_LED_ROUGE,LOW);
 
+  pinMode(LED_BUILTIN,OUTPUT);
+  digitalWrite(LED_BUILTIN,LOW);  
+
+  pinMode(PIN_LED_VERTE,OUTPUT);
+  digitalWrite(PIN_LED_VERTE,LOW);
+
   pinMode(PIN_IN_N1,INPUT_PULLUP);
   pinMode(PIN_IN_N2,INPUT_PULLUP);
   pinMode(PIN_IN_N3,INPUT_PULLUP);
@@ -371,14 +387,17 @@ void setup()
   tmrBeforeSleep.start();
   tmrBeforeFirst.start();
   tmrRepeatFirst.start();
-  tmrTick1S.start();
+  tmr250ms.start();
 }
 
 void goDeepSleep()
 {
   g_cmd_pump=false;
   digitalWrite(PIN_OUT_CMD,LOW);
-  digitalWrite(PIN_LED_ROUGE,HIGH);
+  digitalWrite(PIN_LED_ROUGE,LOW);
+  digitalWrite(PIN_LED_VERTE,LOW);
+  digitalWrite(LED_BUILTIN,HIGH);
+  
 
   // Réveil timer uniquement (simple et fiable)
   uint64_t us = (uint64_t)SLEEPING_TIME_MIN * 60ULL * 1000000ULL;
@@ -403,7 +422,7 @@ void loop()
   }
 
   // Timeout comm
-  if (tmrComm.tick())
+  if (tmrComm.tick())  
     g_comm_ok=false;
 
   // Pompe OFF si plus de comm
@@ -444,19 +463,64 @@ void loop()
   if (tmrGotoSleep.tick())
     goDeepSleep();
 
-  // Tick secondes
-  if (tmrTick1S.tick())
-    g_tick_s++;
+  // Tick 250 milli-secondes
+  if (tmr250ms.tick())
+  {
+    g_flgImp500ms=false;
+    g_flgImp1s=false;
+    g_flgImp2s=false;
+    
+    g_flg250ms=!g_flg250ms;
+    if (g_flg250ms==false)
+    {
+      g_flgImp500ms=true;
+      g_flg500ms=!g_flg500ms;
+      if (g_flg500ms==false)
+      {
+        g_flgImp1s=true;
+        g_flg1s=!g_flg1s;
+        g_tick_s++;
+        if (g_flg1s==false)
+        {
+          g_flgImp2s=true;
+          g_flg2s=!g_flg2s;
+        }
+      }
+    }
+  }
 
   // Application sortie pompe + LED
   if (g_cmd_pump)
   {
-    digitalWrite(PIN_OUT_CMD,HIGH);
-    digitalWrite(PIN_LED_ROUGE,LOW);
+    digitalWrite(PIN_OUT_CMD,HIGH);    
+    digitalWrite(PIN_LED_VERTE,g_flg500ms==true?HIGH:LOW);
   }
   else
   {
     digitalWrite(PIN_OUT_CMD,LOW);
-    digitalWrite(PIN_LED_ROUGE,HIGH);
+    digitalWrite(PIN_LED_VERTE,g_comm_ok==true?HIGH:LOW);
+  }
+
+  if (g_comm_ok==true)
+  {
+    digitalWrite(LED_BUILTIN,g_flg500ms==true ? LOW : HIGH);
+    digitalWrite(PIN_LED_ROUGE,LOW);    
+  }
+  else
+  {
+    digitalWrite(LED_BUILTIN,HIGH);
+    
+    if (!mqttClient.isWifiConnected())
+    {
+      digitalWrite(PIN_LED_ROUGE,HIGH);
+    }
+    else if (!mqttClient.isMqttConnected())
+    {
+      digitalWrite(PIN_LED_ROUGE,g_flg250ms==true ? HIGH : LOW);
+    }
+    else
+    {
+      digitalWrite(PIN_LED_ROUGE,g_flgImp2s==true ? HIGH : LOW);
+    }
   }
 }

@@ -206,7 +206,7 @@
         </div>
         {% if state.on and not state.sleep %}
             <div class="mt-4">
-            {% set label_map = {'paul': 'main vers paul', 'main': 'main vers reduit','reduit': 'reduit vers barbec',} %}
+            {% set label_map = {'paul': 'main vers paul', 'main': 'main vers reduit','reduit': 'reduit vers barbec','terrasse': 'barbec vers terrasse','arriere': 'main vers arriere'} %}
 
             {% for cuve in cuves %}
             {% if cuve.name in label_map %}            

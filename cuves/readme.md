@@ -89,6 +89,8 @@ Trop fragile, une version similaire avec une sortie 8 mm a ensuite été imprim�
 
 Pour filtrer de plus gros morceaux avant le tuyau de sortie, la pièce suivante est vissée à l'intérieur des cuves (Réduit et Barbecue).
 
+![Filtre intérieur](./images/filtre.png)
+
 ## Modules Wifi pour commander les pompes
 
 ### Description
@@ -99,6 +101,19 @@ Le module de pompage comporte:
 - 3 entrées de type interrupteur (actif à l'état bas) pour la détection du niveau de cuve.
 
 ### Carte Wifi IO
+
+Deux versions de cartes ont été réalisées:
+- Carte wemos
+- carte C3
+
+La première à base d'un Wemos D1 mini (ESP8266). Cette carte fonctionne depuis 2024. Son boitier est petit et cela pose un problème avec la condensation. En 2025, deux cartes étaient déjà oxydées car elles baignaient dans l'eau. les boitiers ne sont pas parfaitement étanches.
+Le projet se trouve ici: [Carte wemos](./carte_wemos)
+
+La carte C3 est basée sur un module ESP32 C3 mini. Elle est censée mieux fonctionner... Fabriquée en 2026, elle est placée dans une boîte de dérivation plus grosse pour éviter que la condensation atteigne la carte.
+Le projet se trouve ici: [Carte C3](./carte_c3)
+
+La carte wemos s'avère plus puissante niveau Wifi et porte un peu plus loin. Les cartes C3 un peu moins bonnes et dépendantes de leur module C3 (dispertion).
+Malgré tout, les cartes C3 semblent fonctionner correctement.
 
 ### Protocole d'échange avec MQTT
 

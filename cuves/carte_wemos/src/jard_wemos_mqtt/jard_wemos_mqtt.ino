@@ -12,8 +12,10 @@
 
 //#define NODE_MAIN
 //#define NODE_PAUL
-#define NODE_REDUIT
+//#define NODE_REDUIT
 //#define NODE_BARBEC
+//#define NODE_ARRIERE
+#define NODE_TERRASSE
 //#define NODE_TEST
 
 #define VERSION "V1.0"
@@ -119,6 +121,13 @@ Timer tmrRepeatFirst((unsigned long)TIME_REPEAT_FIRST_S*1000UL,false);
 #ifdef NODE_BARBEC
   char NAME[]="barbec";
 #endif
+#ifdef NODE_ARRIERE
+  char NAME[]="arriere";
+#endif
+#ifdef NODE_TERRASSE
+  char NAME[]="terrasse";
+#endif
+
 
 /**
  * @brief Instance du client MQTT qui va gerer le bordel

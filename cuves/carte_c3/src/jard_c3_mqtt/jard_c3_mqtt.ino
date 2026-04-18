@@ -19,10 +19,12 @@
 #include "esp_sleep.h"
 // #include "esp_task_wdt.h"       // Optionnel si tu veux gérer le WDT proprement
 
-#define NODE_MAIN
+//#define NODE_MAIN
 //#define NODE_PAUL
 //#define NODE_REDUIT
 //#define NODE_BARBEC
+#define NODE_ARRIERE
+//#define NODE_TERRASSE
 //#define NODE_TEST
 
 #define VERSION "V1.0-ESP32C3"
@@ -123,6 +125,14 @@ Timer tmrRepeatFirst((unsigned long)TIME_REPEAT_FIRST_S*1000UL,false);
 #ifdef NODE_BARBEC
   char NAME[]="barbec";
 #endif
+#ifdef NODE_ARRIERE
+  char NAME[]="arriere";
+#endif
+#ifdef NODE_TERRASSE
+  char NAME[]="terrasse";
+#endif
+
+
 
 EspMQTTClient mqttClient(
   WIFI_ID,

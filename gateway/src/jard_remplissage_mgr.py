@@ -73,6 +73,8 @@ class RempliApp():
         self.add_remplissage("main_paul"    , "paul"  , "paul"  , "main")
         self.add_remplissage("reduit_barbec", "reduit", "barbec", "reduit")
         
+        self.add_remplissage("barbec_terrasse", "terrasset", "terrasse", "barbec")
+        self.add_remplissage("main_arriere", "arriere", "arriere", "main")
 
     def tolvl(self,n1,n2,n3):
         if n3==True:

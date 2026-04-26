@@ -31,8 +31,8 @@
 #define FIRE      (A5)
 #define ADDRESS   (11)
 
-#define LD_LEFT   (A1)
-#define LD_RIGHT  (A2)
+#define LD_LEFT   (A2)
+#define LD_RIGHT  (A1)
 
 #define TX_EN     (10)
 
@@ -61,11 +61,38 @@ const int list_segs[NB_SEGS]=
 unsigned char g_addr=1;
 unsigned long t0_fire_ms=0;
 bool g_on=false;
+bool g_low=false;
+bool g_high=false;
 
-FrameBuilder builder;
-Timer tmrCycle(100UL,false);
+FrameBuilder builderTX;
+Timer tmrCycle(500UL,false);
 Timer tmrInput(250UL,false);
 Timer tmrNoComm(5000UL);
+
+FrameBuilder builderRX;
+
+class FrameReceiver: public IFrameReceiver
+{
+public:
+   bool OnFrameReceive(FramePump *pump) override
+   {
+    g_high=false;
+    g_low=false;
+    tmrNoComm.start();
+    return true;
+   }
+   
+   bool OnFrameReceive(FrameOya *oya) override
+   {
+    g_high=oya->high();
+    g_low=oya->low();
+    tmrNoComm.start();
+    return true;
+   }
+};
+
+FrameReceiver receiver;
+
 
 void display(char val,bool dp)
 {
@@ -129,6 +156,7 @@ void display_hex(unsigned char val,bool dp)
 
 void setup() 
 {
+  Serial.begin(9600);
   for (int i=0;i<NB_SEGS;i++)
   {
     pinMode(list_segs[i],OUTPUT);
@@ -151,7 +179,6 @@ void setup()
   
   pinMode(TX_EN,OUTPUT);
   digitalWrite(TX_EN,LOW);
-  
 
   display(0,false);  
   
@@ -160,6 +187,8 @@ void setup()
   tmrCycle.start();
   tmrInput.start();
   tmrNoComm.start();
+  
+  builderRX.setReceiver(&receiver);
 }
 
 int g_sendSync=false;
@@ -173,13 +202,23 @@ void sendCommandFrame(unsigned char addr)
   }
   
   FrameCmd cmd(cmds,addr);
-  unsigned char *pMsg=builder.build(&cmd);
+  unsigned char *pMsg=builderTX.build(&cmd);
 
   digitalWrite(TX_EN,HIGH);
   delay(2);
-  Serial.write(pMsg,builder.size());
+  Serial.write(pMsg,builderTX.size());
+  Serial.flush();
   delay(1);
   digitalWrite(TX_EN,LOW);
+}
+
+void serialEvent()
+{
+  while (Serial.available() > 0)
+  {
+    unsigned char c = Serial.read();
+    builderRX.recv(c);
+  }
 }
 
 void loop()
@@ -229,6 +268,15 @@ void loop()
       g_sendSync=false;
     }    
   }
-  
-  tmrNoComm.start();
+
+  if (tmrNoComm.isRunning()==true)
+  {
+    digitalWrite(LD_LEFT,g_low==true?HIGH:LOW);
+    digitalWrite(LD_RIGHT,g_high==true?HIGH:LOW);
+  }
+  else
+  {
+    digitalWrite(LD_LEFT,LOW);
+    digitalWrite(LD_RIGHT,LOW);
+  }
 }

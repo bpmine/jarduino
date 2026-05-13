@@ -5,8 +5,8 @@
   (paper "A4")
 
   (title_block
-    (title "Esclave Oya M0")
-    (date "2026-04-14")
+    (title "Esclave Oya m0")
+    (date "2026-05-13")
     (rev "B")
     (company "BPC")
     (comment 1 "Technologie avec M0 / Petite carte")
@@ -17,6 +17,14 @@
   (lib_symbols
   )
 
+
+  (text_box "Rev B:\n- Inversion RX/TX\n- Chgt conn. prog."
+    (at 127 140.335 0) (size 26.035 8.255)
+    (stroke (width 0) (type default))
+    (fill (type none))
+    (effects (font (size 1.27 1.27)) (justify left top))
+    (uuid cff2ce19-d813-4725-ac1d-392cc0671fde)
+  )
 
   (text "ALIM\nE/S" (at 120.65 97.79 0)
     (effects (font (size 2.54 2.54) bold) (justify left bottom))

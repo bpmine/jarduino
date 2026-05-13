@@ -83,16 +83,16 @@ class RdWiioSrv(RdApp):
         self.client = mqtt.Client()
         self.modules=set()
         
-        ks=self.r.keys('%s.*' % (self.kApp()))
-        p=self.r.pipeline()
-        for k in ks:
-            p.delete(k)
-        p.execute()
+        #ks=self.r.keys('%s.*' % (self.kApp()))
+        #p=self.r.pipeline()
+        #for k in ks:
+        #    p.delete(k)
+        #p.execute()
 
-        self.set_app_var('alive',1)
+        self.set_app_var_bool('alive',True)
         #self.set_app_var('on',1,None)
 
-        self.r.delete('%s.modules' % (self.kApp()))
+        #self.r.delete('%s.modules' % (self.kApp()))
 
     def on_connect(self,client, userdata, flags, rc):
         print("Connected with result code "+str(rc))
@@ -175,6 +175,7 @@ class RdWiioSrv(RdApp):
         print('Start program...');
         while True:
             time.sleep(1)
+            self.set_app_var_bool('alive',True)
 
             on=self.get_app_var_bool('on')
             if on==None:
@@ -186,6 +187,7 @@ class RdWiioSrv(RdApp):
                 oldOn=on
             
             if on!=True:
+                self.set_app_var_bool('pumping',False,None)
                 continue            
 
             if DEBUG_CYCLE==True:
@@ -193,7 +195,8 @@ class RdWiioSrv(RdApp):
                 print('Cycle:')
 
             slp=self.get_app_var_bool('sleep')
-            
+
+            pumping=False
             for n in self.modules:
                 if slp==True:
                     self.client.publish("/wifiio/cmd/%s" % n,"sleep");
@@ -201,6 +204,7 @@ class RdWiioSrv(RdApp):
                 
                 v=self.get_mod_var(n,'to_cmd')
                 if v!=None and v=='1':
+                    pumping=True
                     self.client.publish("/wifiio/cmd/%s" % n,"on");
                     if DEBUG_CYCLE==True:
                         print('pub %s on' % n)
@@ -214,8 +218,10 @@ class RdWiioSrv(RdApp):
                     print("Loose %s!" % n)
                     self.set_mod_var(n,'valid',0,None)
 
+            self.set_app_var_bool('pumping',pumping,None)
+            
             if slp==True:
-                self.set_app_var_bool('on',False,None)                
+                self.set_app_var_bool('on',False,None)         
         
 
 if __name__=='__main__':

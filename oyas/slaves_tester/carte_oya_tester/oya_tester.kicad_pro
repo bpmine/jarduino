@@ -55,12 +55,7 @@
           "width": 0.0
         }
       ],
-      "drc_exclusions": [
-        "missing_courtyard|118000000|144000000|3822bf46-e6da-475d-b607-4ac154346e50|00000000-0000-0000-0000-000000000000",
-        "missing_courtyard|118000000|81000000|dd52e8bf-9d1c-4008-9f30-21d54c3381f5|00000000-0000-0000-0000-000000000000",
-        "missing_courtyard|57000000|144000000|ed6cb668-31cb-4063-867a-1dca2721e9a1|00000000-0000-0000-0000-000000000000",
-        "missing_courtyard|87900000|120070000|f6604763-ba45-48c1-852e-b9cf2053d876|00000000-0000-0000-0000-000000000000"
-      ],
+      "drc_exclusions": [],
       "meta": {
         "version": 2
       },
@@ -199,9 +194,7 @@
     "equivalence_files": []
   },
   "erc": {
-    "erc_exclusions": [
-      "pin_to_pin|1054100|355600|d3fe6268-0622-4b71-97e5-1c0335d3d930|c4b5d3a5-d541-4cb7-89ed-1f649b52fa9f|/508bf5f8-0ac6-45b3-b765-aef3492bf14c|/508bf5f8-0ac6-45b3-b765-aef3492bf14c|/508bf5f8-0ac6-45b3-b765-aef3492bf14c"
-    ],
+    "erc_exclusions": [],
     "meta": {
       "version": 0
     },

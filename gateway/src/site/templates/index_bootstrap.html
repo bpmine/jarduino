@@ -78,9 +78,26 @@
         <div class="col-md-6 col-lg-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title" onclick="toggleDetails('detail-{{ loop.index }}')" style="cursor: pointer;">{{ module.name }}</h5>
-                    <p class="text-muted">{{ module.date }}</p>
-                    <div class="jauge-container">
+
+                    <!--<h5 class="card-title" onclick="toggleDetails('detail-{{ loop.index }}')" style="cursor: pointer;">{{ module.name }}</h5>
+                    <p class="text-muted">{{ module.date }}</p>-->
+                    <div class="row align-items-center mb-2" onclick="toggleDetails('detail-{{ loop.index }}')">
+                        <!-- Nom -->
+                        <div class="col text-start">
+                            <h5 class="card-title mb-0">
+                                {{ module.name }}
+                            </h5>
+                        </div>
+
+                        <!-- Date à droite -->
+                        <div class="col text-end">
+                            <small>
+                                {{ module.date }}
+                            </small>
+                        </div>  
+                    </div>
+
+                    <div class="jauge-container" onclick="toggleDetails('detail-{{ loop.index }}')">
                         <div class="jauge-bar {% if module.level < 25 %}red{% elif module.level > 60 %}green{% else %}orange{% endif %}" style="width: {{ module.level }}%;"></div>
                     </div>
                     <div class="mb-2">
@@ -134,9 +151,27 @@
         <div class="col-md-6 col-lg-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">{{ cuve.name }}</h5>
-                    <p class="text-muted">{{ cuve.date }}</p>
-                    <p><strong>Alim: </strong> {{ cuve.pwr }} V</p>
+                    <!-- Ligne nom + batterie -->
+                    <div class="row align-items-center mb-2">                    
+                        <!-- Nom -->
+                        <div class="col text-start">
+                            <h5 class="card-title mb-0">
+                                {{ cuve.name }}
+                            </h5>
+                        </div>
+
+                        <!-- Batterie à droite -->
+                        <div class="col text-end">
+                            <small>
+                                <i class="bi bi-battery-half"></i>
+                                <strong>🔋</strong>{{ cuve.pwr }} V
+                            </small>
+                        </div>  
+                    </div>
+                    <!-- Ligne datetime -->
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span> {{ cuve.date }}</span>
+                    </div>
                     <div class="jauge-container">
                         <div class="jauge-bar {% if cuve.level < 40 %}red{% elif cuve.level > 60 %}green{% else %}orange{% endif %}" style="width: {{ cuve.level }}%;"></div>
                     </div>
@@ -161,7 +196,7 @@
     </div>
 <hr>
 <div class="container mt-4">
-  <h3>Mode Commandes</h3>
+  <h3>Mode Commande des cuves</h3>
   <div class="form-check form-switch">
     <input class="form-check-input" type="checkbox" id="advancedToggle" onchange="confirmAdvancedToggle(this)">
     <label class="form-check-label" for="advancedToggle">Activer le mode</label>

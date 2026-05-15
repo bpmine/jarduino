@@ -11,6 +11,7 @@ alive=None
 on=None
 sleep=None
 pumping=None
+waking=None
 
 class RdVoyants(RdApp):
 
@@ -34,6 +35,7 @@ class RdVoyants(RdApp):
         global on
         global sleep
         global pumping
+        global waking
 
         while True:
             time.sleep(2)
@@ -41,6 +43,7 @@ class RdVoyants(RdApp):
             on=self.get_app_var_bool('on')
             sleep=self.get_app_var_bool('sleep')
             pumping=self.get_app_var_bool('pumping')
+            waking=self.get_app_var_bool('waking')
 
 
     def start(self):
@@ -109,10 +112,12 @@ def main():
             set_blue(False)
         elif on==True:
             set_red(True)
-            if pumping==False:
+            if pumping==True:
+                set_blue(flg_250MS)
+            elif waking==True:
                 set_blue(pulse_2S)
             else:
-                set_blue(pulse_500MS)
+                set_blue(pulse_1S)
 
 
 

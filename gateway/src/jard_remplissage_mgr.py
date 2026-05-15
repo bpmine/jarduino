@@ -73,7 +73,7 @@ class RempliApp():
         self.add_remplissage("main_paul"    , "paul"  , "paul"  , "main")
         self.add_remplissage("reduit_barbec", "reduit", "barbec", "reduit")
         
-        self.add_remplissage("barbec_terrasse", "terrasset", "terrasse", "barbec")
+        self.add_remplissage("barbec_terrasse", "terrasse", "terrasse", "barbec")
         self.add_remplissage("main_arriere", "arriere", "arriere", "main")
 
     def tolvl(self,n1,n2,n3):
@@ -152,7 +152,6 @@ class RempliApp():
                     cmd=False
 
                 if pmp!=None:
-                    #pass
                     self.set_mod_var_bool(pmp,'to_cmd',cmd)            
 
                 txt='%-20s: on=%-6s, %s[%s] -> %s[%s], pmp=%s' % (name,on,lvl_src,cons_src,lvl_dst,cons_dst,cmd)

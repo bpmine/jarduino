@@ -79,7 +79,10 @@ def get_cuves():
 
         state={
             'on':data.get('on',False),
-            'sleep':data.get('sleep',False)
+            'sleep':data.get('sleep',False),
+            'alive':data.get('alive',False),
+            'pumping':data.get('pumping',False),
+            'waking':data.get('waking',False)
         }
 
         return cuves,state

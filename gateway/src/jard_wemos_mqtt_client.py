@@ -1,8 +1,5 @@
 #!/usr/bin/python3
 from jard_wemos_mqtt_mgr import RdApp
-import json
-import redis
-import time
 
 class RdWiioClient(RdApp):
     def __init__(self,ip,port=6379):
@@ -65,6 +62,8 @@ class RdWiioClient(RdApp):
             'on': self.get_app_var_bool('on'),
             'alive': self.get_app_var_bool('alive'),
             'sleep': self.get_app_var_bool('sleep'),
+            'waking': self.get_app_var_bool('waking'),
+            'pumping': self.get_app_var_bool('pumping'),
             'modules':{},
             'remplis':{},
             }

@@ -159,7 +159,7 @@ class RdWiioSrv(RdApp):
             if sleep==True and self.get_mod_var_bool(name,'sleep')==False:
                 print('Envoi sleep a %s' % (name))
                 self.client.publish("/wifiio/cmd/%s" % name,"sleep");
-                self.set_mod_var_bool(name,'sleep',True,3000)
+                self.set_mod_var_bool(name,'sleep',True,3600)
 
     def start(self):
         oldOn=False
@@ -175,7 +175,7 @@ class RdWiioSrv(RdApp):
         print('Start program...');
         while True:
             time.sleep(1)
-            self.set_app_var_bool('alive',True)
+            self.set_app_var_bool('alive',True,10)
 
             on=self.get_app_var_bool('on')
             if on==None:
@@ -188,6 +188,7 @@ class RdWiioSrv(RdApp):
             
             if on!=True:
                 self.set_app_var_bool('pumping',False,None)
+                self.set_app_var_bool('waking',False,None)
                 continue            
 
             if DEBUG_CYCLE==True:
@@ -197,11 +198,16 @@ class RdWiioSrv(RdApp):
             slp=self.get_app_var_bool('sleep')
 
             pumping=False
+            waking=False
             for n in self.modules:
                 if slp==True:
                     self.client.publish("/wifiio/cmd/%s" % n,"sleep");
                     continue
                 
+                mod_sleep=self.get_mod_var_bool(n,'sleep')
+                if mod_sleep==True and not slp:
+                    waking=True
+
                 v=self.get_mod_var(n,'to_cmd')
                 if v!=None and v=='1':
                     pumping=True
@@ -219,6 +225,7 @@ class RdWiioSrv(RdApp):
                     self.set_mod_var(n,'valid',0,None)
 
             self.set_app_var_bool('pumping',pumping,None)
+            self.set_app_var_bool('waking',True,None)
             
             if slp==True:
                 self.set_app_var_bool('on',False,None)         

@@ -63,10 +63,13 @@ class RdApp:
 
     def get_mod_var_int(self,nmod,nvar):
         res=self.get_mod_var(nmod,nvar)
-        if res==None or res.isnumeric()==False:
+        if res==None: 
             return 0
         else:
-            return int(res)
+            try:
+                return int(res)
+            except:
+                return 0
 
     def set_mod_var_bool(self,nmod,nvar,val,tmt=None):
         self.set_mod_var(nmod,nvar,1 if val==True else 0,tmt)
@@ -74,6 +77,15 @@ class RdApp:
     def del_mod_var(self,nmod,nvar):
         k=self.kModVar(nmod,nvar)
         self.r.delete(k)
+
+    def get_modules(self):
+        modules=set()
+        res=self.r.smembers('%s.modules' % (self.kApp()))
+        for name in res:
+            modules.add(name)
+
+        return modules
+
         
 
 class RdWiioSrv(RdApp):
@@ -81,7 +93,7 @@ class RdWiioSrv(RdApp):
         super(RdWiioSrv,self).__init__(ip,port)
 
         self.client = mqtt.Client()
-        self.modules=set()
+        #self.modules=set()        
         
         #ks=self.r.keys('%s.*' % (self.kApp()))
         #p=self.r.pipeline()
@@ -89,7 +101,7 @@ class RdWiioSrv(RdApp):
         #    p.delete(k)
         #p.execute()
 
-        self.set_app_var_bool('alive',True)
+        #self.set_app_var_bool('alive',True)
         #self.set_app_var('on',1,None)
 
         #self.r.delete('%s.modules' % (self.kApp()))
@@ -143,10 +155,10 @@ class RdWiioSrv(RdApp):
                 self.update_data(name,js)
                 print('-> Recv %s (%s)' % (name,js['cmd']))
                 
-                if name not in self.modules:
+                modules=self.get_modules()
+                if name not in modules:
                     try:
                         self.r.sadd('%s.modules' % (self.kApp()),name)
-                        self.modules.add(name)
                         print('Add %s' % name)
                     except Exception as ex:
                         print(ex)
@@ -197,9 +209,11 @@ class RdWiioSrv(RdApp):
 
             slp=self.get_app_var_bool('sleep')
 
+            modules=self.get_modules()
+
             pumping=False
             waking=False
-            for n in self.modules:
+            for n in modules:
                 if slp==True:
                     self.client.publish("/wifiio/cmd/%s" % n,"sleep");
                     continue
@@ -223,9 +237,11 @@ class RdWiioSrv(RdApp):
                 if val==None:                    
                     print("Loose %s!" % n)
                     self.set_mod_var(n,'valid',0,None)
+                elif val=='1' and slp==False:
+                    self.set_mod_var_bool(n,'sleep',False)
 
             self.set_app_var_bool('pumping',pumping,None)
-            self.set_app_var_bool('waking',True,None)
+            self.set_app_var_bool('waking',waking,None)
             
             if slp==True:
                 self.set_app_var_bool('on',False,None)         

@@ -154,21 +154,25 @@
         <div class="col-md-6 col-lg-4">
             <div class="card">
                 <div class="card-body">
-                    <!-- Ligne nom + batterie -->
-                    <div class="row align-items-center mb-2">                    
-                        <!-- Nom -->
-                        <div class="col text-start">
-                            <h5 class="card-title mb-0">
-                                {{ cuve.name }}
-                            </h5>
-                        </div>
+                    <!-- Ligne nom + infos -->
+                    <div class="d-flex justify-content-between align-items-center mb-2">
 
-                        <!-- Batterie à droite -->
-                        <div class="col text-end">
-                            <small>
-                                <strong>🔋</strong>{{ cuve.pwr }} V
-                            </small>
-                        </div>  
+                        <!-- Nom -->
+                        <h5 class="card-title mb-0">
+                            {{ cuve.name }}
+                        </h5>
+
+                        <!-- Infos compactes -->
+                        <small class="text-nowrap ms-2">
+
+                            🔋{{ cuve.pwr }}V
+
+                            &nbsp;
+
+                            📶 {{ cuve.rssi }}dBm
+
+                        </small>
+
                     </div>
                     <!-- Ligne datetime -->
                     <div class="d-flex justify-content-between align-items-center mb-2">

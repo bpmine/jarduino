@@ -101,14 +101,14 @@ def main():
             else:
                 pulse_500MS=True
 
-        if on==None or alive!=True:
+        if alive!=True:
             set_red(flg_250MS)
             set_blue(False)
         elif sleep==True:
             set_red(pulse_2S)
             set_blue(False)
         elif on==False:
-            set_red(pulse_500MS)
+            set_red(pulse_1S)
             set_blue(False)
         elif on==True:
             set_red(True)

@@ -22,6 +22,10 @@ inline unsigned short DataBuilder::mask(int addr)
   return msk;
 }
 
+void DataBuilder::set_bigs(unsigned short bigs)
+{
+  pData->bigs=bigs;
+}
 
 void DataBuilder::set(Slave *slave)
 {

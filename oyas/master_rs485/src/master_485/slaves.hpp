@@ -177,11 +177,13 @@ class SlavesList
     Slave *slaves[NUM_SLAVES_MAX];
 
     unsigned short flgEnabledSlaves;
+    unsigned short flgBigOyas;
 
   public:
     SlavesList()
     {
       flgEnabledSlaves=0;
+      flgBigOyas=0;
       for (int i=0;i<NUM_SLAVES_MAX;i++)
       {
     	if (i==0)
@@ -215,6 +217,21 @@ class SlavesList
     unsigned short enabled_slaves(void)
     {
       return flgEnabledSlaves;
+    }
+
+    void config_big_oyas(unsigned short big_oyas)
+    {
+      flgBigOyas=big_oyas;
+    }
+
+    unsigned short big_oyas(void)
+    {
+      return flgBigOyas;
+    }
+
+    void set_big_oyas(unsigned short bigs)
+    {
+      flgBigOyas=bigs;
     }
 
     void init_all(void)

@@ -94,6 +94,7 @@ void WifiComm::pubDataInfo(void)
   doc["lows"]=data.low;
   doc["highs"]=data.high;
   doc["flow"]=data.flow;
+  doc["bigs"]=data.bigs;
 
   char dte[40];
   sprintf(dte,"%04d-%02d-%02dT%02d:%02d:%02dZ",
@@ -204,6 +205,23 @@ void WifiComm::recv(void)
           else if (strcmp(doc["req"],"razt")==0)
           {
             api_raz_all_time();
+            tmrRemoteActive.start();
+            tmrAlive.start();
+          }
+          else if (strcmp(doc["req"],"setcfg")==0)
+          {
+            if (doc.containsKey("slaves"))
+            {
+              int slaves=doc["slaves"];
+              api_set_slaves_config(slaves);
+            }
+
+            if (doc.containsKey("bigs"))
+            {
+              int bigs=doc["bigs"];
+              api_set_bigs(bigs);
+            }
+
             tmrRemoteActive.start();
             tmrAlive.start();
           }

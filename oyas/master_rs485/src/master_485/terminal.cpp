@@ -34,7 +34,8 @@ static void _help(void)
   Serial.println("  - setdate dd/mm/yyyy");
   Serial.println("  - settime hh:mm:ss");
   Serial.println("  - time");
-  Serial.println("  - confslaves");
+  Serial.println("  - confslaves (add/rm/mask)");
+  Serial.println("  - confbigs (add/rm/mask)");
 }
 
 static bool _parseOnOff(const char *params,bool def)
@@ -363,6 +364,63 @@ static void _term_exec_config_slaves(const char *strParams)
   }
 }
 
+static void _term_exec_config_bigs(const char *strParams)
+{
+  if (strParams==NULL)
+  {
+    unsigned short mask=api_get_bigs();
+    Serial.print("Liste gros oyas: ");
+    Serial.println(mask,HEX);
+
+    for (int i=0;i<14;i++)
+    {
+      unsigned short m=1<<i;
+      if ((mask&m)==m)
+      {
+        if (i>0)
+        {
+          Serial.print("  - OYA   @");
+          Serial.println(i+1,HEX);
+          delay(5);
+          yield();
+        }
+      }
+    }
+  }
+  else
+  {
+    int mask;
+    int addr;
+    char cmd[10];
+    if ( ( sscanf(strParams,"%3s %1X",cmd,&addr)==2 ) && (addr>0) && (addr<15) )
+    {
+      if (strcmp(cmd,"add")==0)
+      {
+        unsigned short mask=api_get_bigs();
+        mask|=( 1<< (addr-1) );
+        api_set_bigs(mask);
+        _term_exec_config_bigs(NULL);
+      }
+      else if (strcmp(cmd,"rm")==0)
+      {
+        unsigned short mask=api_get_bigs();
+        mask&=~( 1<< (addr-1) );
+        api_set_bigs(mask);
+        _term_exec_config_bigs(NULL);
+      }
+    }
+    else if ( sscanf(strParams,"%X",&mask)==1 )
+    {
+      api_set_bigs((unsigned short)mask);
+      _term_exec_config_bigs(NULL);
+    }
+    else
+    {
+      Serial.println("Parametres incorrects");
+    }
+  }
+}
+
 static void _term_exec_ping(const char *strParams)
 {
   int addr;
@@ -458,6 +516,10 @@ static void _execCmd(const char *strCmd,const char *strParams)
   else if (strcmp(strCmd,"confslaves")==0)
   {
     _term_exec_config_slaves(strParams);
+  }
+  else if (strcmp(strCmd,"confbigs")==0)
+  {
+    _term_exec_config_bigs(strParams);
   }
   else if (strcmp(strCmd,"ping")==0)
   {

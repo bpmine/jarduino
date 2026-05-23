@@ -5,10 +5,11 @@
 #include <RTClib.h>
 
 #include "databuilder.h"
+#include "memory.h"
 
 MasterArduino Master;
-
 static DS1307 _rtc;
+Memory mem;
 
 void api_trace(bool en)
 {
@@ -94,11 +95,31 @@ void api_set_hour(int hour,int minute,int second)
 void api_set_slaves_config(unsigned short config)
 {
   Master.set_config_slaves(config);
+  mem.slaves=Master.get_config_slaves();
+  mem.save();
 }
 
 unsigned short api_get_slaves_config(void)
 {
   return Master.get_config_slaves();
+}
+
+unsigned short api_get_bigs(void)
+{
+  if (Master.getSlavesList()!=nullptr)
+    return Master.getSlavesList()->big_oyas();
+  else
+    return 0;
+}
+
+void api_set_bigs(unsigned short bigs)
+{
+  if (Master.getSlavesList()!=nullptr)
+  {
+    Master.getSlavesList()->set_big_oyas(bigs);
+    mem.bigs=Master.getSlavesList()->big_oyas();
+    mem.save();
+  }
 }
 
 void api_raz_all_time(void)
@@ -143,8 +164,16 @@ void api_latch_data(Data *pData)
     bld.set(oya);
     oya=api_find_next_oya(pos);
   }
+  bld.set_bigs(api_get_bigs());
 
   DateTime now = _rtc.now();
   bld.set(&now);
 }
 
+bool api_load_memory(void)
+{
+  bool res=mem.load();
+  api_set_slaves_config(mem.slaves);
+  api_set_bigs(mem.bigs);
+  return res;
+}

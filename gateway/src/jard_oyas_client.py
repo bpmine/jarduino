@@ -18,6 +18,7 @@ import time
 ###         "comms":14,			///< Même principe pour la comm (oyas/pompe communiquent avec le maitre ou pas)
 ###         "lows":4,			///< Même principe pour le capteur bas de chaque oya (4 = oya 2 low tous les autres pas low)
 ###         "highs":0,			///< Même principe pour le capteur haut de chaque oya (0 = aucun oya high)
+###         "bigs": 2,          ///< Même principe pour la taille de chaque oya (bit à 1= gros oya)
 ###         "date_mqtt":"2025-05-14T00:45:12Z",
 ###         "date":"2025-05-14T00:46:12Z",
 ###         "slaves":
@@ -27,7 +28,7 @@ import time
 ###              "type":"pump",
 ###              "on":true,
 ###				 "flow":456,
-###              "comm_ok":true
+###              "comm_ok":true    
 ###           },
 ###           {
 ###              "addr":2,
@@ -35,7 +36,8 @@ import time
 ###              "on":true,
 ###              "low":true,
 ###              "high":false,
-###              "comm_ok":true
+###              "comm_ok":true,
+###              "big":true
 ###           },
 ###           {
 ###              "addr":3,
@@ -43,7 +45,8 @@ import time
 ###              "on":false,
 ###              "low":false,
 ###              "high":false,
-###              "comm_ok":true
+###              "comm_ok":true,
+###              "big":false
 ###           }
 ###         ]
 ###		 },
@@ -117,6 +120,7 @@ class RdOyasClient(RdApp):
         ons=self.get_mod_var_int(name,'ons')
         lows=self.get_mod_var_int(name,'lows')
         highs=self.get_mod_var_int(name,'highs')
+        bigs=self.get_mod_var_int(name,'bigs')
         date=self.get_mod_var(name,'date')
         date_mqtt=self.get_mod_var(name,'date_mqtt')
             
@@ -148,6 +152,7 @@ class RdOyasClient(RdApp):
                 if addr!=1:
                     obj['high']=(highs & mask) == mask
                     obj['low']=(lows & mask) == mask
+                    obj['big']=(bigs & (mask>>1)) == (mask>>1)
                 
                 mod['slaves'].append(obj)
             

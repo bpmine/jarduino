@@ -10,6 +10,7 @@
 #include "timer.h"
 #include "wificomm.h"
 #include "manager.h"
+#include "api.h"
 
 #include <FastLED.h>
 
@@ -72,15 +73,23 @@ void setup(void)
 
   Master.begin(&Serial1, PIN_TX_EN);
 
-  #ifdef NODE_BARBEC  ///< Barbec: 7 Oyas + 1 Pompe
+  /*#ifdef NODE_BARBEC  ///< Barbec: 7 Oyas + 1 Pompe
     Master.set_config_slaves(0x00FF);
+    Master.set_big_oyas(0x003C); // 2,3,4 et 5  11 1100
   #endif
   #ifdef NODE_REDUIT ///< Reduit: 12 Oyas + 1 Pompe
     Master.set_config_slaves(0x1FFF);
+    Master.set_big_oyas(0x0048);  // 3 et 6
   #endif
   #ifdef NODE_PAUL  ///< Paul/Nord: 6 Oyas + 1 Pompe
     Master.set_config_slaves(0x7F);
-  #endif
+    Master.set_big_oyas(0x0000);  // Tous petits
+  #endif*/
+
+  if (api_load_memory()==false)
+  {
+    Serial.println("Reinitialisation des paramaetres!");
+  }
 
   tmrCycle.start();
   tmrLeds.start();

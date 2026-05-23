@@ -139,6 +139,12 @@ class Master : public IFrameReceiver
     void set_config_slaves(unsigned short ens);
 
     /**
+     * @brief Designe les gros oyas (8L) vs les petits (5L)
+     * @param[in] big_oyas Bits indiquant les gros oyas (Bit 1 = Oya 1. Le Bit 0 correspondrait à la pompe: NA)
+     * */
+    void set_big_oyas(unsigned short big_oyas);
+
+    /**
      * @brief Retourne la configuration des esclaves
      * @return (Bit0 = Esclave @1, Bit1 = Esclave @2, ... Bit14 = Esclave @14)
      * */

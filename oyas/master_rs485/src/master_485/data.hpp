@@ -13,6 +13,7 @@ class Data
     unsigned short high;
     unsigned short low;
     unsigned short flow;
+    unsigned short bigs;
     unsigned int temp_dg[MAX_SLAVES];
     unsigned int hum_pc[MAX_SLAVES];
     unsigned int volt[MAX_SLAVES];

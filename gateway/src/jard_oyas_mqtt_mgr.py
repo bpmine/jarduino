@@ -169,6 +169,7 @@ class RdOyasSrv(RdApp):
             self.update_mod_var_int(name,data,'ons')
             self.update_mod_var_int(name,data,'lows')
             self.update_mod_var_int(name,data,'highs')
+            self.update_mod_var_int(name,data,'bigs')
             self.set_mod_var(name,'date',data['date'],None)                    
                             
         self.set_mod_var(name,'valid',1)
@@ -262,12 +263,19 @@ class RdOyasSrv(RdApp):
                 print('_'*40)
                 print('Cycle:')
 
-##            slp=self.get_app_var_bool('sleep')
-##            
-##            for n in self.modules:
-##                if slp==True:
-##                    self.client.publish("/oyas/cmd/%s" % n,"sleep");
-##                    continue
+            
+            for n in self.modules:
+                new_slaves=self.get_mod_var_int(n,'to_slaves')
+                if new_slaves!=None:
+                    slaves=self.get_mod_var_int(n,'slaves')
+                    if slaves!=new_slaves:
+                        print(f'Envoi de la configuration des esclaves à {n}: {slaves:04X} -> {new_slaves:04X}')
+                        js={'req':'setcfg','slaves':new_slaves}
+                        self.client.publish("/oyas/cmd/%s" % n,)
+                        self.set_mod_var_int(n,'slaves',new_slaves)
+            
+            
+            time.sleep(1)
 ##                
 ##                v=self.get_mod_var(n,'to_cmd')
 ##                if v!=None and v=='1':

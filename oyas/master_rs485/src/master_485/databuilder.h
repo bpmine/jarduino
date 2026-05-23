@@ -1,3 +1,7 @@
+/***
+ * @file databuilder.h
+ * @brief Builder pour le document JSON de data sortant
+ **/
 #ifndef DATA_BUILDER_HEADER_INCLUDED
 #define DATA_BUILDER_HEADER_INCLUDED
 
@@ -6,6 +10,7 @@ class Oya;
 class Pump;
 class Slave;
 class DateTime;
+class Master;
 class DataBuilder
 {
   private:
@@ -21,6 +26,7 @@ class DataBuilder
     void set(Oya *oya);
     void set(int day,int month,int year,int h,int m,int s);
     void set(DateTime *pDt);
+    void set_bigs(unsigned short bigs);
 };
 
 #endif

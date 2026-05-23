@@ -56,6 +56,11 @@ void Master::set_config_slaves(unsigned short ens)
   list.config_slaves(ens&(0x3FFF));
 }
 
+void Master::set_big_oyas(unsigned short big_oyas)
+{
+  list.config_big_oyas(big_oyas&(0x3FFE)); /// NA pour la pompe
+}
+
 void Master::set_commands(unsigned short cmds)
 {
   /// @remark On ne commande que les esclaves actifs sur ce maitre. Les autres sont à 0 (sécurité).

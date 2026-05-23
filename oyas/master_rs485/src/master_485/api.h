@@ -28,8 +28,11 @@ extern void api_get_date_hour(int &day,int &month,int &year,int &hour,int &minut
 extern void api_set_date(int day,int month,int year);
 extern void api_set_hour(int hour,int minute,int second);
 
+extern bool api_load_memory(void);
 extern void api_set_slaves_config(unsigned short config);
 extern unsigned short api_get_slaves_config(void);
+extern unsigned short api_get_bigs(void);
+extern void api_set_bigs(unsigned short bigs);
 
 extern void api_raz_all_time(void);
 extern void api_raz_time(unsigned char addr);

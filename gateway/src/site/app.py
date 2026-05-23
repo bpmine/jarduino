@@ -105,7 +105,8 @@ def index():
             level = resume_levels([oya for oya in slaves if oya.get("type") == "oya"])
             comm_issues = any(not oya.get("comm_ok", True) for oya in slaves)
             high_count = sum(1 for oya in slaves if oya.get("type") == "oya" and oya.get("high"))
-            alert_count = sum(1 for oya in slaves if oya.get("type") == "oya" and not oya.get("high") and not oya.get("low"))
+            alert_count = sum(1 for oya in slaves if oya.get("type") == "oya" and not oya.get("high") and not oya.get("low") and oya.get("comm_ok"))
+            comm_issues_count=sum(1 for slv in slaves if not slv.get("comm_ok"))
             module = {
                 "name": module_info.get("name"),
                 "date": iso_to_dte(module_info.get("date").replace("Z", "+00:00")),
@@ -113,6 +114,7 @@ def index():
                 "comm_issues": comm_issues,
                 "high_count": high_count,
                 "alert_count": alert_count,
+                "comm_issues_count": comm_issues_count,
                 "slaves": slaves
             }
             modules.append(module)

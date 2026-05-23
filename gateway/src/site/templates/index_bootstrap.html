@@ -106,7 +106,7 @@
                         <span class="badge bg-danger">Bas ({{ module.alert_count }})</span>
                         {% endif %}
                         {% if module.comm_issues %}
-                        <span class="badge bg-danger">Pas de réponse</span>
+                        <span class="badge bg-danger">Pas de réponse ({{module.comm_issues_count}})</span>
                         {% endif %}
                     </div>
                     <div id="detail-{{ loop.index }}" style="display: none;">
@@ -116,7 +116,7 @@
                                 <tr>
                                     <td>{{ oya.addr }}</td>
                                     <td>
-                                        <img src="{{ url_for('static', filename='pump.png' if oya.type == 'pump' else 'oya.png') }}" class="img-fluid" width="32">
+                                        <img src="{{ url_for('static', filename='pump.png' if oya.type == 'pump' else 'oya.png' if oya.big==false else 'big_oya.png') }}" class="img-fluid" width="32">
                                     </td>
                                     <td>
                                         <img src="{{ url_for('static', filename='bus_ok.png' if oya.comm_ok else 'bus_nok.png') }}" class="img-fluid" width="32">

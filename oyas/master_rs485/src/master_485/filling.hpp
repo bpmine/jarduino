@@ -55,8 +55,8 @@ class SpecialFillElmSettings
   /**
    * COTE REDUIT:
    *
-   * - Oyas 8L  : @1,
-   * - Oyas 10L : @2, @3
+   * - Oyas 8L  : @2, @4, @5, @7, @8, @9, @10, @11, @12, @13,
+   * - Oyas 10L : @3, @6
    *
    * @8 et @9 passent a low en 9s puis a high en 44s (Soit 53s pour passer de vide a high)
    * */

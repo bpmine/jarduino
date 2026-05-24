@@ -112,6 +112,14 @@ class RdApp:
             return 0
         else:
             return int(res)
+        
+    def get_modules(self):
+        modules=set()
+        res=self.r.smembers('%s.modules' % (self.kApp()))
+        for name in res:
+            modules.add(name)
+
+        return modules        
                 
 
 class RdOyasSrv(RdApp):
@@ -119,19 +127,25 @@ class RdOyasSrv(RdApp):
         super(RdOyasSrv,self).__init__(ip,port)
 
         self.client = mqtt.Client()
-        self.modules=set()
-        self.slaves={}
+        #self.modules=set()
         
-        ks=self.r.keys('%s.*' % (self.kApp()))
-        p=self.r.pipeline()
-        for k in ks:
-            p.delete(k)
-        p.execute()
+        #ks=self.r.keys('%s.*' % (self.kApp()))
+        #p=self.r.pipeline()
+        #for k in ks:
+        #    p.delete(k)
+        #p.execute()
+
+        modules=self.get_modules()
+        for nme in modules:
+            self.del_mod_var(nme,"to_cmds")
+            self.del_mod_var(nme,"to_filling")
+            self.del_mod_var(nme,"to_bigs")
+            self.del_mod_var(nme,"to_slaves")
 
         self.set_app_var_bool('alive',True,10)
         #self.set_app_var('on',1,None)
 
-        self.r.delete('%s.modules' % (self.kApp()))
+        #self.r.delete('%s.modules' % (self.kApp()))
 
     def on_connect(self,client, userdata, flags, rc):
         print("Connected with result code "+str(rc))
@@ -219,12 +233,13 @@ class RdOyasSrv(RdApp):
                 
                 #self.send_mod_ack(name)
                 
-                if name not in list(self.modules):
+                modules=self.get_modules()
+                if name not in modules:
                     try:
                         print('ADD')
                         
                         self.r.sadd('%s.modules' % (self.kApp()),name)
-                        self.modules.add(name)
+                        #self.modules.add(name)
                         print('Add %s' % name)
                     except Exception as ex:
                         print(ex)
@@ -263,6 +278,8 @@ class RdOyasSrv(RdApp):
                 js={'req':'setcfg','slaves':new_slaves}
                 self.client.publish("/oyas/cmd/%s" % name_module,json.dumps(js).encode('ASCII'))
                 self.set_mod_var_int(name_module,'slaves',new_slaves)
+            else:
+                self.del_mod_var(name_module,"to_slaves")
 
         new_bigs=self.get_mod_var_int(name_module,'to_bigs')
         if new_bigs!=None:
@@ -272,6 +289,8 @@ class RdOyasSrv(RdApp):
                 js={'req':'setcfg','bigs':new_bigs}
                 self.client.publish("/oyas/cmd/%s" % name_module,json.dumps(js).encode('ASCII'))
                 self.set_mod_var_int(name_module,'bigs',new_bigs)
+            else:
+                self.del_mod_var(name_module,"to_bigs")
 
 
     def start(self):
@@ -307,13 +326,14 @@ class RdOyasSrv(RdApp):
             if on!=True:
                 continue            
 
+            modules=self.get_modules()
             if DEBUG_CYCLE==True:
                 print('_'*40)
                 print('Cycle:')
-                for n in self.modules:
+                for n in modules:
                     print(f'  - {n}')
             
-            for n in self.modules:
+            for n in modules:
                 to_cmds=self.get_mod_var_int(n,'to_cmds')
                 if to_cmds==None:
                     to_cmds=0
@@ -325,31 +345,7 @@ class RdOyasSrv(RdApp):
                     to_cmds=to_filling;
 
                 self.send_mod_cmds(n,to_cmds,True,stop_highs)
-                
-                #js={'req':'cmds','cmds':to_cmds,'ctrl':True}
-                #if stop_highs!=None:
-                #    js["highs"]=stop_highs                    
-                #self.client.publish("/oyas/cmd/%s" % n,json.dumps(js).encode('ASCII'))
 
-##                
-##                v=self.get_mod_var(n,'to_cmd')
-##                if v!=None and v=='1':
-##                    self.client.publish("/oyas/cmd/%s" % n,"on");
-##                    if DEBUG_CYCLE==True:
-##                        print('pub %s on' % n)
-##                else:
-##                    self.client.publish("/oyas/cmd/%s" % n,"off");
-##                    if DEBUG_CYCLE==True:
-##                        print('pub %s off' % n)
-##
-##                val=self.get_mod_var(n,'valid')
-##                if val==None:                    
-##                    print("Loose %s!" % n)
-##                    self.set_mod_var(n,'valid',0,None)
-##
-##            if slp==True:
-##                self.set_app_var_bool('on',False,None)                
-        
 
 if __name__=='__main__':
     srv=RdOyasSrv('192.168.3.200')

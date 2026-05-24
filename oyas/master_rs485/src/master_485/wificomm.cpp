@@ -37,6 +37,8 @@ WifiComm::WifiComm()
   flgRemoteActive=false;
   flgAlive=false;
   commands=0;
+  stophighs=0;
+  flgDepanage=false;
   send_state=OFF;
   tmrSendData.start();
 }
@@ -95,6 +97,7 @@ void WifiComm::pubDataInfo(void)
   doc["highs"]=data.high;
   doc["flow"]=data.flow;
   doc["bigs"]=data.bigs;
+  doc["rmt"]=data.remote;
 
   char dte[40];
   sprintf(dte,"%04d-%02d-%02dT%02d:%02d:%02dZ",
@@ -115,17 +118,21 @@ void WifiComm::pubDataInfo(void)
   pStr->print("\x02");
 }
 
-void WifiComm::execCommands(unsigned short cmds,bool active)
+void WifiComm::execCommands(unsigned short cmds,unsigned short stophighs,bool active,bool depan)
 {
   if (active==true)
   {
     flgRemoteActive=true;
     commands=cmds;
+    this->stophighs=stophighs;
+    flgDepanage=depan;
   }
   else
   {
     flgRemoteActive=false;
     commands=0;
+    this->stophighs=0;
+    flgDepanage=0;
   }
 }
 
@@ -141,6 +148,16 @@ bool WifiComm::isAlive(void)
 unsigned short WifiComm::getCommands(void)
 {
   return commands;
+}
+
+bool WifiComm::isDepanage(void)
+{
+  return flgDepanage;
+}
+
+unsigned short WifiComm::getStopHighs(void)
+{
+  return stophighs;
 }
 
 void WifiComm::recv(void)
@@ -187,11 +204,30 @@ void WifiComm::recv(void)
           }
           if (strcmp(doc["req"],"cmds")==0)
           {
-            unsigned short cmds=doc["cmds"];
-            bool ctrl=doc["ctrl"];
-            execCommands(cmds,ctrl);
-            tmrRemoteActive.start();
-            tmrAlive.start();
+            if (doc.containsKey("cmds") && doc.containsKey("ctrl"))
+            {
+              unsigned short cmds=doc["cmds"];
+              bool ctrl=doc["ctrl"];
+              unsigned short stops=cmds&0xFFFE;
+              if (doc.containsKey("highs"))
+              {
+                unsigned short tmp=doc["highs"];
+                stops=tmp&0xFFFE;
+              }
+
+              bool depan=false;
+              if (doc.containsKey("depan"))
+                depan=doc["depan"];
+
+              execCommands(cmds,stops,ctrl,depan);
+
+              tmrRemoteActive.start();
+              tmrAlive.start();
+            }
+            else
+            {
+              execCommands(0,0,false,false);
+            }
           }
           else if (strcmp(doc["req"],"ack")==0)
           {
@@ -285,6 +321,7 @@ void WifiComm::loop(void)
   {
     flgRemoteActive=false;
     commands=0;
+    stophighs=0;
   }
 
   if (tmrAlive.tick()==true)
@@ -298,6 +335,7 @@ void WifiComm::sendData(void)
   if (send_state==IDLE)
   {
     api_latch_data(&data);
+    data.remote=flgRemoteActive;
     Serial.println("Latch");
     send_state=SEND_DATA;
     tmrSendData.start();

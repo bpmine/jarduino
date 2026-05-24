@@ -153,13 +153,13 @@ class Master : public IFrameReceiver
     /**
      * @brief Commande les esclaves souhaités (Bit0 = Esclave @1, Bit1 = Esclave @2, ... Bit14 = Esclave @14)
      * @param[in] cmds Bits de commande des esclaves
-     * */
+     **/
     void set_commands(unsigned short cmds);
     
     /**
      * @brief Déclenche le RAZ des temps totaux des esclaves
      * @param[in] razs bits correspondant aux esclaves a RAZ (Bit0 = Esclave @1, Bit1 = Esclave @2, ... Bit14 = Esclave @14)
-     * */
+     **/
     void set_raz_time(unsigned short razs);
 
     /**

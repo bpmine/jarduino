@@ -28,6 +28,7 @@ static DS1307 _rtc;
 #define TIMEOUT_CHECK_RTC_PERIOD            (30 * 1000UL)
 #define TIMEOUT_CHECK_WIFI_DURATION         (60 * 1000UL)
 #define TIMEOUT_READ_RS485                  (6 * 1000UL)
+#define TIMEOUT_TICK_DEPANAGE_MS            (1500UL)
 
 Btn _btn;
 int mode_aff=MODE_AFF_IDLE;
@@ -215,23 +216,69 @@ class StateWifiCheck:public StateGestion
  * */
 class StateWifiRemote:public StateGestion
 {
+    bool m_flg1S=false;
+
     void onEnter() override
     {
       logger.println("Enter Wifi remote");
       api_master(true);
+      m_flg1S=false;
+      _machine.startTimeOut(TIMEOUT_TICK_DEPANAGE_MS);
     }
 
     void onRun() override
     {
       mode_aff=MODE_AFF_REMOTE;
 
+      /// @remark Si controle distant pas actif, on retoure à Checkwifi
       if (Comm.isRemoteActive()==false)
         _machine.setState(stWifiCheck);
       else
       {
-        unsigned short cmds=Comm.getCommands();
+        /// @remark Sinon, on réplique les commandes distantes
+        unsigned short cmds=Comm.getCommands(); ///< Commandes à appliquer
+        unsigned stophighs=Comm.getStopHighs(); ///< Coupure sur les capteurs hauts correspondants
+
+        if ( (m_flg1S==false) && (Comm.isDepanage()) )
+          cmds=cmds&0x0001; /// @remark En mode dépannage, on coupe l'EV une seconde sur deux
+
+        /// On accepte au plus les deux premiers oyas à 1, les autres sont mis à 0
+        unsigned short cmds_only_oyas=cmds & 0xFFFE;
+        int cnt_1=0;
+        for (int i=0;i<15;i++)
+        {
+          if (cmds_only_oyas & (1<<i))
+            cnt_1++;
+
+          if (cnt_1>2)
+            cmds=cmds & (~(1<<i));
+        }
+
+        /// Recuperation des niveaux hauts de tous les oyas
+        Oya *p;
+        int pos;
+        unsigned short highs=0;
+        p=api_find_first_oya(pos);
+        while (p!=nullptr)
+        {
+          if ( (p->comm_ok==true) && (p->high==true) )
+            highs|= 1 << (p->addr-1);
+          p=api_find_next_oya(pos);
+        }
+        highs=highs&api_get_slaves_config();
+
+        if (highs&stophighs)
+          cmds=0;
+
         api_set_commands(cmds);
       }
+    }
+
+
+    void onTimeout() override
+    {
+      m_flg1S=! m_flg1S;
+      _machine.startTimeOut(TIMEOUT_TICK_DEPANAGE_MS);
     }
 
     void onLeave() override
@@ -269,6 +316,10 @@ class StateDisplay:public StateGestion
       }
       else if (_btn.isLongPressed())
         _machine.setState(stStartFill);
+
+      if (Comm.isRemoteActive())
+        _machine.setState(stWifiRemote);
+
     }
     void onLeave() override
     {

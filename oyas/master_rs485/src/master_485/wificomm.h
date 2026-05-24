@@ -29,13 +29,15 @@ class WifiComm
     bool flgRemoteActive;
     bool flgAlive;
     unsigned short commands;
+    unsigned short stophighs;
+    bool flgDepanage;
 
     Timer tmrSendAck= Timer(TIMEOUT_WIFI_ACK_MS);
     Timer tmrSendData= Timer(PERIOD_SEND_DATAS_MS,false);
 
     void pubDataInfo(void);
 
-    void execCommands(unsigned short cmds,bool ctrl);
+    void execCommands(unsigned short cmds,unsigned short stophighs,bool active,bool depan);
     void recv(void);
     void sendTask(void);
 
@@ -49,6 +51,8 @@ class WifiComm
     bool isRemoteActive(void);
     bool isAlive(void);
     unsigned short getCommands(void);
+    unsigned short getStopHighs(void);
+    bool isDepanage(void);
 
     void sendData(void);
 };

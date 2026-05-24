@@ -14,6 +14,7 @@ class Data
     unsigned short low;
     unsigned short flow;
     unsigned short bigs;
+    bool remote;
     unsigned int temp_dg[MAX_SLAVES];
     unsigned int hum_pc[MAX_SLAVES];
     unsigned int volt[MAX_SLAVES];
@@ -42,6 +43,8 @@ class Data
       high=0;
       low=0;
       flow=0;
+      bigs=0;
+      remote=false;
 
       for (int i=0;i<MAX_SLAVES;i++)
       {
@@ -61,7 +64,7 @@ class Data
       sec=0;
     }
 
-    void copyFrom(Data *pSrc)
+    /*void copyFrom(Data *pSrc)
     {
       config_slaves=pSrc->config_slaves;
       comm_ok=pSrc->comm_ok;
@@ -70,6 +73,8 @@ class Data
       high=pSrc->high;
       low=pSrc->low;
       flow=pSrc->flow;
+      bigs=pSrc->bigs;
+      remote=pSrc->remote;
 
       for (int i=0;i<MAX_SLAVES;i++)
       {
@@ -100,8 +105,9 @@ class Data
       unsigned short e = high ^ pSrc->high;
       unsigned short f = low ^ pSrc->low;
       unsigned short g = flow ^pSrc->flow;
+      unsigned short h = bigs ^pSrc->bigs;
 
-      ret = a | b | c | d | e | f | g;
+      ret = a | b | c | d | e | f | g | h;
 
       for (int i=0;i<MAX_SLAVES;i++)
       {
@@ -111,7 +117,7 @@ class Data
       }
 
       return ret;
-    }
+    }*/
 };
 
 #endif

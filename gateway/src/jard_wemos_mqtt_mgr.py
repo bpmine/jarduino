@@ -89,6 +89,8 @@ class RdApp:
         
 
 class RdWiioSrv(RdApp):
+    OFFLINE_AFTER_SLEEP_TIMEOUT_S=4000
+
     def __init__(self,ip,port=6379):
         super(RdWiioSrv,self).__init__(ip,port)
 
@@ -168,10 +170,12 @@ class RdWiioSrv(RdApp):
                 pass
 
             sleep=self.get_app_var_bool('sleep')
-            if sleep==True and self.get_mod_var_bool(name,'sleep')==False:
-                print('Envoi sleep a %s' % (name))
-                self.client.publish("/wifiio/cmd/%s" % name,"sleep");
-                self.set_mod_var_bool(name,'sleep',True,3600)
+            if sleep==True:
+                if self.get_mod_var_bool(name,'sleep')==False:
+                    print('Envoi sleep a %s' % (name))
+                    self.client.publish("/wifiio/cmd/%s" % name,"sleep");
+                
+                self.set_mod_var_bool(name,'sleep',True,RdWiioSrv.OFFLINE_AFTER_SLEEP_TIMEOUT_S)
 
     def start(self):
         oldOn=False
@@ -216,6 +220,7 @@ class RdWiioSrv(RdApp):
             for n in modules:
                 if slp==True:
                     self.client.publish("/wifiio/cmd/%s" % n,"sleep");
+                    self.set_mod_var_bool(n,'sleep',True,RdWiioSrv.OFFLINE_AFTER_SLEEP_TIMEOUT_S)
                     continue
                 
                 mod_sleep=self.get_mod_var_bool(n,'sleep')

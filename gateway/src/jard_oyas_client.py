@@ -91,17 +91,22 @@ class RdOyasClient(RdApp):
     def __init__(self,ip,port=6379):
         super(RdOyasClient,self).__init__(ip,port)
 
-    def setOn(self,flgOn,tm=None):
-        if (flgOn==True):
-            self.setSleep(False)
-            
-        self.set_app_var_bool('on',flgOn,tm)
+    def setOn(self,mname,flgOn,tm=None):            
+        self.set_mod_var_bool(mname,'on',flgOn,tm)
 
-    #def setSleep(self,flgSleep):
-    #    self.set_app_var_bool('sleep',flgSleep,None)        
+    def setCmds(self,mname,cmds,tm=10):
+        self.set_mod_var(mname,'to_cmds',cmds,tm)
+        self.set_mod_var(mname,'to_filling',0,None)
 
-    def setCmd(self,mname,flgOn,tm=None):
-        self.set_mod_var(mname,'to_cmd',1 if flgOn==True else 0,tm)
+    def setFilling(self,mname,addr_to_fill,pump=True,tm=60):
+        self.set_mod_var(mname,'to_cmds',0,None)
+
+        if addr_to_fill>1 and addr_to_fill<15:
+            to_filling=1<<addr_to_fill
+            if pump==True:
+                to_filling|=0x01
+
+            self.set_mod_var(mname,'to_filling',to_filling,tm)
 
     def hasModule(self,name):
         res=self.r.smembers('%s.modules' % (self.kApp()))
@@ -113,25 +118,25 @@ class RdOyasClient(RdApp):
         return False
 
     def getModuleJson(self,name):
-
-        slaves=self.get_mod_var_int(name,'slaves')
-        comms=self.get_mod_var_int(name,'comms')
-        cmds=self.get_mod_var_int(name,'cmds')
-        ons=self.get_mod_var_int(name,'ons')
-        lows=self.get_mod_var_int(name,'lows')
-        highs=self.get_mod_var_int(name,'highs')
-        bigs=self.get_mod_var_int(name,'bigs')
+        slaves=self.get_mod_var_int(name,'slaves',0)
+        comms=self.get_mod_var_int(name,'comms',0)
+        cmds=self.get_mod_var_int(name,'cmds',0)
+        ons=self.get_mod_var_int(name,'ons',0)
+        lows=self.get_mod_var_int(name,'lows',0)
+        highs=self.get_mod_var_int(name,'highs',0)
+        bigs=self.get_mod_var_int(name,'bigs',0)
         date=self.get_mod_var(name,'date')
         date_mqtt=self.get_mod_var(name,'date_mqtt')
             
         mod={
             'name':name,
-            'slaves':self.get_mod_var_int(name,'slaves'),
-            'cmds':self.get_mod_var_int(name,'cmds'),
-            'ons':self.get_mod_var_int(name,'ons'),
-            'comms':self.get_mod_var_int(name,'comms'),
-            'lows':self.get_mod_var_int(name,'lows'),
-            'highs':self.get_mod_var_int(name,'highs'),
+            'slaves':slaves,
+            'cmds':cmds,
+            'ons':ons,
+            'comms':comms,
+            'lows':lows,
+            'highs':highs,
+			'bigs':bigs,
             'date_mqtt':self.get_mod_var(name,'date_mqtt'),
             'date':self.get_mod_var(name,'date'),
             'slaves':[]
@@ -163,7 +168,6 @@ class RdOyasClient(RdApp):
         ret={
             'on': self.get_app_var_bool('on'),
             'alive': self.get_app_var_bool('alive'),
-            #'sleep': self.get_app_var_bool('sleep'),
             'modules':{}
             }
         

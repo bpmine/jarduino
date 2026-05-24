@@ -8,7 +8,7 @@ import datetime
 import threading
 
 DEBUG_CYCLE=False
-DEBUG_MQTT=False
+DEBUG_MQTT=True
 
 class RdApp:
     TMT = 5
@@ -62,15 +62,21 @@ class RdApp:
         else:
             return True if res=='1' else False
 
-    def get_mod_var_int(self,nmod,nvar):
+    def get_mod_var_int(self,nmod,nvar,defaut=None):
         res=self.get_mod_var(nmod,nvar)
-        if res==None or res.isnumeric()==False:
-            return 0
+        if res==None: 
+            return defaut
         else:
-            return int(res)
+            try:
+                return int(res)
+            except:
+                return 0
 
     def set_mod_var_bool(self,nmod,nvar,val,tmt=None):
         self.set_mod_var(nmod,nvar,1 if val==True else 0,tmt)
+
+    def set_mod_var_int(self,nmod,nvar,val,tmt=None):
+        self.set_mod_var(nmod,nvar,val,tmt)
 
     def del_mod_var(self,nmod,nvar):
         k=self.kModVar(nmod,nvar)
@@ -122,7 +128,7 @@ class RdOyasSrv(RdApp):
             p.delete(k)
         p.execute()
 
-        self.set_app_var('alive',1)
+        self.set_app_var_bool('alive',True,10)
         #self.set_app_var('on',1,None)
 
         self.r.delete('%s.modules' % (self.kApp()))
@@ -144,7 +150,6 @@ class RdOyasSrv(RdApp):
             self.set_mod_var(name,key,data[key],None)
         else:
             self.del_mod_var(name,key)
-
             
     def update_slave_var_bool(self,name,addr,data,key):
         
@@ -158,6 +163,25 @@ class RdOyasSrv(RdApp):
             self.set_slave_var(name,addr,key,data[key],None)
         else:
             self.del_slave_var(name,addr,key)
+
+    def send_mod_ack(self,name_module):
+        js={'req':'ack'}
+        self.client.publish("/oyas/cmd/%s" % name_module,json.dumps(js).encode('ASCII'))
+
+    def send_mod_config(self,name_module,slaves,bigs):
+        js={'req':'setcfg'}
+        if slaves!=None:
+            js['slaves']=slaves;
+        if bigs!=None:
+            js['slaves']=bigs;
+        
+        self.client.publish("/oyas/cmd/%s" % name_module,json.dumps(js).encode('ASCII'))
+
+    def send_mod_cmds(self,name_module,cmds,ctrl,stop_highs=None):
+        js={'req':'cmds','cmds':cmds,'ctrl':ctrl}
+        if stop_highs!=None:
+            js["highs"]=stop_highs
+        self.client.publish("/oyas/cmd/%s" % name_module,json.dumps(js).encode('ASCII'))
 
     def update_data(self,name,data):
         self.set_mod_var(name,'name',name,None)
@@ -191,7 +215,9 @@ class RdOyasSrv(RdApp):
                 js=json.loads(str(msg.payload,'ascii'))
                 self.update_data(name,js)
                 if DEBUG_MQTT==True:
-                    print('-> Recv %s' % (name))                    
+                    print('-> Recv %s' % (name))
+                
+                #self.send_mod_ack(name)
                 
                 if name not in list(self.modules):
                     try:
@@ -203,29 +229,50 @@ class RdOyasSrv(RdApp):
                     except Exception as ex:
                         print(ex)
 
+                self.send_mod_config_ifneeded(name)
+
             except Exception as e:
                 if DEBUG_MQTT==True:
                     print('Message incorrect: %s' % e)
                 pass
 
-            #sleep=self.get_app_var_bool('sleep')
-            #if sleep==True and self.get_mod_var_bool(name,'sleep')==False:
-            #    print('Envoi sleep a %s' % (name))
-            #    self.client.publish("/oyas/cmd/%s" % name,"sleep");
-            #    self.set_mod_var_bool(name,'sleep',True,3000)
 
-    def sync(self):
-        print('Demarrage du Thread de synchro/requete...')
-        while True:
-            time.sleep(1)
-            on=self.get_app_var_bool('on')
-            if on==True:
-                print('SYNC...')
-                for n in self.modules:
-                    print(n)
-                    req={'req':'cmds','cmds':0,'ctrl':'0'}
-                    msg=json.dumps(req)
-                    self.client.publish(f'/oyas/cmd/{n}',msg)            
+    #def sync(self):
+    #    print('Demarrage du Thread de synchro/requete...')
+    #    while True:
+    #        time.sleep(1)
+    #        on=self.get_app_var_bool('on')
+    #        if on==True:
+    #            print('SYNC...')
+    #            for n in self.modules:
+    #                print(n)
+    #                req={'req':'cmds','cmds':0,'ctrl':'0'}
+    #                msg=json.dumps(req)
+    #                self.client.publish(f'/oyas/cmd/{n}',msg)            
+
+    def send_mod_config_ifneeded(self,name_module):
+        on=self.get_app_var_bool('on')
+        if on!=True:
+            return;
+
+        new_slaves=self.get_mod_var_int(name_module,'to_slaves')
+        if new_slaves!=None:
+            slaves=self.get_mod_var_int(name_module,'slaves')
+            if slaves!=new_slaves:
+                print(f'Envoi de la configuration des esclaves de {name_module}: {slaves:04X} -> {new_slaves:04X}')
+                js={'req':'setcfg','slaves':new_slaves}
+                self.client.publish("/oyas/cmd/%s" % name_module,json.dumps(js).encode('ASCII'))
+                self.set_mod_var_int(name_module,'slaves',new_slaves)
+
+        new_bigs=self.get_mod_var_int(name_module,'to_bigs')
+        if new_bigs!=None:
+            bigs=self.get_mod_var_int(name_module,'bigs')
+            if bigs!=new_bigs:
+                print(f'Envoi de la configuration des gros oyas à {name_module}: {bigs:04X} -> {new_bigs:04X}')
+                js={'req':'setcfg','bigs':new_bigs}
+                self.client.publish("/oyas/cmd/%s" % name_module,json.dumps(js).encode('ASCII'))
+                self.set_mod_var_int(name_module,'bigs',new_bigs)
+
 
     def start(self):
         oldOn=False
@@ -238,14 +285,15 @@ class RdOyasSrv(RdApp):
 
         self.client.loop_start()
 
-        th = threading.Thread(target=self.sync)
-        th.start()
+        #th = threading.Thread(target=self.sync)
+        #th.start()
 
         #self.modules.add('barbec')
         self.set_app_var('on',0,None)
         print('Start program...');
         while True:
             time.sleep(1)
+            self.set_app_var_bool('alive',True,10)
 
             on=self.get_app_var_bool('on')
             if on==None:
@@ -262,20 +310,27 @@ class RdOyasSrv(RdApp):
             if DEBUG_CYCLE==True:
                 print('_'*40)
                 print('Cycle:')
-
+                for n in self.modules:
+                    print(f'  - {n}')
             
             for n in self.modules:
-                new_slaves=self.get_mod_var_int(n,'to_slaves')
-                if new_slaves!=None:
-                    slaves=self.get_mod_var_int(n,'slaves')
-                    if slaves!=new_slaves:
-                        print(f'Envoi de la configuration des esclaves à {n}: {slaves:04X} -> {new_slaves:04X}')
-                        js={'req':'setcfg','slaves':new_slaves}
-                        self.client.publish("/oyas/cmd/%s" % n,)
-                        self.set_mod_var_int(n,'slaves',new_slaves)
-            
-            
-            time.sleep(1)
+                to_cmds=self.get_mod_var_int(n,'to_cmds')
+                if to_cmds==None:
+                    to_cmds=0
+
+                stop_highs=None
+                to_filling=self.get_mod_var_int(n,'to_filling')
+                if to_filling!=None:
+                    stop_highs=to_filling&0xFFFE;
+                    to_cmds=to_filling;
+
+                self.send_mod_cmds(n,to_cmds,True,stop_highs)
+                
+                #js={'req':'cmds','cmds':to_cmds,'ctrl':True}
+                #if stop_highs!=None:
+                #    js["highs"]=stop_highs                    
+                #self.client.publish("/oyas/cmd/%s" % n,json.dumps(js).encode('ASCII'))
+
 ##                
 ##                v=self.get_mod_var(n,'to_cmd')
 ##                if v!=None and v=='1':

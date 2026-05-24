@@ -161,6 +161,59 @@ def get_oyas():
     js=oyasCln.getJson()
     return js
 
+@app.route('/oyas/modules/<name>/do/on', methods=['GET'])
+def oyas_module_do_on(name):
+    if oyasCln.hasModule(name)==False:
+        abort(404)
+
+    duree=request.args.get('duration')
+    if duree==None or not duree.isnumeric() or int(duree)>3600:
+        duree=30*60
+    else:
+        duree=int(duree,10)
+        
+    oyasCln.setOn(name,True,duree)
+    
+    return {'result':True,'msg':'Maître Oya %s ON.' % name}
+
+@app.route('/oyas/modules/<name>/do/off', methods=['GET'])
+def oyas_module_do_off(name):
+    if oyasCln.hasModule(name)==False:
+        abort(404)
+        
+    oyasCln.setOn(name,False,None)
+    
+    return {'result':True,'msg':'Maître Oya %s OFF.' % name}
+
+@app.route('/oyas/modules/<name>/do/cmds', methods=['GET'])
+def oyas_do_cmds(name):
+    if oyasCln.hasModule(name)==False:
+        abort(404)
+        
+    if oyasCln.get_mod_var_bool(name,"on")==True:
+        try:
+            cmds=int(request.args.get('cmds'))
+            oyasCln.setCmds(name,cmds)
+            return {'result':True,'msg':'Commandes sur le Maître Oya %s: %04x.' % (name,cmds)}
+        except Exception as ex:
+            return {'result':True,'msg':'Parametre incorrect ou erreur commandes sur le Maître Oya %s: %04x.' % (name,cmds)}
+    else:
+        return {'result':True,'msg':'Impossible: Le Maître des OYA %s est OFF.' % name}
+
+@app.route('/oyas/modules/<name>/do/filling', methods=['GET'])
+def oyas_do_filling(name):
+    if oyasCln.hasModule(name)==False:
+        abort(404)
+        
+    if oyasCln.get_mod_var_bool(name,"on")==True:
+        try:
+            addr=int(request.args.get('addr'))            
+            oyasCln.setFilling(name,addr)
+            return {'result':True,'msg':'Demande remplissage de %s/%x.' % (name,addr)}
+        except Exception as ex:
+            return {'result':True,'msg':'Parametre incorrect ou erreur demande remplissage sur le Maître Oya %s.' % name}
+    else:
+        return {'result':True,'msg':'Impossible: Le Maître des OYA %s est OFF.' % name}
 
 if __name__=='__main__':
     app.debug = True

@@ -13,7 +13,7 @@
 #include "api.h"
 
 #include <FastLED.h>
-
+#include <EEPROM.h>
 
 #define COL_BLACK   CRGB(0,0,0)
 #define COL_RED     CRGB(255,0,0)
@@ -86,9 +86,10 @@ void setup(void)
     Master.set_big_oyas(0x0000);  // Tous petits
   #endif*/
 
+  //EEPROM.write(0,0);
   if (api_load_memory()==false)
   {
-    Serial.println("Reinitialisation des paramaetres!");
+    Serial.println("Reinitialisation des parametres!");
   }
 
   tmrCycle.start();

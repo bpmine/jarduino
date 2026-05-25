@@ -27,6 +27,11 @@ void DataBuilder::set_bigs(unsigned short bigs)
   pData->bigs=bigs;
 }
 
+void DataBuilder::set_config_slaves(unsigned short slaves)
+{
+  pData->config_slaves=slaves;
+}
+
 void DataBuilder::set(Slave *slave)
 {
   if (slave==nullptr)
@@ -51,8 +56,6 @@ void DataBuilder::set(Slave *slave)
     pData->tick_ms[addr]=slave->last_slave_tick_ms;
     pData->total_s[addr]=slave->total_slave_on_s;
     pData->errs[addr]=slave->total_slave_errs;
-
-    pData->config_slaves|=msk;
   }
 }
 

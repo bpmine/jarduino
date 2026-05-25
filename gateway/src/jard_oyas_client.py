@@ -143,6 +143,10 @@ class RdOyasClient(RdApp):
             }
 
         cfg=int(slaves)
+        if name=='reduit':
+            cfg=cfg<<1; ## A gerer quand MAJ firmware Reduit et Paul !!
+        ### Config et bigs sont bit0=pompe. Mais masques lows, highs bit 2 = 1er oya !!!
+        
         for addr in range(1,15):
             mask=1<<addr
 

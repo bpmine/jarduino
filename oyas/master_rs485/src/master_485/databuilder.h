@@ -27,6 +27,7 @@ class DataBuilder
     void set(int day,int month,int year,int h,int m,int s);
     void set(DateTime *pDt);
     void set_bigs(unsigned short bigs);
+    void set_config_slaves(unsigned short slaves);
 };
 
 #endif

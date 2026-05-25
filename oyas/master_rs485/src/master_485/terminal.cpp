@@ -318,14 +318,12 @@ static void _term_exec_config_slaves(const char *strParams)
       {
         if (i==0)
         {
-          Serial.println("  - POMPE @1");
+          Serial.println("  - PMP @1");
         }
         else
         {
-          Serial.print("  - OYA   @");
-          Serial.println(i+1,HEX);
-          delay(5);
-          yield();
+          Serial.print("  @");
+          Serial.print(i+1,HEX);
         }
       }
     }
@@ -372,18 +370,13 @@ static void _term_exec_config_bigs(const char *strParams)
     Serial.print("Liste gros oyas: ");
     Serial.println(mask,HEX);
 
-    for (int i=0;i<14;i++)
+    for (int i=1;i<15;i++)
     {
       unsigned short m=1<<i;
       if ((mask&m)==m)
       {
-        if (i>0)
-        {
-          Serial.print("  - OYA   @");
-          Serial.println(i+1,HEX);
-          delay(5);
-          yield();
-        }
+        Serial.print("  @");
+        Serial.print(i+1,HEX);
       }
     }
   }

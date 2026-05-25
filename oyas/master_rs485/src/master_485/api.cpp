@@ -6,6 +6,7 @@
 
 #include "databuilder.h"
 #include "memory.h"
+#include "data.hpp"
 
 MasterArduino Master;
 static DS1307 _rtc;
@@ -164,7 +165,9 @@ void api_latch_data(Data *pData)
     bld.set(oya);
     oya=api_find_next_oya(pos);
   }
+
   bld.set_bigs(api_get_bigs());
+  bld.set_config_slaves(api_get_slaves_config());
 
   DateTime now = _rtc.now();
   bld.set(&now);

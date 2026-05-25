@@ -267,6 +267,7 @@ class StateWifiRemote:public StateGestion
         }
         highs=highs&api_get_slaves_config();
 
+        /// On coupe tout dès que le niveau haut est atteint
         if (highs&stophighs)
           cmds=0;
 

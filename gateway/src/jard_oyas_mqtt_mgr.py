@@ -8,7 +8,7 @@ import datetime
 import threading
 
 DEBUG_CYCLE=False
-DEBUG_MQTT=True
+DEBUG_MQTT=False
 
 class RdApp:
     TMT = 5
@@ -55,10 +55,10 @@ class RdApp:
         k=self.kModVar(nmod,nvar)
         return self.r.get(k)
 
-    def get_mod_var_bool(self,nmod,nvar):
+    def get_mod_var_bool(self,nmod,nvar,default=None):
         res=self.get_mod_var(nmod,nvar)
         if res==None:
-            return False
+            return default
         else:
             return True if res=='1' else False
 
@@ -141,6 +141,7 @@ class RdOyasSrv(RdApp):
             self.del_mod_var(nme,"to_filling")
             self.del_mod_var(nme,"to_bigs")
             self.del_mod_var(nme,"to_slaves")
+            self.del_mod_var(nme,"on")
 
         self.set_app_var_bool('alive',True,10)
         #self.set_app_var('on',1,None)
@@ -161,23 +162,13 @@ class RdOyasSrv(RdApp):
 
     def update_mod_var_int(self,name,data,key):
         if key in data:
-            self.set_mod_var(name,key,data[key],None)
+            try:
+                self.set_mod_var(name,key,data[key],None)
+            except:
+                self.del_mod_var(name,key)
         else:
             self.del_mod_var(name,key)
             
-    def update_slave_var_bool(self,name,addr,data,key):
-        
-        if key in data:
-            self.set_slave_var(name,addr,key,1 if data[key]==True else 0,None)
-        else:
-            self.del_slave_var(name,addr,key)
-
-    def update_slave_var_int(self,name,addr,data,key):
-        if key in data:
-            self.set_slave_var(name,addr,key,data[key],None)
-        else:
-            self.del_slave_var(name,addr,key)
-
     def send_mod_ack(self,name_module):
         js={'req':'ack'}
         self.client.publish("/oyas/cmd/%s" % name_module,json.dumps(js).encode('ASCII'))
@@ -208,6 +199,7 @@ class RdOyasSrv(RdApp):
             self.update_mod_var_int(name,data,'lows')
             self.update_mod_var_int(name,data,'highs')
             self.update_mod_var_int(name,data,'bigs')
+            self.update_mod_var_bool(name,data,'rmt')
             self.set_mod_var(name,'date',data['date'],None)                    
                             
         self.set_mod_var(name,'valid',1)
@@ -295,6 +287,7 @@ class RdOyasSrv(RdApp):
 
     def start(self):
         oldOn=False
+        oldModOn={}
         
         print('Start jarduino Oyas masters MQTT server...')
         self.client.on_connect = self.on_connect
@@ -320,7 +313,7 @@ class RdOyasSrv(RdApp):
                 self.set_app_var('on',0,None)
                 
             if oldOn!=on:                
-                print("Mise en marche" if on==True else "Arrêt!")
+                print("Mise en marche Systeme" if on==True else "Arrêt Systeme!")
                 oldOn=on
             
             if on!=True:
@@ -334,6 +327,20 @@ class RdOyasSrv(RdApp):
                     print(f'  - {n}')
             
             for n in modules:
+                on_mod=self.get_mod_var_bool(n,'on',False)
+                if n not in oldModOn:
+                    oldModOn[n]=on_mod
+
+                if oldModOn[n]!=on_mod:
+                    if on_mod==True:
+                        print(f'Mise en marche du maître {n}')
+                    else:
+                        print(f'Arret du maître {n}!')
+                    oldModOn[n]=on_mod
+
+                if on_mod!=True:
+                    continue
+
                 to_cmds=self.get_mod_var_int(n,'to_cmds')
                 if to_cmds==None:
                     to_cmds=0
@@ -345,7 +352,6 @@ class RdOyasSrv(RdApp):
                     to_cmds=to_filling;
 
                 self.send_mod_cmds(n,to_cmds,True,stop_highs)
-
 
 if __name__=='__main__':
     srv=RdOyasSrv('192.168.3.200')

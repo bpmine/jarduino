@@ -98,13 +98,19 @@ class RdOyasClient(RdApp):
         self.set_mod_var(mname,'to_cmds',cmds,tm)
         self.set_mod_var(mname,'to_filling',0,None)
 
-    def setFilling(self,mname,addr_to_fill,pump=True,tm=60):
+    def setFilling(self,mname,addr_to_fill,pump=True,repair=False,tm=60):
         self.set_mod_var(mname,'to_cmds',0,None)
 
         if addr_to_fill>1 and addr_to_fill<15:
-            to_filling=1<<addr_to_fill
+            to_filling=1<<(addr_to_fill-1)
             if pump==True:
                 to_filling|=0x01
+            
+            if repair==True:
+                repair_tm=min(tm,20)
+                self.set_mod_var(mname,'repair',True,repair_tm)
+            else:
+                self.set_mod_var(mname,'repair',False,None)
 
             self.set_mod_var(mname,'to_filling',to_filling,tm)
 
@@ -125,6 +131,7 @@ class RdOyasClient(RdApp):
         lows=self.get_mod_var_int(name,'lows',0)
         highs=self.get_mod_var_int(name,'highs',0)
         bigs=self.get_mod_var_int(name,'bigs',0)
+        remote=self.get_mod_var_bool(name,'rmt',False)
         date=self.get_mod_var(name,'date')
         date_mqtt=self.get_mod_var(name,'date_mqtt')
             
@@ -137,15 +144,14 @@ class RdOyasClient(RdApp):
             'lows':lows,
             'highs':highs,
 			'bigs':bigs,
+            'remote':remote,
             'date_mqtt':self.get_mod_var(name,'date_mqtt'),
             'date':self.get_mod_var(name,'date'),
             'slaves':[]
             }
 
         cfg=int(slaves)
-        if name!='paul':
-            cfg=cfg<<1; ## A gerer quand MAJ firmware Paul !!
-        ### Config et bigs sont bit0=pompe. Mais masques lows, highs bit 2 = 1er oya !!!
+        cfg=cfg<<1; ## Aligner avec les masques adresses
         
         for addr in range(1,15):
             mask=1<<addr

@@ -161,6 +161,18 @@ def get_oyas():
     js=oyasCln.getJson()
     return js
 
+@app.route('/oyas/do/on', methods=['GET'])
+def oyas_do_on():      
+    oyasCln.set_app_var_bool("on",True,None)
+    
+    return {'result':True,'msg':'Gestion OYAS ON'}
+
+@app.route('/oyas/do/off', methods=['GET'])
+def oyas_do_off():      
+    oyasCln.set_app_var_bool("on",False,None)
+    
+    return {'result':True,'msg':'Gestion OYAS OFF'}
+
 @app.route('/oyas/modules/<name>/do/on', methods=['GET'])
 def oyas_module_do_on(name):
     if oyasCln.hasModule(name)==False:
@@ -207,11 +219,28 @@ def oyas_do_filling(name):
         
     if oyasCln.get_mod_var_bool(name,"on")==True:
         try:
-            addr=int(request.args.get('addr'))            
-            oyasCln.setFilling(name,addr)
+            addr=int(request.args.get('addr'))
+            pump=int(request.args.get('pump',True))   
+            tm=int(request.args.get('time'),60)
+            oyasCln.setFilling(name,addr,pump,False,tm)
             return {'result':True,'msg':'Demande remplissage de %s/%x.' % (name,addr)}
         except Exception as ex:
             return {'result':True,'msg':'Parametre incorrect ou erreur demande remplissage sur le Maître Oya %s.' % name}
+    else:
+        return {'result':True,'msg':'Impossible: Le Maître des OYA %s est OFF.' % name}
+
+@app.route('/oyas/modules/<name>/do/repair', methods=['GET'])
+def oyas_do_repair(name):
+    if oyasCln.hasModule(name)==False:
+        abort(404)
+        
+    if oyasCln.get_mod_var_bool(name,"on")==True:
+        try:
+            addr=int(request.args.get('addr'))            
+            oyasCln.setFilling(name,addr,True,True,30)
+            return {'result':True,'msg':'Demande reparation/nettoyage de %s / @%x.' % (name,addr)}
+        except Exception as ex:
+            return {'result':True,'msg':'Parametre incorrect ou erreur demande nettoyage sur le Maître Oya %s.' % name}
     else:
         return {'result':True,'msg':'Impossible: Le Maître des OYA %s est OFF.' % name}
 

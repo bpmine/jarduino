@@ -93,6 +93,10 @@ class RdOyasClient(RdApp):
 
     def setOn(self,mname,flgOn,tm=None):            
         self.set_mod_var_bool(mname,'on',flgOn,tm)
+        self.del_mod_var(mname,'to_cmds')
+        self.del_mod_var(mname,'to_filling')
+        self.del_mod_var(mname,'to_slaves')
+        self.del_mod_var(mname,'to_bigs')
 
     def setCmds(self,mname,cmds,tm=10):
         self.set_mod_var(mname,'to_cmds',cmds,tm)
@@ -134,10 +138,16 @@ class RdOyasClient(RdApp):
         remote=self.get_mod_var_bool(name,'rmt',False)
         date=self.get_mod_var(name,'date')
         date_mqtt=self.get_mod_var(name,'date_mqtt')
+
+        onoff=self.get_mod_var_bool(name,'on')
+        to_cmds=self.get_mod_var_int(name,'to_cmds')
+        to_filling=self.get_mod_var_int(name,'to_filling')
+        to_slaves=self.get_mod_var_int(name,'to_slaves')
+        to_bigs=self.get_mod_var_int(name,'to_bigs')
             
         mod={
             'name':name,
-            'slaves':slaves,
+            'config':slaves,
             'cmds':cmds,
             'ons':ons,
             'comms':comms,
@@ -147,7 +157,13 @@ class RdOyasClient(RdApp):
             'remote':remote,
             'date_mqtt':self.get_mod_var(name,'date_mqtt'),
             'date':self.get_mod_var(name,'date'),
-            'slaves':[]
+            'slaves':[],
+
+            'on':onoff,
+            'to_cmds':to_cmds,
+            'to_filling':to_filling,
+            'to_slaves':to_slaves,
+            'to_bigs':to_bigs,
             }
 
         cfg=int(slaves)
@@ -173,6 +189,94 @@ class RdOyasClient(RdApp):
             
         
         return mod
+    
+    def getModuleJson_ForConfig(self,name):
+        module=self.getModuleJson(name)
+        if module==None:
+            return None
+        
+        to_slaves=self.get_mod_var_int(name,'to_slaves')
+        to_bigs=self.get_mod_var_int(name,'to_bigs')
+        
+        if to_slaves!=None:
+            dic_slaves={}
+            for slav in module['slaves']:
+                dic_slaves[slav['addr']]=slav
+
+            to_slaves=to_slaves<<1; ## Aligner avec les masques adresses
+
+            new_slaves=[]
+            for a in range(1,15):
+                mask=1<<a
+                if mask&to_slaves==mask:
+                    if a in dic_slaves.keys():
+                        new_slaves.append(dic_slaves[a])
+                    else:
+                        obj={'addr':a,
+                            'type':'pump' if a==1 else 'oya',
+                            'on':False,
+                            'comm_ok':False
+                        }
+
+                        if a!=1:
+                            obj['high']=False
+                            obj['low']=False
+                            obj['big']=False
+
+                        new_slaves.append(obj)
+
+            module['slaves']=new_slaves
+
+        if to_bigs!=None:
+            to_bigs=to_bigs<<1; ## Aligner avec les masques adresses
+            for slav in module['slaves']:
+                mask=1<<a
+                if mask&to_bigs==mask:
+                    slav['big']=True
+                else:
+                    slav['big']=False
+
+        return module
+    
+    def configAddSlave(self,name,addr):
+        mod=self.getModuleJson_ForConfig(name)
+        if mod==None:
+            return False
+        
+        if addr<1 or addr>14:
+            return False
+        
+        mask=1<<addr-1;
+        to_slaves=mod['to_slaves']
+        if to_slaves==None:
+            config=mod['config']
+            to_slaves=config
+
+        to_slaves=to_slaves|mask
+        self.set_mod_var_int(name,'to_slaves',to_slaves)
+        return True        
+
+    def configRemoveSlave(self,name,addr):
+        mod=self.getModuleJson_ForConfig(name)
+        if mod==None:
+            return False
+        
+        if addr<1 or addr>14:
+            return False
+        
+        mask=1<<addr-1;
+        to_slaves=mod['to_slaves']
+        if to_slaves==None:
+            config=mod['config']
+            to_slaves=config
+
+        to_slaves=to_slaves&(~mask)
+        self.set_mod_var_int(name,'to_slaves',to_slaves)
+        return True        
+
+    def getModulesNames(self):
+        res=self.r.smembers('%s.modules' % (self.kApp()))
+        return res
 
     def getJson(self):
         ret={
@@ -186,13 +290,28 @@ class RdOyasClient(RdApp):
             mod=self.getModuleJson(name)
             ret['modules'][name]=mod         
 
-
         return ret            
-
+    
+    def set_all_modules_off(self):
+        mods=self.getModulesNames()
+        for m in mods:
+            self.set_mod_var_bool(m,'on',False)
      
 if __name__=='__main__':
     cln=RdOyasClient('192.168.3.200')
-    print(json.dumps(cln.getJson(),indent=1))
-    print('_'*40)
+    #print(json.dumps(cln.getJson(),indent=1))
+    #print('_'*40)
+
+    js=cln.getModuleJson_ForConfig('reduit')
+    print(json.dumps(js,indent=1))
+
+    cln.configAddSlave('reduit',5)
+
+    #cln.configAddSlave('barbec',1)
+    #cln.configAddSlave('barbec',2)
+    #cln.configAddSlave('barbec',3)
+    #cln.configAddSlave('barbec',6)
+    #cln.configAddSlave('barbec',7)
+    #cln.configAddSlave('barbec',8)
 
 

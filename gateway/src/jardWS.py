@@ -170,8 +170,16 @@ def oyas_do_on():
 @app.route('/oyas/do/off', methods=['GET'])
 def oyas_do_off():      
     oyasCln.set_app_var_bool("on",False,None)
+    oyasCln.set_all_modules_off()
     
     return {'result':True,'msg':'Gestion OYAS OFF'}
+
+@app.route('/oyas/modules/<name>', methods=['GET'])
+def oyas_module_get(name):
+    if oyasCln.hasModule(name)==False:
+        abort(404)
+       
+    return oyasCln.getModuleJson(name)    
 
 @app.route('/oyas/modules/<name>/do/on', methods=['GET'])
 def oyas_module_do_on(name):

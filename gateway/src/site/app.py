@@ -6,7 +6,7 @@ import re
 app = Flask(__name__)
 
 IP_WEBSERVICE = 'http://127.0.0.1:5000'
-IP_WEBSERVICE = 'http://192.168.3.200:5000'
+#IP_WEBSERVICE = 'http://192.168.3.200:5000'
 
 pDte=re.compile(r'^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})')
 def iso_to_dte(iso_str):
@@ -164,6 +164,60 @@ def pump_off(module):
         return jsonify({"status": "ok", "response": r.text})
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route('/maintenance/oyas/on', methods=['POST'])
+def oyas_on():
+    url = f"{IP_WEBSERVICE}/oyas/do/on"
+    try:
+        r = requests.get(url)
+        return jsonify({"status": "ok", "message": "Oyas ON"})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route('/maintenance/oyas/off', methods=['POST'])
+def oyas_off():
+    url = f"{IP_WEBSERVICE}/oyas/do/off"
+    try:
+        r = requests.get(url)
+        return jsonify({"status": "ok", "message": "Oyas OFF"})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route('/maintenance/oyas/modules/<name>/on', methods=['POST'])
+def oyas_module_on(name):
+    url = f"{IP_WEBSERVICE}/oyas/modules/{name}/do/on"
+    try:
+        r = requests.get(url)
+        return jsonify({"status": "ok", "message": f"Oyas {name} ON"})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route('/maintenance/oyas/modules/<name>/off', methods=['POST'])
+def oyas_module_off(name):
+    url = f"{IP_WEBSERVICE}/oyas/modules/{name}/do/off"
+    try:
+        r = requests.get(url)
+        return jsonify({"status": "ok", "message": f"Oyas {name} OFF"})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+
+@app.route("/maintenance/oyas/modules/<name>")
+def page_config(name):
+    try:
+        response = requests.get(IP_WEBSERVICE+"/oyas", timeout=5)
+        response.raise_for_status()
+        data = response.json()        
+        modules=data.get('modules',{})
+        module=None
+        if name in modules.keys():
+            module=modules[name]
+            
+    except Exception as ex:        
+        data=None
+        module=None
+
+    return render_template("oyas_bootstrap.html", name=name, data=data,module=module)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=False)

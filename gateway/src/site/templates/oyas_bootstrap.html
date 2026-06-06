@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuration maître oyas</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+
+    <script>
+        function sendState(state) {
+            return fetch(`/maintenance/oyas/${state}`, {
+                method: 'POST'
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Erreur');
+                return response.json();
+            });
+        }
+
+        function sendMasterState(name, state) {
+            return fetch(`/maintenance/oyas/modules/${name}/${state}`, {
+                method: 'POST'
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Erreur');
+                return response.json();
+            });
+        }
+
+        function toggleSystem(sw) {
+            const state = sw.checked ? 'on' : 'off';
+
+            sendState(state)
+                .then(() => location.reload())
+                .catch(() => {
+                    alert('Erreur lors de l’envoi de la commande.');
+                    sw.checked = !sw.checked;
+                });
+        }
+
+        function toggleMaster(sw) {
+            const state = sw.checked ? 'on' : 'off';
+
+            sendMasterState('{{ name }}', state)
+                .then(() => location.reload())
+                .catch(() => {
+                    alert('Erreur lors de l’envoi de la commande maître.');
+                    sw.checked = !sw.checked;
+                });
+        }
+    </script>
+</head>
+
+<body class="container my-4">
+
+    <h1 class="text-center mb-4">
+        Configuration maître oyas
+    </h1>
+
+    <h5 class="text-center mb-4">
+        <span class="badge bg-primary">{{ name }}</span>
+    </h5>
+
+    {% if not data %}
+
+    <div class="alert alert-danger">
+        Impossible de contacter le service Oyas.
+    </div>
+
+    {% else %}
+
+    {% set system_on = data.get('on', False) %}
+
+    <!-- Contrôle global -->
+
+    <div class="card mb-3">
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+                    <h5 class="card-title mb-0">Autorisation du contrôle distant</h5>
+                    <small class="text-muted">
+                        État global commun à tous les maîtres
+                    </small>
+                </div>
+
+                <div class="form-check form-switch fs-4">
+
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="systemSwitch"
+                        {% if system_on %}checked{% endif %}
+                        onchange="toggleSystem(this)"
+                    >
+
+                    {% if system_on %}
+                    <span class="badge bg-success ms-2">ON</span>
+                    {% else %}
+                    <span class="badge bg-secondary ms-2">OFF</span>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Contrôle du maître -->
+
+    {% if system_on %}
+
+        {% if module %}
+
+        <div class="card mb-3">
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+                        <h5 class="card-title mb-0">{{ name }}</h5>
+                        <small class="text-muted">
+                            Autorisation du contrôle distant pour ce maître
+                        </small>
+                    </div>
+
+                    <div class="form-check form-switch fs-4">
+
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="masterSwitch"
+                            {% if module.get('on', False) %}checked{% endif %}
+                            onchange="toggleMaster(this)"
+                        >
+
+                        {% if module.get('on', False) %}
+                        <span class="badge bg-success ms-2">ON</span>
+                        {% else %}
+                        <span class="badge bg-secondary ms-2">OFF</span>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Esclaves -->
+        {% if module.get('on', False) %}
+        <div class="card">
+            <div class="card-body">
+
+                <h5 class="card-title mb-3">Esclaves RS485</h5>
+
+                {% set slaves = module.get('slaves', []) %}
+
+                <div class="table-responsive">
+                    <table class="table table-sm table-striped align-middle">
+                        <thead>
+                            <tr>
+                                <th>Adresse</th>
+                                <th>Type</th>
+                                <th>Désactiver</th>
+                                <th>Mode</th>
+                                <th>Timer</th>
+                                <th>Boost</th>
+                                <th>Dépanner</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            {% for oya in module.slaves %}                            
+
+                            <tr>
+                                <td>
+                                    <span>{{ oya.addr }}</span>
+                                </td>
+
+                                <td>
+                                    {% if oya.addr == 1 %}
+                                    <img src="{{ url_for('static', filename='pump.png') }}" class="img-fluid" width="32">
+                                    {% else %}
+                                    <img src="{{ url_for('static', filename='oya.png') }}" class="img-fluid" width="32">
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-outline-danger">
+                                        Désactiver
+                                    </button>
+                                </td>
+
+                                <td>
+                                    <div class="form-check form-check-inline">
+                                        <input
+                                            class="form-check-input"
+                                            type="checkbox"
+                                            id="small_{{ oya.addr }}"
+                                            name="small_{{ oya.addr }}"
+                                        >
+                                        <label class="form-check-label" for="small_{{ oya.addr }}">
+                                            Petit
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check form-check-inline">
+                                        <input
+                                            class="form-check-input"
+                                            type="checkbox"
+                                            id="big_{{ oya.addr }}"
+                                            name="big_{{ oya.addr }}"
+                                        >
+                                        <label class="form-check-label" for="big_{{ oya.addr }}">
+                                            Gros
+                                        </label>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-outline-primary">
+                                        Timer
+                                    </button>
+                                </td>
+
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-outline-warning">
+                                        Boost
+                                    </button>
+                                </td>
+
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">
+                                        Dépanner
+                                    </button>
+                                </td>                                
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+        {% endif %}
+
+        {% else %}
+
+        <div class="alert alert-warning">
+            Maître "{{ name }}" introuvable.
+        </div>
+
+        {% endif %}
+
+    {% else %}
+
+    <div class="alert alert-secondary">
+        Le contrôle distant global est désactivé.
+    </div>
+
+    {% endif %}
+
+    {% endif %}
+
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+
+</body>
+</html>
